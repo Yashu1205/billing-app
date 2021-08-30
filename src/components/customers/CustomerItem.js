@@ -5,7 +5,6 @@ import EditCustomer from "./EditCustomer"
 const CustomerItem = (props) => {
     const [showEditForm, setShowEditForm] = useState(false)
     const { _id, name, email, mobile, user, removeCustomer } = props
-    const dispatch = useDispatch()
 
     const handleRemoveCustomer = () => {
         const conf = window.confirm('Are you sure to delete the customer?')
