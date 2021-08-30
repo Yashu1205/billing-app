@@ -1,4 +1,4 @@
-import { SET_ERRORS, IS_LOGIN } from '../actions/UserAction'
+import { SET_ERRORS, IS_LOGIN, REMOVE_ERRORS } from '../actions/UserAction'
 
 const userInitialValues = {
     isLogin: localStorage.getItem('token') || false,
@@ -14,6 +14,10 @@ const UserReducer = (state = userInitialValues, action) => {
 
         case IS_LOGIN: {
             return {...state, isLogin: true}
+        }
+
+        case REMOVE_ERRORS: {
+            return {...state, serverErrors: {}}
         }
 
         default : {

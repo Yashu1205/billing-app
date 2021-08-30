@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { startLoginUser } from "../../actions/UserAction"
+import { removeServerErrors, startLoginUser } from "../../actions/UserAction"
 
 const Login = (props) => {
     const [email, setEmail] = useState('')
@@ -30,6 +30,7 @@ const Login = (props) => {
         e.preventDefault()
         resetForm()
         setLoginErrors({})
+        dispatch(removeServerErrors())
     } 
 
     const runValidations = () => {

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import isEmail from 'validator/lib/isEmail'
 
-import { startUserRegistration } from '../../actions/UserAction'
+import { removeServerErrors, startUserRegistration } from '../../actions/UserAction'
 
 const UserRegistration  = (props) => {
     const [signupForm, setSignupForm] = useState({username:'', email:'',password:'', businessName:'', address:''})
@@ -32,13 +32,7 @@ const UserRegistration  = (props) => {
     const resetForm = () => {
         const userInfo = {username:'', email:'',password:'', businessName:'', address:''}
         setSignupForm({...userInfo})
-    }
-
-    const handleCancel = (e) => {
-        e.preventDefault()
-        resetForm()        
-        setFormErrors({})
-    }
+    }    
 
     const handleChange = (e) => {
         setSignupForm({...signupForm, [e.target.name]:e.target.value })
@@ -60,6 +54,13 @@ const UserRegistration  = (props) => {
             setFormErrors({})
             dispatch(startUserRegistration(signupForm, resetForm, redirectToLogin))
         }
+    }
+
+    const handleCancel = (e) => {
+        e.preventDefault()
+        resetForm()        
+        setFormErrors({})
+        dispatch(removeServerErrors())
     }
 
     return (

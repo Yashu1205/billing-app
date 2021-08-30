@@ -13,7 +13,6 @@ export const startUserRegistration = (formData, resetForm, redirectToLogin) => {
                 axios.post(`${baseApiUrl}/users/register`, formData)
                      .then((response) => {
                          const result = response.data
-                         console.log(result)
                          if(result.hasOwnProperty('errors')){
                              dispatch(setServerErrors(result.errors))
                          }
@@ -27,7 +26,7 @@ export const startUserRegistration = (formData, resetForm, redirectToLogin) => {
                          }
                      })
                      .catch((error) => {
-                         console.log(error)
+                         Swal.fire('Oops...', error.message, 'error')
                      })
     }
 }
@@ -45,7 +44,7 @@ export const startLoginUser = (formData, resetForm, redirectToHome) => {
                          localStorage.setItem('token', response.data.token)
                          resetForm()
                          dispatch(isLogin())
-                         Swal.fire('Success', 'Logged in Successfully','success')
+                         Swal.fire('Success', 'Successfully Logged in','success')
                          redirectToHome()
                      }
                  })
@@ -56,7 +55,6 @@ export const startLoginUser = (formData, resetForm, redirectToHome) => {
 }  
 
 const setServerErrors = (errors) => {
-    console.log(errors)
     return {
         type: SET_ERRORS,
         payload: errors
