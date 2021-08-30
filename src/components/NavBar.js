@@ -6,6 +6,7 @@ import '../css/navbar.css'
 import Home from './Home'
 import Register from './User/Register'
 import Login from './User/Login' 
+import CustomersContainer from './customers/CustomersContainer'
 
 const NavBar = (props) => {
     const isLoggedIn = localStorage.getItem('token') || false
@@ -82,6 +83,7 @@ const NavBar = (props) => {
             <Route path="/" component={Home} exact={true}/>
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
+            <Route path="/customers" component={CustomersContainer} />
 
         </div>
     )
