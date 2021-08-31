@@ -1,16 +1,28 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux"
 import EditCustomer from "./EditCustomer"
+import Swal from 'sweetalert2'
 
 const CustomerItem = (props) => {
     const [showEditForm, setShowEditForm] = useState(false)
     const { _id, name, email, mobile, user, removeCustomer } = props
 
     const handleRemoveCustomer = () => {
-        const conf = window.confirm('Are you sure to delete the customer?')
-        if(conf){
-            removeCustomer(_id)
-        }
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+            })
+           .then((result) => {
+                if (result.isConfirmed) {
+                    removeCustomer(_id)
+                }
+           })
     }
 
     const handleEditForm = () => {

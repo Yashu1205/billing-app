@@ -24,7 +24,7 @@ export const startGetCustomers = () => {
     }
 }
 
-export const startAddCustomer = (formData) => {
+export const startAddCustomer = (formData, handleFormToggle) => {
     return (dispatch) => {
         axios.post(baseUrl, formData, {
                     headers: {
@@ -33,12 +33,11 @@ export const startAddCustomer = (formData) => {
                 })
             .then((response) => {
                 const result = response.data
-                console.log(result)
                 dispatch(addCustomer(result))
+                handleFormToggle()
                 Swal.fire('Success', 'Customer added successfully', 'success')
             })
             .catch((error) => {
-                console.log(error)
                 Swal.fire('Oops...', error.message, 'error')
             })  
     }

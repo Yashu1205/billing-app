@@ -19,15 +19,17 @@ const CustomersList = (props) => {
     const removeCustomer = (id) => {
         dispatch(startDeleteCustomer(id))
     } 
-
-    const editCustomer = (formData) => {
-        console.log('updated data',formData)
-    }
     
     return (
-        <div>
-            <h2>Listing Customers - { customers.length }</h2>
-            <button onClick={() => setShowAddForm(true)}>Add new customer</button> 
+        <>
+            <div className="row">
+                <div className="col-md-8">
+                    <h3>Listing Customers - { customers.length }</h3>
+                </div>
+                <div className="col-md-4">
+                    <button onClick={() => setShowAddForm(true)} style={{float: 'right'}}>Add new customer</button> 
+                </div> 
+            </div>
             {customers.length > 0 &&
                 customers.map(customer => {
                     return <CustomerItem key={customer._id} {...customer} removeCustomer={removeCustomer} />
@@ -35,9 +37,8 @@ const CustomersList = (props) => {
             }
             {
                 showAddForm && <AddCustomer handleFormToggle={handleFormToggle} />
-            }
-            
-        </div>
+            }            
+        </>
     )
 }
 
