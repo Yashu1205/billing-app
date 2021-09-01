@@ -17,6 +17,18 @@ const ProductForm = (props) => {
         }
     }
 
+    const handleError = (e) => {
+        const inputValue = e.target.value
+        if(inputValue.trim().length === 0){
+            setFormErrors({...formErrors, [e.target.name]: `${e.target.name} is required`})
+        } else{
+            const errors = {...formErrors}
+            delete errors[e.target.name]
+            setFormErrors({...errors})
+        }
+
+    }
+
     const runValidations = () => {
         if(name.trim().length === 0){
             errors.name = 'name is required'
@@ -55,11 +67,15 @@ const ProductForm = (props) => {
             <Modal.Body>
                 <form onSubmit={handleSubmit}>
                     <label >Name</label><br/>
-                    <input type="text" className="form-control" name="name" value={name} onChange={handleChange} />
+                    <input type="text" className="form-control" name="name" value={name} 
+                           onChange={handleChange} 
+                           onBlur={handleError} />
                     {formErrors.name && <span className="text-danger">{formErrors.name} <br/></span>}
                     
                     <label>Price</label><br/>
-                    <input type="text" className="form-control" name="price" value={price} onChange={handleChange} />
+                    <input type="text" className="form-control" name="price" value={price} 
+                           onChange={handleChange}
+                           onBlur={handleError} />
                     {formErrors.price && <span className="text-danger">{formErrors.price} <br/></span>}
                     <br />
 
