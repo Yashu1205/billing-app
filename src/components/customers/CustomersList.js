@@ -23,21 +23,28 @@ const CustomersList = (props) => {
     return (
         <>
             <div className="row">
-                <div className="col-md-8">
+                <div className="col-md-4">
                     <h3>Listing Customers - { customers.length }</h3>
                 </div>
                 <div className="col-md-4">
                     <button onClick={() => setShowAddForm(true)} style={{float: 'right'}}>Add new customer</button> 
                 </div> 
             </div>
-            {customers.length > 0 &&
-                customers.map(customer => {
-                    return <CustomerItem key={customer._id} {...customer} removeCustomer={removeCustomer} />
-                })
-            }
-            {
-                showAddForm && <AddCustomer handleFormToggle={handleFormToggle} />
-            }            
+            <div className="row">
+                <div className="col-md-8">
+                    {customers.length > 0 &&
+                        customers.map(customer => {
+                            return <CustomerItem key={customer._id} {...customer} removeCustomer={removeCustomer} />
+                        })
+                    }
+                </div>
+                <div className="col-md-4">
+                    {
+                        showAddForm && <AddCustomer handleFormToggle={handleFormToggle} />
+                    }
+                </div>
+
+            </div>
         </>
     )
 }

@@ -25,19 +25,19 @@ const CustomerItem = (props) => {
            })
     }
 
-    const handleEditForm = () => {
+    const handleFormToggle = () => {
         setShowEditForm(!showEditForm)
     }
     
     return (
-        <div className="card mb-3">
+        <div className="card mb-3 p-1">
             <p>{name} - {mobile} - {email} 
                 <button className="btn btn-sm btn-danger" onClick={handleRemoveCustomer}>Delete</button>
                 <button className="btn btn-sm btn-info" onClick={() => setShowEditForm(true)}>Edit</button>
             </p>
             {
                 showEditForm && <EditCustomer id={_id} name={name} mobile={mobile} email={email} 
-                                              handleEditForm={handleEditForm}/>
+                                              handleFormToggle={handleFormToggle}/>
             }
         </div>
     )
