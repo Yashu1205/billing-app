@@ -50,24 +50,61 @@ const CustomerForm = (props) => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <label>name*: </label>
-                <input type="text" name="name" value={name} onChange={handleChange} /><br/><br/>
-                { formErrors.name && <span className="text-danger">{ formErrors.name}<br/></span>}
-                
-                <label>mobile*: </label>
-                <input type="text" name="mobile" value={mobile} onChange={handleChange} /><br/><br/>
-                { formErrors.mobile && <span className="text-danger">{ formErrors.mobile}<br/></span>}
+        <div className="card">
+            <div className="card-body">
+            <h2>Add Note</h2>
 
-                <label>email: </label>
-                <input type="text" name="email" value={email} onChange={handleChange} /><br/><br/>
+                <form onSubmit={handleSubmit}>
 
-                <input type="submit" value="Add"/>
-                <input type="button" value="Cancel" onClick={handleCancel} />
+                    <input type="text" className="form-control"
+                        name="name" 
+                        value={name} 
+                        onChange={handleChange}
+                        placeholder="Enter name"
+                    />
+                    { formErrors.name && <span className="text-danger"> {formErrors.name}<br/> </span> }
+                    <br/>
 
-            </form>
+                    <input type="text" className="form-control"
+                            name="mobile" 
+                            value={mobile}
+                            onChange={handleChange}
+                            placeholder="Enter mobile" />
+                    { formErrors.mobile && <span className="text-danger"> {formErrors.mobile}<br/> </span> }
+                    <br/>
+
+                    <input type="text" className="form-control"
+                            name="email" 
+                            value={email}
+                            onChange={handleChange}
+                            placeholder="Enter email" />
+                    <br/>
+
+                    <input type="submit" className="btn btn-primary btn-sm" value="Save" />
+                    
+                    <button className="btn btn-secondary btn-sm" style={{marginLeft: '5px'}}
+                                        onClick={handleCancel}>Cancel</button> 
+                </form>
+            </div>
         </div>
+        // <div>
+        //     <form onSubmit={handleSubmit}>
+        //         <label>name*: </label>
+        //         <input type="text" name="name" value={name} onChange={handleChange} /><br/><br/>
+        //         { formErrors.name && <span className="text-danger">{ formErrors.name}<br/></span>}
+                
+        //         <label>mobile*: </label>
+        //         <input type="text" name="mobile" value={mobile} onChange={handleChange} /><br/><br/>
+        //         { formErrors.mobile && <span className="text-danger">{ formErrors.mobile}<br/></span>}
+
+        //         <label>email: </label>
+        //         <input type="text" name="email" value={email} onChange={handleChange} /><br/><br/>
+
+        //         <input type="submit" value="Add"/>
+        //         <input type="button" value="Cancel" onClick={handleCancel} />
+
+        //     </form>
+        // </div>
     )
 }
 

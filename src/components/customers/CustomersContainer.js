@@ -12,7 +12,7 @@ const CustomersContainer = (props) => {
 
 
     return (
-        <div>
+        <div className="container mt-3">
             <CustomersList />
         </div>
     )
