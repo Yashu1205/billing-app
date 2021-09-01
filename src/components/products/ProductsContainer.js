@@ -17,7 +17,7 @@ const ProductsContainer = (props) => {
     }
 
     return(
-        <div class="d-flex row">
+        <div>
             <ProductsList handleModal={handleModal}/>
             <AddProduct showModal={showModal} handleModal={handleModal} />
         </div>
