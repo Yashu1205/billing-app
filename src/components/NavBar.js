@@ -8,6 +8,7 @@ import Register from './User/Register'
 import Login from './User/Login' 
 import CustomersContainer from './customers/CustomersContainer'
 import ProductsContainer from './products/ProductsContainer'
+import BillsContainer from './bills/BillsContainer'
 
 const NavBar = (props) => {
     const isLoggedIn = localStorage.getItem('token') || false
@@ -86,6 +87,7 @@ const NavBar = (props) => {
             <Route path="/login" component={Login} />
             <Route path="/customers" component={CustomersContainer} />
             <Route path="/products" component={ProductsContainer} />
+            <Route path="/bills" component={BillsContainer} />
 
         </div>
     )
