@@ -1,7 +1,10 @@
-import { useDispatch, useSelector } from "react-redux"
-import ProductItem from "./ProductItem"
-import { startDeleteProduct } from "../../actions/productsAction"
 import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { startDeleteProduct } from "../../actions/productsAction"
+import ReactPaginate from 'react-paginate'
+import ProductItem from "./ProductItem"
+
+
 
 const ProductsList = (props) => {
     const [query, setQuery] = useState('')
