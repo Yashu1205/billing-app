@@ -7,6 +7,7 @@ import Home from './Home'
 import Register from './User/Register'
 import Login from './User/Login' 
 import CustomersContainer from './customers/CustomersContainer'
+import ProductsContainer from './products/ProductsContainer'
 
 const NavBar = (props) => {
     const isLoggedIn = localStorage.getItem('token') || false
@@ -17,8 +18,8 @@ const NavBar = (props) => {
     }
 
     return (
-        <div className="d-flex flex-row">
-            <div className="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical" style={{width: '150px', borderRight: '1px solid grey', height: '100vh'}}>
+        <div className="d-flex flex-row ">
+            <div className="nav flex-column nav-pills " id="v-pills-tab" role="tablist" aria-orientation="vertical" style={{width: '150px', borderRight: '1px solid grey', height: '100vh'}}>
                 <h1>BMS</h1>
                 <ul style={{listStyleType: 'none'}}>
                     <li>
@@ -84,6 +85,7 @@ const NavBar = (props) => {
             <Route path="/register" component={Register} />
             <Route path="/login" component={Login} />
             <Route path="/customers" component={CustomersContainer} />
+            <Route path="/products" component={ProductsContainer} />
 
         </div>
     )

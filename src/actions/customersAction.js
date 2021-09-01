@@ -2,6 +2,7 @@ import axios from "axios"
 import Swal from "sweetalert2"
 
 const baseUrl = 'http://dct-billing-app.herokuapp.com/api/customers'
+
 export const SET_CUSTOMERS = 'SET_CUSTOMERS'
 export const ADD_CUSTOMER = 'ADD_CUSTOMER'
 export const DELETE_CUSTOMER = 'DELETE_CUSTOMER'
