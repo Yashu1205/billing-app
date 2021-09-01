@@ -31,7 +31,7 @@ const CustomerItem = (props) => {
     
     return (
         <div className="card mb-3 p-1">
-            <p>{name} - {mobile} - {email} 
+            <p>{name} - {mobile} { email && `- ${email}`} 
                 <button className="btn btn-sm btn-danger" onClick={handleRemoveCustomer}>Delete</button>
                 <button className="btn btn-sm btn-info" onClick={() => setShowEditForm(true)}>Edit</button>
             </p>
