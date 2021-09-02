@@ -1,6 +1,6 @@
 import { SET_CUSTOMERS, ADD_CUSTOMER, DELETE_CUSTOMER, UPDATE_CUSTOMER } from "../actions/customersAction"
 
-const customersInitialValues = { data: { customers: []}}
+const customersInitialValues = { data: { customers: []} }
 
 const customersReducer = (state = customersInitialValues.data, action) => {
     switch(action.type){
