@@ -56,7 +56,6 @@ const BillForm = (props) => {
             <h2>Add Note</h2>
 
                 <form onSubmit={handleSubmit}>
-
                     <select name="customer" value={customerId} onChange={handleChange} >
                         <option value="">Select customer</option>
                         {
@@ -66,11 +65,9 @@ const BillForm = (props) => {
                         }
                     </select>
                     <br/>
-                    <Select
-        value={selectedOption}
-        onChange={handleSelectChange}
-        options={options}
-      />
+                    
+                    <Select value={selectedOption} onChange={handleSelectChange} options={options} />
+                    
                     <button>Add to cart</button><br/>
                     <input type="submit" className="btn btn-primary btn-sm" value="Save" />
                     
