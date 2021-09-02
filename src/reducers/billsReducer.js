@@ -1,6 +1,6 @@
 import { SET_BILLS, ADD_BILL, BILL_DETAILS, DELETE_BILL } from "../actions/billsAction"
 
-const billsInitialValues = { data: { bills: []}}
+const billsInitialValues = { data: { bills: [], billDetails: {}}}
 
 const billsReducer = (state = billsInitialValues.data, action) => {
 
@@ -13,6 +13,16 @@ const billsReducer = (state = billsInitialValues.data, action) => {
             const newBills = [action.payload, ...state.bills]
             return {...state, bills: newBills}
         }
+
+        case DELETE_BILL: {
+            const result = state.bills.filter(bill => bill._id !== action.payload)
+            return {...state, bills: result}
+        }
+
+        case BILL_DETAILS: {
+            return {...state, billDetails: action.payload}
+        }
+        
         default : {
             return {...state}
         }

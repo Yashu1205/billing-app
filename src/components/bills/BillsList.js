@@ -1,12 +1,18 @@
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { startDeleteBill } from '../../actions/billsAction'
 import BillItem from './BillItem'
 
 const BillsList = (props) => {
     const { handleModal } = props
+
+    const dispatch = useDispatch() 
     const  { bills } = useSelector((state) => {
         return state.bill
     })
     
+    const removeBill = (id) => {
+        dispatch(startDeleteBill(id))
+    }
 
     return (
         <>
@@ -24,7 +30,7 @@ const BillsList = (props) => {
             <div className="row">
                 {bills.length > 0 &&
                     bills.map(bill => {
-                        return <BillItem key={bill._id} {...bill}  />
+                        return <BillItem key={bill._id} {...bill} removeBill={removeBill} />
                     })
                 }
 

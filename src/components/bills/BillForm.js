@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { Modal } from 'react-bootstrap'
-import { startAddBill } from '../../actions/billsAction'
+import DatePicker from 'react-datepicker' 
+import "react-datepicker/dist/react-datepicker.css";
 
 const BillForm = (props) => {
-    const [ startDate, setStartDate ] = useState('')
+    const [ startDate, setStartDate ] = useState(new Date())
     const [ customer, setCustomer ] = useState('')
     const [ product, setProduct ] = useState('')
     const [ lineItems, setLineItems ] = useState([])
@@ -12,9 +12,8 @@ const BillForm = (props) => {
     const [ quantity ,setQuantity ] = useState(1)
     const [ formErrors, setFormErrors] = useState({})
     const errors = {}
-    const { customers, products, showModal, handleModal } = props
-    
-    const dispatch = useDispatch()
+
+    const { customers, products, showModal, handleModal, formSubmission } = props
 
     const handleChange = (e) => {
         const inputName = e.target.name
@@ -81,25 +80,26 @@ const BillForm = (props) => {
                 customer: customer,
                 lineItems: lineItems
             }
-            dispatch(startAddBill(formData, handleModal))
+            formSubmission(formData)
         }
     }
 
     return (
-        <Modal show={showModal } size="md" aria-labelledby="contained-modal-title-vcenter" centered>
+        <Modal show={showModal } size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
             <Modal.Header>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Add New Product
+                    Create New Bill
                 </Modal.Title>
             </Modal.Header>
 
             <Modal.Body>
-                <h4>This is to add a new bill</h4>
                 <div className="row">
                     <div className="col-md-6">
                         <form onSubmit={handleSubmit}>
-                            <input type="date" name="date" value={startDate} onChange={handleChange} /><br/>
-                            <select name="customer" value={customer} onChange={handleChange}>
+                            <input type="date" className="form-control" name="date" value={startDate} onChange={handleChange} /><br/>
+                            
+                            {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
+                            <select className="form-control" name="customer" value={customer} onChange={handleChange}>
                                 <option value="">Select Customer</option>
                                 {   customers.length > 0 &&
                                     customers.map(customer => {
@@ -108,17 +108,25 @@ const BillForm = (props) => {
                                 }
                             </select><br/>
                             {formErrors.customer && <span className="text-danger">{formErrors.customer}</span>}
+                            
+                            <div className="row">
+                                <div className="col-md-10">
+                                    <select className="form-control" name="product" value={product} onChange={handleChange}>
+                                        <option value="">Select Product</option>
+                                        {   products.length > 0 &&
+                                            products.map(product => {
+                                                return <option key={product._id} value={product._id}>{product.name}</option>
+                                            })
+                                        }
+                                    </select><br/> 
+                                    {formErrors.product && <span className="text-danger">{formErrors.product}</span>} 
 
-                            <select name="product" value={product} onChange={handleChange}>
-                                <option value="">Select Product</option>
-                                {   products.length > 0 &&
-                                    products.map(product => {
-                                        return <option key={product._id} value={product._id}>{product.name}</option>
-                                    })
-                                }
-                            </select><br/> 
-                            {formErrors.product && <span className="text-danger">{formErrors.product}</span>} 
-                            <button className="btn btn-sm btn-primary mb-2" onClick={addToCart}>Add to cart</button> <br/>     
+                                </div>
+                                <div className="col-md-2">
+                                    <button className="btn btn-sm btn-primary mb-2" onClick={addToCart}>Add</button> <br/>     
+
+                                </div>
+                            </div>
 
                             <input type="submit" value="save" className="btn btn-primary btn-sm" />
                             <button onClick={handleModal } className="btn btn-secondary btn-sm">Cancel</button>
@@ -129,7 +137,7 @@ const BillForm = (props) => {
                         {
                             cartItems.length > 0 &&
                             
-                            <table>
+                            <table className="table table-borderless">
                                 <thead>
                                     <tr>  
                                         <th>Product</th>
@@ -144,10 +152,10 @@ const BillForm = (props) => {
                                             <tr key={item.id}>
                                                 <td>{item.name}</td>
                                                 <td>
-                                                    <button onClick={() => handleQuantity(item.id,-1)}
-                                                            disabled={item.quantity === 1}>-</button>
-                                                        {item.quantity}
-                                                    <button onClick={() => handleQuantity(item.id, 1)}>+</button>
+                                                    <button className="btn btn-light" onClick={() => handleQuantity(item.id,-1)}
+                                                            disabled={item.quantity === 1}> - </button>
+                                                        {item.quantity}x
+                                                    <button className="btn btn-light"  onClick={() => handleQuantity(item.id, 1)}> + </button>
                                                 </td>
                                                 <td>
                                                     <button onClick={() => removeItemFromCart(item.id)}>Remove</button>

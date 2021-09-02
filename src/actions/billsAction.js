@@ -47,6 +47,39 @@ export const startAddBill = (formData, handleModal) => {
     }
 }
 
+export const startDeleteBill  = (id) => {
+    return (dispatch) => {
+        axios.delete(`${baseUrl}/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .then((response) => {
+                const result = response.data
+                dispatch(deleteBill(result._id))
+                Swal.fire('Success', 'bill deleted successfully','success')
+            })
+    }
+}
+
+export const startBillDetails = (id, handleShowBillModal ) => {
+    return (dispatch) => {
+        axios.get(`${baseUrl}/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .then((response) => {
+                const result = response.data
+                dispatch(setBillDetails(result))
+                handleShowBillModal()
+            })
+            .catch((error) => {
+                Swal.fire('Oops...',error.message, 'error')
+            })
+    }
+}
+
 const setBills = (bills) => {
     return {
         type: SET_BILLS,
@@ -58,5 +91,19 @@ const addBill = (newBill) => {
     return {
         type: ADD_BILL,
         payload: newBill
+    }
+}
+
+const deleteBill = (id) => {
+    return {
+        type: DELETE_BILL,
+        payload: id 
+    }
+}
+
+const setBillDetails = (billDetails) => {
+    return {
+        type: BILL_DETAILS,
+        payload: billDetails
     }
 }
