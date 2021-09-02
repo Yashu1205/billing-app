@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux'
 import BillItem from './BillItem'
 
 const BillsList = (props) => {
-    
+    const { handleModal } = props
     const  { bills } = useSelector((state) => {
         return state.bill
     })
@@ -18,7 +18,7 @@ const BillsList = (props) => {
                     <input type="text" placeholder="search customer" className="form-control" /> 
                 </div>
                 <div className="col-md-4">
-                    <button style={{float: 'right'}}>Add new bill</button> 
+                    <button style={{float: 'right'}} onClick={handleModal}>Add new bill</button> 
                 </div> 
             </div>
             <div className="row">
