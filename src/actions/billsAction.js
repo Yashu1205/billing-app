@@ -19,12 +19,31 @@ export const startGetBills = () => {
                 .then((response) => {
                     const result = response.data
                     dispatch(setBills(result))
-                    console.log(result)
                 })
                 .catch((error) => {
                     Swal.fire('Oops...', error.message, 'error')
                 })
 
+    }
+}
+
+export const startAddBill = (formData, handleModal) => {
+    return (dispatch) => {
+        axios.post(baseUrl, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .then((response) => {
+                const result = response.data
+                dispatch(addBill(result))
+                console.log(result)
+                handleModal()
+                Swal.fire('Success', 'Bill added successfully', 'success')
+            })
+            .catch((error) => {
+                Swal.fire('Oops...', error.message, 'error')
+            })
     }
 }
 
@@ -35,3 +54,9 @@ const setBills = (bills) => {
     }
 }
 
+const addBill = (newBill) => {
+    return {
+        type: ADD_BILL,
+        payload: newBill
+    }
+}

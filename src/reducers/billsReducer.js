@@ -8,6 +8,11 @@ const billsReducer = (state = billsInitialValues.data, action) => {
         case SET_BILLS: {
             return {...state, bills: action.payload}
         }
+
+        case ADD_BILL: {
+            const newBills = [action.payload, ...state.bills]
+            return {...state, bills: newBills}
+        }
         default : {
             return {...state}
         }
