@@ -10,6 +10,7 @@ export const DELETE_PRODUCT = 'DELETE_PRODUCT'
 export const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 
 export const startGetProducts = () => {
+    console.log('products action')
     return (dispatch) => {
         axios.get(baseUrl, {
                 headers: {

@@ -6,9 +6,9 @@ import CustomersList from './CustomersList'
 const CustomersContainer = (props) => {
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(startGetCustomers())
-    },[])
+    // useEffect(() => {
+    //     dispatch(startGetCustomers())
+    // },[])
 
 
     return (

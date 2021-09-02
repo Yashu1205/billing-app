@@ -8,9 +8,9 @@ const ProductsContainer = (props) => {
     const [showModal, setShowModal] = useState(false)
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(startGetProducts())
-    },[])
+    // useEffect(() => {
+    //     dispatch(startGetProducts())
+    // },[])
 
     const handleModal = () => {
         setShowModal(!showModal)
