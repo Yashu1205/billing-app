@@ -19,7 +19,7 @@ const ProductsContainer = (props) => {
     return(
         <div className="container mt-3">
             <ProductsList handleModal={handleModal}/>
-            <AddProduct showModal={showModal} handleModal={handleModal} />
+            {/* <AddProduct showModal={showModal} handleModal={handleModal} /> */}
         </div>
     )
 }

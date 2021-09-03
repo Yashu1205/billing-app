@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { startDeleteCustomer } from "../../actions/customersAction"
 import CustomerItem from "./CustomerItem"
 import AddCustomer from "./AddCustomer"
+import '../../css/header.css'
 
 const CustomersList = (props) => {
     const [query, setQuery] = useState('')
@@ -19,7 +20,7 @@ const CustomersList = (props) => {
         setSearchResults([...customers])
     },[customers])
 
-    const handleModalToggle = () => {
+    const handleShowModal = () => {
         setShowModal(!showModal)
     }
 
@@ -72,36 +73,37 @@ const CustomersList = (props) => {
 
     return (
         <>
-            <div className="row">
-                <div className="col-md-3">
-                    <h3>Listing Customers - { customers.length }</h3>
-                </div>
-                <div className="col-md-3">
+            <div className="row mb-3 customer-header">                
+                <div className="col-md-4">
                     <input type="text" value={query} onChange={handleSearchChange} placeholder="search customer" className="form-control" /> 
                 </div>
-                <div className="col-md-3">
-                    <select name="sort" className="form-control" value={orderBy} onChange={handleSort} placeholder="Sort customers">
+                <div className="col-md-4">
+                    <select name="sort" className="form-select" value={orderBy} onChange={handleSort} placeholder="Sort customers">
                         <option value="">Sort customers</option>
                         <option value="ascending">Sort by name - ascending</option>
                         <option value="descending">Sort by name - descending</option>
                     </select>
                 </div> 
-                <div className="col-md-3">
-                    <button className="btn btn-primary" onClick={handleModalToggle}>Add New Customer</button>
+                <div className="col-md-4">
+                    <button className="btn add" onClick={handleShowModal}>Add Customer</button>
                 </div>
             </div>
-            <div className="row">
-                <div className="col-md-8">
+
+            <h4 style={{marginLeft: '15px'}}>Listing Customers - { searchResults.length }</h4>
+            
+            <div className="row mt-3">
+                <div className="col-md-10">
                     {searchResults.length > 0 &&
                         searchResults.map(customer => {
-                            return <CustomerItem key={customer._id} {...customer} removeCustomer={removeCustomer} />
+                            return <CustomerItem key={customer._id} 
+                                                 {...customer} 
+                                                 removeCustomer={removeCustomer} />
                         })
                     }
+                    { showModal &&
+                        <AddCustomer showModal={showModal} handleShowModal={handleShowModal} />
+                    }
                 </div>
-                <div className="col-md-4">
-                    <AddCustomer handleModalToggle={handleModalToggle} />
-                </div>
-
             </div>
         </>
     )

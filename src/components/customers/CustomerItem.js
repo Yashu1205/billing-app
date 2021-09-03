@@ -4,8 +4,10 @@ import EditCustomer from "./EditCustomer"
 import Swal from 'sweetalert2'
 
 const CustomerItem = (props) => {
-    const [showEditForm, setShowEditForm] = useState(false)
-    const { _id, name, email, mobile, user, removeCustomer } = props
+    const [showModal, setShowModal] = useState(false)
+    const { _id, name, email, mobile, removeCustomer } = props
+
+    const handleShowModal = () => setShowModal(!showModal)
 
     const handleRemoveCustomer = () => {
             Swal.fire({
@@ -24,20 +26,22 @@ const CustomerItem = (props) => {
                 }
            })
     }
-
-    const handleFormToggle = () => {
-        setShowEditForm(!showEditForm)
-    }
     
     return (
         <div className="card mb-3 p-1">
-            <p>{name} - {mobile} { email && `- ${email}`} 
-                <button className="btn btn-sm btn-danger" onClick={handleRemoveCustomer}>Delete</button>
-                <button className="btn btn-sm btn-info" onClick={() => setShowEditForm(true)}>Edit</button>
-            </p>
+            <div className="row">
+                <div className="col-md-8 detail">
+                    <p>{name} - {mobile} { email && `- ${email}`}</p>
+                </div>
+                <div className="col-md-4 action">
+                    <button className="btn btn-sm btn-danger" onClick={handleRemoveCustomer}>Delete</button>
+                    <button className="btn btn-sm btn-info" onClick={handleShowModal}>Edit</button>
+                </div>
+            </div>
             {
-                showEditForm && <EditCustomer id={_id} name={name} mobile={mobile} email={email} 
-                                              handleFormToggle={handleFormToggle}/>
+                showModal && <EditCustomer id={_id} name={name} mobile={mobile} email={email} 
+                                            showModal={showModal}
+                                            handleShowModal={handleShowModal}/>
             }
         </div>
     )

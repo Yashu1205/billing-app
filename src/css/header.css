@@ -1,0 +1,21 @@
+.customer-header{
+    padding: 14px 10px;
+    background-color: #96c288;
+    width: 84%;
+    border-radius: 15px;
+}
+
+.action button{
+    float:right;
+    margin: 15px 3px;
+}
+
+.detail p{
+    padding: 10px;
+    margin: 5px;
+}
+.add {
+    background-color: #6064df;
+    float: right;
+    color: white;
+}
