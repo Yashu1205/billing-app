@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const CustomerForm = (props) => {
-    const { name: custName, email: custEmail, mobile: custMobile, formSubmission, handleFormToggle } = props
+    const { name: custName, email: custEmail, mobile: custMobile, formSubmission, title, handleFormToggle } = props
     const [name, setName] = useState(custName ? custName : '')
     const [email, setEmail] = useState(custEmail ? custEmail : '')
     const [mobile, setMobile] = useState(custMobile ? custMobile : '')
@@ -52,7 +52,7 @@ const CustomerForm = (props) => {
     return (
         <div className="card">
             <div className="card-body">
-            <h2>Add Note</h2>
+            <h3>{title ? title : 'Add New Customer'}</h3>
 
                 <form onSubmit={handleSubmit}>
 
@@ -80,7 +80,7 @@ const CustomerForm = (props) => {
                             placeholder="Enter email" />
                     <br/>
 
-                    <input type="submit" className="btn btn-primary btn-sm" value="Save" />
+                    <input type="submit" className="btn btn-primary btn-sm" value={title ? 'Update' : 'Save'} />
                     
                     <button className="btn btn-secondary btn-sm" style={{marginLeft: '5px'}}
                                         onClick={handleCancel}>Cancel</button> 

@@ -49,9 +49,6 @@ const CustomersList = (props) => {
                 <div className="col-md-4">
                     <input type="text" value={query} onChange={handleSearchChange} placeholder="search customer" className="form-control" /> 
                 </div>
-                <div className="col-md-4">
-                    <button onClick={() => setShowAddForm(true)} style={{float: 'right'}}>Add new customer</button> 
-                </div> 
             </div>
             <div className="row">
                 <div className="col-md-8">
@@ -62,9 +59,7 @@ const CustomersList = (props) => {
                     }
                 </div>
                 <div className="col-md-4">
-                    {
-                        showAddForm && <AddCustomer handleFormToggle={handleFormToggle} />
-                    }
+                    <AddCustomer />
                 </div>
 
             </div>

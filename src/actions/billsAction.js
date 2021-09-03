@@ -18,7 +18,7 @@ export const startGetBills = () => {
                 })
                 .then((response) => {
                     const result = response.data
-                    dispatch(setBills(result))
+                    dispatch(setBills(result.reverse()))
                 })
                 .catch((error) => {
                     Swal.fire('Oops...', error.message, 'error')

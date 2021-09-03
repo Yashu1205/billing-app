@@ -4,15 +4,14 @@ import CustomerForm from "./CustomerForm"
 
 const AddCustomer = (props) => {
     const dispatch = useDispatch()
-    const { handleFormToggle } = props
 
     const formSubmission = (formData) => {        
-        dispatch(startAddCustomer(formData, handleFormToggle))
+        dispatch(startAddCustomer(formData))
     }
 
     return (
         <div>
-            <CustomerForm formSubmission={formSubmission} handleFormToggle={handleFormToggle} />
+            <CustomerForm formSubmission={formSubmission} />
         </div>
     )
 }

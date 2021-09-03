@@ -2,8 +2,8 @@ import { Modal } from 'react-bootstrap'
 import html2pdf from 'html2pdf.js'
 
 const ViewBill = (props) => {
-    const { billDetails, showBillModal, handleShowBillModal, getCustomerName, getProductName } = props
-    const customerName = getCustomerName(billDetails.customer)
+    const { billDetails, showBillModal, handleShowBillModal, customerName, getProductName } = props
+    // const customerName = getCustomerName(billDetails.customer)
 
     const downloadBill = () => {
         const element = document.getElementById('bill-info')

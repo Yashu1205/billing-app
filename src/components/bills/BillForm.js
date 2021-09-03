@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { Modal } from 'react-bootstrap'
-import DatePicker from 'react-datepicker' 
-import "react-datepicker/dist/react-datepicker.css";
+import Select from 'react-select'
+// import { DateTime } from 'luxon'
+
+const today = new Date()
 
 const BillForm = (props) => {
-    const [ startDate, setStartDate ] = useState(new Date())
+    const [ startDate, setStartDate ] = useState(today.toISOString().substr(0, 10))
     const [ customer, setCustomer ] = useState('')
     const [ product, setProduct ] = useState('')
-    const [ lineItems, setLineItems ] = useState([])
     const [ cartItems, setCartItems ] = useState([])
     const [ quantity ,setQuantity ] = useState(1)
     const [ formErrors, setFormErrors] = useState({})
@@ -15,26 +16,26 @@ const BillForm = (props) => {
 
     const { customers, products, showModal, handleModal, formSubmission } = props
 
+    const customerOptions = customers.map(customer => {
+        return {'value': customer._id, 'label': customer.name}
+    })
+    const productOptions = products.map(product => {
+        return {'value': product._id, 'label': product.name}
+    })
+    
     const handleChange = (e) => {
-        const inputName = e.target.name
-        if(inputName === 'customer'){
-            setCustomer(e.target.value)
-        }
-        else if(inputName === 'date'){
-            setStartDate(e.target.value)
-        }
-        else{
-            setProduct(e.target.value)
-        }
+        setStartDate(e.target.value)
+    }
+    const handleCustomerChange = (data) => {
+        setCustomer(data)
+    }
+    const handleProductChange = (product) => {
+        setProduct(product)
     }
 
     const addToCart = (e) => {
         e.preventDefault()
-        const newItem = {product: product, quantity: quantity}
-        setLineItems([newItem, ...lineItems])
-
-        const itemName = products.find(prod => product === prod._id).name
-        const newCartItem = {id: product, name: itemName, quantity: quantity}
+        const newCartItem = {id: product.value, name: product.label, quantity: quantity}
         setCartItems([newCartItem, ...cartItems])
         setProduct('')
     }
@@ -56,19 +57,20 @@ const BillForm = (props) => {
         setCartItems(cartResult)
     }
     const runValidations = () => {
-        if(startDate.trim().length === 0){
-            errors.date = 'date is required'
-        } 
-        if(customer.trim().length === 0){
+        if(customer.value.trim().length === 0){
             errors.customer = 'customer is required'
         }
-        if(lineItems.length === 0){
+        if(cartItems.length === 0){
             errors.product = 'product is required'
         }
     }
     const handleSubmit = (e) => {
         e.preventDefault()
         runValidations()
+
+        const lineItems = cartItems.map(cartItem => {
+            return {product: cartItem.id, quantity: cartItem.quantity}
+        })
 
         if(Object.keys(errors).length > 0){
             setFormErrors(errors)
@@ -77,9 +79,10 @@ const BillForm = (props) => {
             setFormErrors({})
             const formData = {
                 date: startDate,
-                customer: customer,
+                customer: customer.value,
                 lineItems: lineItems
             }
+            console.log(formData)
             formSubmission(formData)
         }
     }
@@ -96,34 +99,35 @@ const BillForm = (props) => {
                 <div className="row">
                     <div className="col-md-6">
                         <form onSubmit={handleSubmit}>
-                            <input type="date" className="form-control" name="date" value={startDate} onChange={handleChange} /><br/>
+                            <input type="date" className="form-control" name="date"  
+                                   value={startDate} 
+                                   onChange={handleChange} /><br/>
                             
-                            {/* <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} /> */}
-                            <select className="form-control" name="customer" value={customer} onChange={handleChange}>
+                            {/* <select className="form-control" name="customer" value={customer} onChange={handleChange}>
                                 <option value="">Select Customer</option>
                                 {   customers.length > 0 &&
                                     customers.map(customer => {
                                         return <option key={customer._id} value={customer._id}>{customer.name}</option>
                                     })
                                 }
-                            </select><br/>
+                            </select><br/> */}
+                            <Select name="customer" 
+                                    value={customer} 
+                                    onChange={handleCustomerChange} 
+                                    options={customerOptions} /><br/>
                             {formErrors.customer && <span className="text-danger">{formErrors.customer}</span>}
                             
                             <div className="row">
                                 <div className="col-md-10">
-                                    <select className="form-control" name="product" value={product} onChange={handleChange}>
-                                        <option value="">Select Product</option>
-                                        {   products.length > 0 &&
-                                            products.map(product => {
-                                                return <option key={product._id} value={product._id}>{product.name}</option>
-                                            })
-                                        }
-                                    </select><br/> 
+                                    <Select name="product" 
+                                            value={product} 
+                                            onChange={handleProductChange} 
+                                            options={productOptions} /><br/>
                                     {formErrors.product && <span className="text-danger">{formErrors.product}</span>} 
 
                                 </div>
                                 <div className="col-md-2">
-                                    <button className="btn btn-sm btn-primary mb-2" onClick={addToCart}>Add</button> <br/>     
+                                    <button className="btn btn-sm btn-primary" onClick={addToCart}>Add</button> <br/>     
 
                                 </div>
                             </div>

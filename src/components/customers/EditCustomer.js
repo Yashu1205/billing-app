@@ -11,6 +11,7 @@ const EditCustomer = (props) => {
     }
     return (
         <CustomerForm name={name} email={email} mobile={mobile} 
+                      title="Update Customer"                                
                       formSubmission={formSubmission} 
                       handleFormToggle={handleFormToggle}/>
     )
