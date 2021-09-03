@@ -1,7 +1,8 @@
 import { useState } from 'react'
+import { Modal } from 'react-bootstrap'
 
 const CustomerForm = (props) => {
-    const { name: custName, email: custEmail, mobile: custMobile, formSubmission, handleFormToggle } = props
+    const { name: custName, email: custEmail, mobile: custMobile, formSubmission, showModal, handleModalToggle } = props
     const [name, setName] = useState(custName ? custName : '')
     const [email, setEmail] = useState(custEmail ? custEmail : '')
     const [mobile, setMobile] = useState(custMobile ? custMobile : '')
@@ -46,16 +47,20 @@ const CustomerForm = (props) => {
 
     const handleCancel = (e) => {
         e.preventDefault()
-        handleFormToggle()
+        handleModalToggle()
     }
 
     return (
-        <div className="card">
-            <div className="card-body">
-            <h2>Add Note</h2>
+        <Modal show={showModal } size="md" aria-labelledby="contained-modal-title-vcenter" centered>
+            <Modal.Header>
+                <Modal.Title id="contained-modal-title-vcenter">
+                    Add New Customer
+                </Modal.Title>
+            </Modal.Header>
 
+            <Modal.Body>
                 <form onSubmit={handleSubmit}>
-
+                    <label >Name</label><br/>
                     <input type="text" className="form-control"
                         name="name" 
                         value={name} 
@@ -65,6 +70,7 @@ const CustomerForm = (props) => {
                     { formErrors.name && <span className="text-danger"> {formErrors.name}<br/> </span> }
                     <br/>
 
+                    <label>Mobile</label><br/>
                     <input type="text" className="form-control"
                             name="mobile" 
                             value={mobile}
@@ -80,30 +86,48 @@ const CustomerForm = (props) => {
                             placeholder="Enter email" />
                     <br/>
 
-                    <input type="submit" className="btn btn-primary btn-sm" value="Save" />
-                    
-                    <button className="btn btn-secondary btn-sm" style={{marginLeft: '5px'}}
-                                        onClick={handleCancel}>Cancel</button> 
+                    <input type="submit" value="save" className="btn btn-primary btn-sm" />
+                    <button onClick={handleCancel } className="btn btn-secondary btn-sm">Cancel</button>
                 </form>
-            </div>
-        </div>
-        // <div>
-        //     <form onSubmit={handleSubmit}>
-        //         <label>name*: </label>
-        //         <input type="text" name="name" value={name} onChange={handleChange} /><br/><br/>
-        //         { formErrors.name && <span className="text-danger">{ formErrors.name}<br/></span>}
-                
-        //         <label>mobile*: </label>
-        //         <input type="text" name="mobile" value={mobile} onChange={handleChange} /><br/><br/>
-        //         { formErrors.mobile && <span className="text-danger">{ formErrors.mobile}<br/></span>}
+            </Modal.Body>
 
-        //         <label>email: </label>
-        //         <input type="text" name="email" value={email} onChange={handleChange} /><br/><br/>
+        </Modal>
+        // <div className="card">
+        //     <div className="card-body">
+        //     <h2>Add Note</h2>
 
-        //         <input type="submit" value="Add"/>
-        //         <input type="button" value="Cancel" onClick={handleCancel} />
+        //         <form onSubmit={handleSubmit}>
 
-        //     </form>
+        //             <input type="text" className="form-control"
+        //                 name="name" 
+        //                 value={name} 
+        //                 onChange={handleChange}
+        //                 placeholder="Enter name"
+        //             />
+        //             { formErrors.name && <span className="text-danger"> {formErrors.name}<br/> </span> }
+        //             <br/>
+
+        //             <input type="text" className="form-control"
+        //                     name="mobile" 
+        //                     value={mobile}
+        //                     onChange={handleChange}
+        //                     placeholder="Enter mobile" />
+        //             { formErrors.mobile && <span className="text-danger"> {formErrors.mobile}<br/> </span> }
+        //             <br/>
+
+        //             <input type="text" className="form-control"
+        //                     name="email" 
+        //                     value={email}
+        //                     onChange={handleChange}
+        //                     placeholder="Enter email" />
+        //             <br/>
+
+        //             <input type="submit" className="btn btn-primary btn-sm" value="Save" />
+                    
+        //             <button className="btn btn-secondary btn-sm" style={{marginLeft: '5px'}}
+        //                                 onClick={handleCancel}>Cancel</button> 
+        //         </form>
+        //     </div>
         // </div>
     )
 }
