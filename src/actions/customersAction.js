@@ -17,7 +17,7 @@ export const startGetCustomers = () => {
             })
             .then((response) => {
                 const result = response.data
-                dispatch(setCustomers(result))               
+                dispatch(setCustomers(result.reverse()))               
             })
             .catch((error) => {
                 Swal.fire('Oops...', error.message, 'error')

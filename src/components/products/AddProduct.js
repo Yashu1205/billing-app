@@ -5,17 +5,19 @@ import ProductForm from "./ProductForm"
 
 const AddProduct = (props) => {    
     const dispatch = useDispatch()     
-    const {showModal, handleModal } = props
+    const {showModal, handleShowModal } = props
 
     const formSubmission = (formData) => {
-        dispatch(startAddProduct(formData, handleModal))
-    }
-    
+        dispatch(startAddProduct(formData, handleShowModal))
+    }    
 
     return (
         <>
             {showModal && 
-                <ProductForm showModal={showModal} handleModal={handleModal} formSubmission={formSubmission} />
+                <ProductForm title="Add New Product"
+                             showModal={showModal} 
+                             handleShowModal={handleShowModal} 
+                             formSubmission={formSubmission} />
             }
         </>
     )

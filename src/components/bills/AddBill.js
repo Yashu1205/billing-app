@@ -1,9 +1,10 @@
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { startAddBill } from '../../actions/billsAction'
 import BillForm from './BillForm'
 
 const AddBill = (props) => {
-    const { showModal, handleModal } = props
-
+    const {showModal, handleShowModal} =props
+    const dispatch = useDispatch()
     const customers = useSelector(state => {
         return state.customer
     })
@@ -12,13 +13,19 @@ const AddBill = (props) => {
         return state.product
     })
 
-    console.log('products in add',products.products)
+    const formSubmission = (formData) => {
+        dispatch(startAddBill(formData, handleShowModal))
+    }
 
     return (
         <>
         {
             showModal && 
-            <BillForm  showModal={showModal} handleModal={handleModal} customers={customers.customers} products={products.products} />
+            <BillForm  showModal={showModal} 
+                       handleShowModal={handleShowModal} 
+                       customers={customers.customers} 
+                       products={products.products} 
+                       formSubmission={formSubmission} />
 
         }
         </>

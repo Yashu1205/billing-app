@@ -4,15 +4,18 @@ import CustomerForm from "./CustomerForm"
 
 const AddCustomer = (props) => {
     const dispatch = useDispatch()
-    const { handleFormToggle } = props
+    const { showModal, handleShowModal } = props
 
-    const formSubmission = (formData) => {        
-        dispatch(startAddCustomer(formData, handleFormToggle))
+    const formSubmission = (formData) => {      
+        dispatch(startAddCustomer(formData, handleShowModal))
     }
 
     return (
         <div>
-            <CustomerForm formSubmission={formSubmission} handleFormToggle={handleFormToggle} />
+            <CustomerForm showModal={showModal} 
+                          title="Add New Customer"
+                          formSubmission={formSubmission} 
+                          handleShowModal={handleShowModal} />
         </div>
     )
 }
