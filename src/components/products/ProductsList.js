@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { startDeleteProduct } from "../../actions/productsAction"
-import ReactPaginate from 'react-paginate'
 import ProductItem from "./ProductItem"
 import '../../css/header.css'
 
@@ -59,9 +58,7 @@ const ProductsList = (props) => {
                 <div className="col-md-10">
                     {searchResults.length > 0 &&
                         searchResults.map(product => {
-                            return <CustomerItem key={product._id} 
-                                                 {...product} 
-                                                 removeProduct={removeProduct} />
+                            return <ProductItem key={product._id} {...product}  removeProduct={removeProduct} />
                         })
                     }
                     { showModal &&
@@ -69,12 +66,6 @@ const ProductsList = (props) => {
                     }
                 </div>
             </div>
-
-            {searchResults.length > 0 &&
-                searchResults.map(product => {
-                    return <ProductItem key={product._id} {...product}  removeProduct={removeProduct} />
-                })
-            }
             
         </>
     )
