@@ -3,17 +3,17 @@ import { startUpdateCustomer } from "../../actions/customersAction"
 import CustomerForm from "./CustomerForm"
 
 const EditCustomer = (props) => {
-    const { id, name, mobile, email , handleFormToggle} = props
+    const { id, name, mobile, email , showModal, handleShowModal} = props
     const dispatch = useDispatch()
 
     const formSubmission = (formData) => {
-        dispatch(startUpdateCustomer(formData, id, handleFormToggle))
+        dispatch(startUpdateCustomer(formData, id, handleShowModal))
     }
     return (
         <CustomerForm name={name} email={email} mobile={mobile} 
-                      title="Update Customer"                                
+                      showModal={showModal}
                       formSubmission={formSubmission} 
-                      handleFormToggle={handleFormToggle}/>
+                      handleShowModal={handleShowModal}/>
     )
 
 }

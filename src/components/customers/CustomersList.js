@@ -3,11 +3,19 @@ import { useSelector, useDispatch } from 'react-redux'
 import { startDeleteCustomer } from "../../actions/customersAction"
 import CustomerItem from "./CustomerItem"
 import AddCustomer from "./AddCustomer"
+import PaginationTable from '../PaginationTable'
+import formatDataForPagination from '../../helpers/formatDataForPagination'
+import '../../css/header.css'
 
 const CustomersList = (props) => {
+    const  perPage = 5
     const [query, setQuery] = useState('')
     const [searchResults, setSearchResults] = useState([])
-    const [showAddForm, setShowAddForm] = useState(false)
+    const [showModal, setShowModal] = useState(false)
+    const [orderBy, setOrderBy] = useState('')
+    const [currentPage, setCurrentPage] = useState(1)
+    const [startIndex, setStartIndex] = useState(0)
+    const [endIndex, setEndIndex] = useState(perPage)
 
     const { customers } = useSelector(state => {
         return state.customer 
@@ -18,20 +26,14 @@ const CustomersList = (props) => {
         setSearchResults([...customers])
     },[customers])
 
-    const handleFormToggle = () => {
-        setShowAddForm(!showAddForm)
+    const handleShowModal = () => {
+        setShowModal(!showModal)
     }
 
     const removeCustomer = (id) => {
         dispatch(startDeleteCustomer(id))
     } 
 
-    const handleSearchChange = (e) => {
-        const searchInput = e.target.value
-        setQuery(searchInput)
-        getSearchResult(searchInput)
-    }
-    
     const getSearchResult = (query) => {
         const result = customers.filter(customer => {
             return customer.name.toLowerCase().includes(query.toLowerCase()) || 
@@ -40,29 +42,90 @@ const CustomersList = (props) => {
         })
         setSearchResults(result)
     }
+
+    const handleSearchChange = (e) => {
+        const searchInput = e.target.value
+        setQuery(searchInput)
+        getSearchResult(searchInput)
+    }    
+    
+    const getSortedResult = () => {
+        const result = searchResults.sort((a,b) => {
+            const aName =  a.name.toLowerCase(),   bName = b.name.toLowerCase()
+
+            if(aName < bName){
+                return -1
+            }
+            if(aName > bName){
+                return 1
+            }
+            return 0
+        })
+        return result
+    }
+
+    const handleSort = (e) => {
+        setOrderBy(e.target.value)
+        let sortedCustomers = []
+        if(e.target.value === 'ascending'){
+            sortedCustomers = getSortedResult()
+        } else if(e.target.value === 'descending'){
+            sortedCustomers = getSortedResult().reverse()
+        } else {
+            sortedCustomers = [...customers]
+        }
+        setSearchResults(sortedCustomers)     
+    }
+
+    const handleClick = (pageNumber) => {
+        setCurrentPage(pageNumber)
+        const formatData = formatDataForPagination(pageNumber, perPage)
+        
+        setStartIndex(formatData.startIndex)
+        setEndIndex(formatData.endIndex)
+    }
+
     return (
         <>
-            <div className="row">
-                <div className="col-md-4">
-                    <h3>Listing Customers - { customers.length }</h3>
-                </div>
+            <div className="row mb-3 customer-header">                
                 <div className="col-md-4">
                     <input type="text" value={query} onChange={handleSearchChange} placeholder="search customer" className="form-control" /> 
                 </div>
+                <div className="col-md-4">
+                    <select name="sort" className="form-select" value={orderBy} onChange={handleSort} placeholder="Sort customers">
+                        <option value="">Sort customers</option>
+                        <option value="ascending">Sort by name - ascending</option>
+                        <option value="descending">Sort by name - descending</option>
+                    </select>
+                </div> 
+                <div className="col-md-4">
+                    <button className="btn add" onClick={handleShowModal}>Add Customer</button>
+                </div>
             </div>
-            <div className="row">
-                <div className="col-md-8">
+
+            <h4 style={{marginLeft: '15px'}}>Listing Customers - { searchResults.length }</h4>
+            
+            <div className="row mt-3">
+                <div className="col-md-10">
                     {searchResults.length > 0 &&
-                        searchResults.map(customer => {
-                            return <CustomerItem key={customer._id} {...customer} removeCustomer={removeCustomer} />
+                        searchResults.slice(startIndex, endIndex).map(customer => {
+                            return <CustomerItem key={customer._id} 
+                                                 {...customer} 
+                                                 removeCustomer={removeCustomer} />
                         })
                     }
+                    { showModal &&
+                        <AddCustomer showModal={showModal} handleShowModal={handleShowModal} />
+                    }
                 </div>
-                <div className="col-md-4">
-                    <AddCustomer />
-                </div>
-
             </div>
+
+            {searchResults.length > 0 &&
+                <div >
+                    <PaginationTable currentPage={currentPage} perPage={perPage} totalData={customers.length}
+                                     handleClick={handleClick} />
+                </div>
+            }
         </>
     )
 }

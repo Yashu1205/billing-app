@@ -16,15 +16,11 @@ const BillsList = (props) => {
     const  { bills } = useSelector((state) => {
         return state.bill
     })
+    console.log(bills)
 
     useEffect(() => {
         setSearchResults([...bills])
     }, [bills])
-
-    const getCustomerName = (customerId) => {
-        const name = customers.find(cust => cust._id === customerId)
-        return name.name
-    }
     
     const removeBill = (id) => {
         dispatch(startDeleteBill(id))
@@ -61,8 +57,7 @@ const BillsList = (props) => {
             <div className="row">
                 {searchResults.length > 0 && customers.length > 0 &&
                     searchResults.map(bill => {
-                        return <BillItem key={bill._id} {...bill} 
-                                         customerName={getCustomerName(bill.customer)}  
+                        return <BillItem key={bill._id} {...bill}   
                                          removeBill={removeBill} />
                     })
                 }
