@@ -20,14 +20,10 @@ const NavBar = (props) => {
 
     return (
         <div className="d-flex flex-row ">
-            <div className="nav flex-column nav-pills " id="v-pills-tab" role="tablist" aria-orientation="vertical" style={{width: '150px', borderRight: '1px solid grey', height: '100vh'}}>
-                <h1>BMS</h1>
+            <div className="sidenav">
+                <h1 style={{textAlign: 'center'}}>BMS</h1>
                 <ul style={{listStyleType: 'none'}}>
-                    <li>
-                        <NavLink exact to="/" activeClassName="active">
-                            Home
-                        </NavLink>
-                    </li>
+                    
 
                     {
                         isLoggedIn ? (
@@ -58,6 +54,11 @@ const NavBar = (props) => {
                             </>
                         ) : (
                             <>
+                            <li>
+                        <NavLink exact to="/" activeClassName="active">
+                            Home
+                        </NavLink>
+                    </li>
                             <li>
                                 <NavLink exact to="/register" activeClassName="active">
                                     Register

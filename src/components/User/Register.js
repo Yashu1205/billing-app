@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 import isEmail from 'validator/lib/isEmail'
 
 import { removeServerErrors, startUserRegistration } from '../../actions/UserAction'
@@ -12,7 +13,6 @@ const UserRegistration  = (props) => {
     const { serverErrors } = useSelector(state => {
         return state.user
     })
-    console.log(serverErrors)
     const dispatch = useDispatch()
 
     const runValidations = () => {
@@ -27,6 +27,13 @@ const UserRegistration  = (props) => {
         if(signupForm.password.trim().length === 0){
             errors.password = 'password is required'
         }
+        if(signupForm.businessName.trim().length === 0){
+            errors.businessName = 'business name is required'
+        }
+        if(signupForm.address.trim().length === 0){
+            errors.address = 'business address is required'
+        }
+        
     }
 
     const resetForm = () => {
@@ -64,35 +71,97 @@ const UserRegistration  = (props) => {
     }
 
     return (
-        <div className="p-2 bd-highlight">
-            <h3>Register with us</h3>
+        <div className="container mt-3">
+            <div className="row">
+                <div className="col-md-3">
 
-            <form onSubmit={handleSubmit}>
-                <label>username* :</label>
-                <input type="text" name="username" value={signupForm.username} onChange={handleChange} /><br/>
-                {formErrors.username && <span className="text-danger">{formErrors.username} <br/></span>}
-                {serverErrors.username && <span className="text-danger">username is already taken <br/></span>}
-                
-                <label>email* :</label>
-                <input type="text" name="email" value={signupForm.email} onChange={handleChange} /><br/>
-                {formErrors.email && <span className="text-danger">{formErrors.email} <br/></span>}
-                {serverErrors.email && <span className="text-danger">email is already taken <br/></span>}
+                </div>
+                <div className="col-md-4 card mt-5">
+                    <div style={{margin: '10px', padding: '10px'}}> 
+                    <h3>Register with us</h3>
+                    <form onSubmit={handleSubmit}>
+                        <table className="table table-borderless pt-3" >
+                            <thead></thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="text" className="form-control form-control-sm"
+                                                name="username" 
+                                                value={signupForm.username} 
+                                                onChange={handleChange}
+                                                placeholder="Enter username" />
+                                        {formErrors.username && <span className="text-danger">{formErrors.username} <br/></span>}
+                                        {serverErrors.username && <span className="text-danger">username is already taken <br/></span>} 
+                                    </td>
+                                </tr>
 
-                <label>password* :</label>
-                <input type="password" name="password" value={signupForm.password} onChange={handleChange} /><br/>
-                {formErrors.password && <span className="text-danger">{formErrors.password} <br/></span>}
+                                <tr>
+                                    <td>
+                                        <input type="text" className="form-control form-control-sm"
+                                                name="email" 
+                                                value={signupForm.email} 
+                                                onChange={handleChange} 
+                                                placeholder="example@email.com" />
+                                        {formErrors.email && <span className="text-danger">{formErrors.email} <br/></span>}
+                                        {serverErrors.email && <span className="text-danger">email is already taken <br/></span>}
+                                    </td>
+                                </tr>
 
-                <label>business name* :</label>
-                <input type="text" name="businessName" value={signupForm.businessName} onChange={handleChange} /><br/>
-                {formErrors.businessName && <span className="text-danger">{formErrors.businessName} <br/></span>}
+                                <tr>
+                                    <td>
+                                        <input type="password" className="form-control form-control-sm"
+                                                name="password" 
+                                                value={signupForm.password} 
+                                                onChange={handleChange} 
+                                                placeholder="Enter password" />
+                                        { formErrors.password && 
+                                            <span className="text-danger">{ formErrors.password }</span> 
+                                        } 
+                                    </td>
+                                </tr>
 
-                <label>address* :</label>
-                <input type="text" name="address" value={signupForm.address} onChange={handleChange} /><br/>
-                {formErrors.address && <span className="text-danger">{formErrors.address} <br/></span>}
+                                <tr>
+                                    <td>
+                                        <input type="text" className="form-control form-control-sm"
+                                                name="businessName" 
+                                                value={signupForm.businessName} 
+                                                onChange={handleChange} 
+                                                placeholder="Enter your business name"/>
+                                            { formErrors.businessName && 
+                                                <span className="text-danger">{ formErrors.businessName }</span>
+                                            } 
+                                    </td>
+                                </tr>
 
-                <input type="submit" value="submit" />
-                <input type="button" value="cancel" onClick={handleCancel}/>
-            </form>
+                                <tr>
+                                    <td>
+                                        <input type="text" className="form-control form-control-sm"
+                                                name="address" 
+                                                value={signupForm.address} 
+                                                onChange={handleChange} 
+                                                placeholder="Enter address for business" />
+                                        { formErrors.address && 
+                                            <span className="text-danger">{ formErrors.address }</span>
+                                        }  
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Already registerd? <NavLink to="/login">Login</NavLink></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="submit" value="submit" className="btn btn-primary btn-sm" style={{marginRight: '10px'}}/>
+                                        <input type="button" value="cancel" onClick={handleCancel} className="btn btn-secondary btn-sm" />
+                                    </td> 
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
 import { removeServerErrors, startLoginUser } from "../../actions/UserAction"
 
@@ -46,7 +47,7 @@ const Login = (props) => {
         e.preventDefault()
         runValidations()
 
-        const redirectToHome = () => { props.history.push('/')}
+        const redirectToHome = () => { props.history.push('/customers')}
 
         if(Object.keys(errors).length > 0){
             setLoginErrors(errors)
@@ -62,42 +63,62 @@ const Login = (props) => {
     }
 
     return (
-        <div>
-            <h3>Login</h3>
-            <form onSubmit={handleSubmit}>
-            <div className="form-group row mt-3">
-                <label className="col-sm-4 col-form-label">Email*:</label>
-                <div className="col-sm-8">
-                    <input type="text" className="form-control" 
-                            name="email"
-                            value={email}
-                            onChange={handleChange} />
+        <div className="container mt-3">
+            <div className="row">
+                <div className="col-md-3">
 
-                    {loginErrors.email && <span className="text-danger">{loginErrors.email} <br/></span>}
                 </div>
-            </div>
-            <div className="form-group row mt-3">
-                <label className="col-sm-4 col-form-label">Password*:</label>
-                <div className="col-sm-8">
-                    <input type="password" className="form-control" 
-                            name="password"
-                            value={password}
-                            onChange={handleChange} />
+                <div className="col-md-4 card mt-5">
+                    <div style={{margin: '10px', padding: '10px'}}> 
+                    <h4>Login</h4>
+                    <form onSubmit={handleSubmit}>
+                        <table className="table table-borderless pt-3" >
+                            <thead></thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                    <input type="text" className="form-control" 
+                                            name="email"
+                                            value={email}
+                                            onChange={handleChange} 
+                                            placeholder="Enter your email" />
 
-                    {loginErrors.password && <span className="text-danger">{loginErrors.password} <br/></span>}
-                    {serverErrors.errors && <span className="text-danger"> { serverErrors.errors} <br/></span>} 
+                                    {loginErrors.email && <span className="text-danger">{loginErrors.email} <br/></span>}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <input type="password" className="form-control form-control-sm"
+                                                name="password" 
+                                                value={password} 
+                                                onChange={handleChange} 
+                                                placeholder="example@email.com" />
+                                        {loginErrors.password && <span className="text-danger">{loginErrors.password} <br/></span>}
+                                        {serverErrors.email && <span className="text-danger">email is already taken <br/></span>}
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <p>New to BMS? <NavLink to="/register">Register here</NavLink></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="submit" value="login" className="btn btn-primary btn-sm" style={{marginRight: '10px'}}/>
+                                        <input type="button" value="cancel" onClick={handleCancel} className="btn btn-secondary btn-sm" />
+                                    </td> 
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                    </div>
                 </div>
             </div>
-            <div className="form-group row mt-3">
-                <div className="col-sm-4"></div>
-                <div className="col-sm-8">
-                    <input type="submit" value="login" style={{marginRight: '5px'}} />
-                    <input type="button" value="cancel" onClick={handleCancel} />
-                </div>
-            </div>
-            </form>
         </div>
-    )
+            
+        )
 }
 
 export default Login
