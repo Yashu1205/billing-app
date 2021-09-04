@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { startDeleteProduct } from "../../actions/productsAction"
 import PaginationTable from '../PaginationTable'
+import formatDataForPagination from "../../helpers/formatDataForPagination"
 import ProductItem from "./ProductItem"
 import AddProduct from "./AddProduct"
 import '../../css/header.css'
@@ -88,17 +89,13 @@ const ProductsList = (props) => {
         setSearchResults(sortedProducts)
     }
 
-    const formatData = (pageNumber) => {
-        const newEndIndex = pageNumber * perPage;
-        const newStartIndex = newEndIndex - perPage;
-        setStartIndex(newStartIndex)
-        setEndIndex(newEndIndex)
-    }
-
     const handleClick = (pageNumber) => {
         setCurrentPage(pageNumber)
-        formatData(pageNumber)
-      };
+        const formatData = formatDataForPagination(pageNumber, perPage)
+        
+        setStartIndex(formatData.startIndex)
+        setEndIndex(formatData.endIndex)
+    }
 
     return(
         <>
