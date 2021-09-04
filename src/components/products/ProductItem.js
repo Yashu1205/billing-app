@@ -6,7 +6,7 @@ const ProductItem = (props) => {
     const [showModal, setShowModal] = useState(false)
     const { _id, name, price, removeProduct} = props
 
-    const handleModal = () => setShowModal(!showModal)
+    const handleShowModal = () => setShowModal(!showModal)
 
     const handleRemoveProduct = () => {
         Swal.fire({
@@ -28,14 +28,19 @@ const ProductItem = (props) => {
 
     return(
         <div className="card mb-3">
-            <p>{name} - {price} 
-                <button className="btn btn-sm btn-danger" onClick={handleRemoveProduct}>Delete</button>
-                <button className="btn btn-sm btn-info" onClick={handleModal}>Edit</button>
-            </p>
+            <div className="row">
+                <div className="col-md-8 detail">
+                    <p>{name} - {price}</p>
+                </div>
+                <div className="col-md-4 action">
+                    <button className="btn btn-sm btn-danger" onClick={handleRemoveProduct}>Delete</button>
+                    <button className="btn btn-sm btn-info" onClick={handleShowModal}>Edit</button>
+                </div>
+            </div>
             {
-                showModal && 
-                    <EditProduct id={_id} name={name} price={price} showModal={showModal} 
-                                 handleModal={handleModal} />
+                showModal && <EditProduct id={_id} name={name} price={price} 
+                                        showModal={showModal}
+                                        handleShowModal={handleShowModal}/>
             }
         </div>
 

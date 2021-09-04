@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { useDispatch } from "react-redux"
 import EditCustomer from "./EditCustomer"
 import Swal from 'sweetalert2'
 

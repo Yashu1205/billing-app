@@ -13,7 +13,7 @@ const AddCustomer = (props) => {
     return (
         <div>
             <CustomerForm showModal={showModal} 
-                          title="Add Customer"
+                          title="Add New Customer"
                           formSubmission={formSubmission} 
                           handleShowModal={handleShowModal} />
         </div>

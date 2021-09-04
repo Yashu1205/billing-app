@@ -58,7 +58,7 @@ const CustomersList = (props) => {
         return result
     }
 
-    const handleSort = (e, sortType) => {
+    const handleSort = (e) => {
         setOrderBy(e.target.value)
         let sortedCustomers = []
         if(e.target.value === 'ascending'){

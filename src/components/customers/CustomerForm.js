@@ -86,7 +86,7 @@ const CustomerForm = (props) => {
                             <label >Mobile*:</label><br/>
                         </div>  
                         <div className="col-md-9">
-                        <input type="text" className="form-control"
+                        <input type="number" className="form-control"
                                 name="mobile" 
                                 value={mobile} 
                                 onChange={handleChange}

@@ -3,23 +3,26 @@ import { useDispatch, useSelector } from "react-redux"
 import { startDeleteProduct } from "../../actions/productsAction"
 import ReactPaginate from 'react-paginate'
 import ProductItem from "./ProductItem"
+import AddProduct from "./AddProduct"
 import '../../css/header.css'
 
 const ProductsList = (props) => {
+    const [showModal, setShowModal] = useState(false)
     const [query, setQuery] = useState('')
+    const [orderBy, setOrderBy] = useState('')
     const [searchResults, setSearchResults] = useState([])
 
+    const dispatch = useDispatch()
     const { products } = useSelector((state) => {
         return state.product
     })
-    const dispatch = useDispatch()
-
-    const { handleModal } = props
-
+    
     useEffect(() => {
         setSearchResults([...products])
     },[products])
 
+    const handleShowModal = () => setShowModal(!showModal)
+    
     const removeProduct = (id) => {
         dispatch(startDeleteProduct(id))
     }
@@ -35,6 +38,51 @@ const ProductsList = (props) => {
         setSearchResults(result)
     }
 
+    const getSortedResult = (key) => {
+        let result = []
+        
+        if(key === 'name'){
+            result = searchResults.sort((a,b) => {
+                const aName =  a.name.toLowerCase(),   bName = b.name.toLowerCase()
+    
+                if(aName < bName){
+                    return -1
+                }
+                if(aName > bName){
+                    return 1
+                }
+                return 0
+            })
+        } 
+        else{
+            result = searchResults.sort((a,b) => a.price - b.price)
+        }
+        return result
+    }
+
+    const handleSort = (e, sortType) => {
+        const inputValue = e.target.value
+        setOrderBy(inputValue)
+        let sortedProducts = []
+
+        if(inputValue === 'nameAsc'){
+            sortedProducts = getSortedResult('name')
+        }
+        else if(inputValue === 'nameDesc'){
+            sortedProducts = getSortedResult('name').reverse()
+        }
+        else if(inputValue === 'priceAsc'){
+            sortedProducts = getSortedResult('price')
+        }
+        else if(inputValue === 'priceDesc'){
+            sortedProducts = getSortedResult('price').reverse()
+        }
+        else {
+            sortedProducts = [...products]
+        }
+        setSearchResults(sortedProducts)
+    }
+
     return(
         <>
             <div className="row mb-3 customer-header">                
@@ -42,24 +90,26 @@ const ProductsList = (props) => {
                     <input type="text" value={query} onChange={handleSearchChange} placeholder="search product" className="form-control" /> 
                 </div>
                 <div className="col-md-4">
-                    {/* <select name="sort" className="form-select" value={orderBy} onChange={handleSort} placeholder="Sort customers">
+                    <select name="sort" className="form-select" value={orderBy} onChange={handleSort} placeholder="Sort customers">
                         <option value="">Sort customers</option>
-                        <option value="ascending">Sort by name - ascending</option>
-                        <option value="descending">Sort by name - descending</option>
-                    </select> */}
+                        <option value="nameAsc">Name - ascending</option>
+                        <option value="nameDesc">Name - descending</option>
+                        <option value="priceAsc">Price - ascending</option>
+                        <option value="priceDesc">Price - descending</option>
+                    </select>
                 </div> 
                 <div className="col-md-4">
-                    <button className="btn add" onClick={handleModal}>Add new product</button>
+                    <button className="btn add" onClick={handleShowModal}>Add new product</button>
                 </div>
             </div>
 
-            <h4>Listing Products - { products.length }</h4>
+            <h4 style={{marginLeft: '15px'}}>Listing Products - { searchResults.length }</h4>
 
             <div className="row mt-3">
                 <div className="col-md-10">
                     {searchResults.length > 0 &&
                         searchResults.map(product => {
-                            return <CustomerItem key={product._id} 
+                            return <ProductItem key={product._id} 
                                                  {...product} 
                                                  removeProduct={removeProduct} />
                         })
@@ -69,12 +119,6 @@ const ProductsList = (props) => {
                     }
                 </div>
             </div>
-
-            {searchResults.length > 0 &&
-                searchResults.map(product => {
-                    return <ProductItem key={product._id} {...product}  removeProduct={removeProduct} />
-                })
-            }
             
         </>
     )
