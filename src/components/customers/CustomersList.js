@@ -3,13 +3,19 @@ import { useSelector, useDispatch } from 'react-redux'
 import { startDeleteCustomer } from "../../actions/customersAction"
 import CustomerItem from "./CustomerItem"
 import AddCustomer from "./AddCustomer"
+import PaginationTable from '../PaginationTable'
+import formatDataForPagination from '../../helpers/formatDataForPagination'
 import '../../css/header.css'
 
 const CustomersList = (props) => {
+    const  perPage = 5
     const [query, setQuery] = useState('')
     const [searchResults, setSearchResults] = useState([])
     const [showModal, setShowModal] = useState(false)
     const [orderBy, setOrderBy] = useState('')
+    const [currentPage, setCurrentPage] = useState(1)
+    const [startIndex, setStartIndex] = useState(0)
+    const [endIndex, setEndIndex] = useState(perPage)
 
     const { customers } = useSelector(state => {
         return state.customer 
@@ -71,6 +77,14 @@ const CustomersList = (props) => {
         setSearchResults(sortedCustomers)     
     }
 
+    const handleClick = (pageNumber) => {
+        setCurrentPage(pageNumber)
+        const formatData = formatDataForPagination(pageNumber, perPage)
+        
+        setStartIndex(formatData.startIndex)
+        setEndIndex(formatData.endIndex)
+    }
+
     return (
         <>
             <div className="row mb-3 customer-header">                
@@ -94,7 +108,7 @@ const CustomersList = (props) => {
             <div className="row mt-3">
                 <div className="col-md-10">
                     {searchResults.length > 0 &&
-                        searchResults.map(customer => {
+                        searchResults.slice(startIndex, endIndex).map(customer => {
                             return <CustomerItem key={customer._id} 
                                                  {...customer} 
                                                  removeCustomer={removeCustomer} />
@@ -105,6 +119,13 @@ const CustomersList = (props) => {
                     }
                 </div>
             </div>
+
+            {searchResults.length > 0 &&
+                <div >
+                    <PaginationTable currentPage={currentPage} perPage={perPage} totalData={customers.length}
+                                     handleClick={handleClick} />
+                </div>
+            }
         </>
     )
 }

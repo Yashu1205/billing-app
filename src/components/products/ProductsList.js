@@ -1,22 +1,27 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { startDeleteProduct } from "../../actions/productsAction"
-import ReactPaginate from 'react-paginate'
+import PaginationTable from '../PaginationTable'
 import ProductItem from "./ProductItem"
 import AddProduct from "./AddProduct"
 import '../../css/header.css'
 
 const ProductsList = (props) => {
+    const perPage = 5
+
     const [showModal, setShowModal] = useState(false)
     const [query, setQuery] = useState('')
     const [orderBy, setOrderBy] = useState('')
     const [searchResults, setSearchResults] = useState([])
+    const [currentPage, setCurrentPage] = useState(1)
+    const [startIndex, setStartIndex] = useState(0)
+    const [endIndex, setEndIndex] = useState(perPage)
 
     const dispatch = useDispatch()
     const { products } = useSelector((state) => {
         return state.product
     })
-    
+
     useEffect(() => {
         setSearchResults([...products])
     },[products])
@@ -83,6 +88,18 @@ const ProductsList = (props) => {
         setSearchResults(sortedProducts)
     }
 
+    const formatData = (pageNumber) => {
+        const newEndIndex = pageNumber * perPage;
+        const newStartIndex = newEndIndex - perPage;
+        setStartIndex(newStartIndex)
+        setEndIndex(newEndIndex)
+    }
+
+    const handleClick = (pageNumber) => {
+        setCurrentPage(pageNumber)
+        formatData(pageNumber)
+      };
+
     return(
         <>
             <div className="row mb-3 customer-header">                
@@ -103,12 +120,12 @@ const ProductsList = (props) => {
                 </div>
             </div>
 
-            <h4 style={{marginLeft: '15px'}}>Listing Products - { searchResults.length }</h4>
+            <h4 style={{marginLeft: '15px'}}>Listing Products - { products.length }</h4>
 
             <div className="row mt-3">
                 <div className="col-md-10">
                     {searchResults.length > 0 &&
-                        searchResults.map(product => {
+                        searchResults.slice(startIndex, endIndex).map(product => {
                             return <ProductItem key={product._id} 
                                                  {...product} 
                                                  removeProduct={removeProduct} />
@@ -119,7 +136,11 @@ const ProductsList = (props) => {
                     }
                 </div>
             </div>
-            
+            {searchResults.length > 0 &&
+                    <PaginationTable currentPage={currentPage} perPage={perPage} totalData={products.length}
+                                     handleClick={handleClick} />
+            }
+
         </>
     )
 }
