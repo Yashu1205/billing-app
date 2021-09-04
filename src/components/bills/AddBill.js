@@ -3,7 +3,7 @@ import { startAddBill } from '../../actions/billsAction'
 import BillForm from './BillForm'
 
 const AddBill = (props) => {
-    const { showModal, handleModal } = props
+    const {showModal, handleShowModal} =props
     const dispatch = useDispatch()
     const customers = useSelector(state => {
         return state.customer
@@ -14,7 +14,7 @@ const AddBill = (props) => {
     })
 
     const formSubmission = (formData) => {
-        dispatch(startAddBill(formData, handleModal))
+        dispatch(startAddBill(formData, handleShowModal))
     }
 
     return (
@@ -22,7 +22,7 @@ const AddBill = (props) => {
         {
             showModal && 
             <BillForm  showModal={showModal} 
-                       handleModal={handleModal} 
+                       handleShowModal={handleShowModal} 
                        customers={customers.customers} 
                        products={products.products} 
                        formSubmission={formSubmission} />

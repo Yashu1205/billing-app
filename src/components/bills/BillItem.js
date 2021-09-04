@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { startBillDetails } from "../../actions/billsAction"
 import Swal from 'sweetalert2'
@@ -7,7 +7,7 @@ import ViewBill from "./ViewBill"
 
 const BillItem = (props) => {
     const [showBillModal, setShowBillModal] = useState(false)
-    const { _id, date, total, customer, removeBill } = props
+    const { _id, date, total, customerName, removeBill } = props
 
     const dispatch = useDispatch()
     
@@ -18,17 +18,9 @@ const BillItem = (props) => {
     const { products } = useSelector((state) => {
         return state.product
     })
-
-    const { customers } = useSelector((state) => {
-        return state.customer
-    })
-
+    
     const getProductName = (productId) => {
         return products.find(prod => prod._id === productId).name
-    }
-
-    const getCustomerName = (customerId) => {
-        return customers.find(cust => cust._id === customerId).name
     }
     
     const handleShowBillModal = () => setShowBillModal(!showBillModal) 
@@ -57,19 +49,36 @@ const BillItem = (props) => {
     
     return (
         <div className="card mb-3 p-1">
-            <p>{getCustomerName(customer)} - {DateTime.fromISO(date).toISODate()} - {total} 
-                <button className="btn btn-sm btn-danger" onClick={handleRemoveBill}>
-                    Delete</button>
-                <button className="btn btn-sm btn-info" onClick={getBillDetails}>View</button>
-            </p>
+            <div className="row">
+                <div className="col-md-8 detail">
+                    <p>{customerName} - {DateTime.fromISO(date).toISODate()} {total}</p>
+                </div>
+                <div className="col-md-4 action">
+                    <button className="btn btn-sm btn-danger" onClick={handleRemoveBill}>Delete</button>
+                    <button className="btn btn-sm btn-info" onClick={getBillDetails}>View</button>
+                </div>
+            </div>
             {
-                showBillModal && 
-                    <ViewBill billDetails={billDetails} showBillModal={showBillModal} 
-                              handleShowBillModal={handleShowBillModal} 
-                              customerName={getCustomerName(customer)}
-                              getProductName={getProductName} /> 
+                showBillModal && <ViewBill billDetails={billDetails} showBillModal={showBillModal}
+                customerName={customerName} 
+                handleShowBillModal={handleShowBillModal} 
+                getProductName={getProductName} /> 
             }
         </div>
+        // <div className="card mb-3 p-1">
+        //     <p>{customerName} - {DateTime.fromISO(date).toISODate()} - {total} 
+        //         <button className="btn btn-sm btn-danger" onClick={handleRemoveBill}>
+        //             Delete</button>
+        //         <button className="btn btn-sm btn-info" onClick={getBillDetails}>View</button>
+        //     </p>
+        //     {
+        //         showBillModal && 
+                    // <ViewBill billDetails={billDetails} showBillModal={showBillModal}
+                    //           customerName={customerName} 
+                    //           handleShowBillModal={handleShowBillModal} 
+                    //           getProductName={getProductName} /> 
+        //     }
+        // </div>
     )
 }
 

@@ -1,12 +1,19 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { startDeleteBill } from '../../actions/billsAction'
+import PaginationTable from '../PaginationTable'
+import formatDataForPagination from '../../helpers/formatDataForPagination'
 import BillItem from './BillItem'
+import AddBill from './AddBill'
 
 const BillsList = (props) => {
+    const perPage = 5
     const [ searchInput, setSearchInput] = useState('')
     const [searchResults, setSearchResults] = useState([])
-    const { handleModal } = props
+    const [showModal, setShowModal] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [startIndex, setStartIndex] = useState(0)
+    const [endIndex, setEndIndex] = useState(perPage)
     let finalResult = []
 
     const dispatch = useDispatch() 
@@ -16,11 +23,19 @@ const BillsList = (props) => {
     const  { bills } = useSelector((state) => {
         return state.bill
     })
-    console.log(bills)
 
     useEffect(() => {
         setSearchResults([...bills])
     }, [bills])
+
+    const handleShowModal = () => {
+        setShowModal(!showModal)
+    }
+
+    const getCustomerName = (customerId) => {
+        const result = customers.find(cust => cust._id === customerId)
+        return result.name
+    }
     
     const removeBill = (id) => {
         dispatch(startDeleteBill(id))
@@ -41,29 +56,55 @@ const BillsList = (props) => {
         setSearchResults(finalResult)
     }
 
+    const handleClick = (pageNumber) => {
+        setCurrentPage(pageNumber)
+        const formatData = formatDataForPagination(pageNumber, perPage)
+        
+        setStartIndex(formatData.startIndex)
+        setEndIndex(formatData.endIndex)
+    }
+
     return (
         <>
-            <div className="row">
+            <div className="row mb-3 customer-header">                
                 <div className="col-md-4">
-                    <h3>Listing Bills - { bills.length }</h3>
+                    <input type="text" value={searchInput} onChange={handleSearch} placeholder="search bills by customer name" className="form-control" /> 
                 </div>
                 <div className="col-md-4">
-                    <input type="text"  value={searchInput} onChange={handleSearch} placeholder="search by customer's name" className="form-control" /> 
-                </div>
-                <div className="col-md-4">
-                    <button className="btn btn-primary" style={{float: 'right'}} onClick={handleModal}>Add new bill</button> 
+                    {/* <select name="sort" className="form-select" value={orderBy} onChange={handleSort} placeholder="Sort customers">
+                        <option value="">Sort customers</option>
+                        <option value="ascending">Sort by name - ascending</option>
+                        <option value="descending">Sort by name - descending</option>
+                    </select> */}
                 </div> 
+                <div className="col-md-4">
+                    <button className="btn add" onClick={handleShowModal}>Add new bill</button>
+                </div>
             </div>
-            <div className="row">
-                {searchResults.length > 0 && customers.length > 0 &&
-                    searchResults.map(bill => {
-                        return <BillItem key={bill._id} {...bill}   
-                                         removeBill={removeBill} />
-                    })
-                }
+            <h4 style={{marginLeft: '15px'}}>Listing Bills - {bills.length} </h4>
 
+            <div className="row mt-3">
+                <div className="col-md-10">
+                    {searchResults.length > 0 && customers.length > 0 &&
+                        searchResults.slice(startIndex, endIndex).map(bill => {
+                            return <BillItem key={bill._id}
+                                                 {...bill} 
+                                                 customerName={getCustomerName(bill.customer)}
+                                                 removeBill={removeBill} />
+                        })
+                    }
+                    { showModal &&
+                        <AddBill showModal={showModal} handleShowModal={handleShowModal} />
+                    }
+                </div>
             </div>
 
+            {searchResults.length > 0 &&
+                <div >
+                    <PaginationTable currentPage={currentPage} perPage={perPage} totalData={bills.length}
+                                     handleClick={handleClick} />
+                </div>
+            }
 
         </>
     )

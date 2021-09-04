@@ -14,7 +14,7 @@ const BillForm = (props) => {
     const [ formErrors, setFormErrors] = useState({})
     const errors = {}
 
-    const { customers, products, showModal, handleModal, formSubmission } = props
+    const { customers, products, showModal, handleShowModal, formSubmission } = props
 
     const customerOptions = customers.map(customer => {
         return {'value': customer._id, 'label': customer.name}
@@ -57,7 +57,7 @@ const BillForm = (props) => {
         setCartItems(cartResult)
     }
     const runValidations = () => {
-        if(customer.value.trim().length === 0){
+        if(customer === ''){
             errors.customer = 'customer is required'
         }
         if(cartItems.length === 0){
@@ -82,7 +82,6 @@ const BillForm = (props) => {
                 customer: customer.value,
                 lineItems: lineItems
             }
-            console.log(formData)
             formSubmission(formData)
         }
     }
@@ -99,30 +98,24 @@ const BillForm = (props) => {
                 <div className="row">
                     <div className="col-md-6">
                         <form onSubmit={handleSubmit}>
-                            <input type="date" className="form-control" name="date"  
+                            <div className="mb-2">
+                                <input type="date" className="form-control" name="date"  
                                    value={startDate} 
-                                   onChange={handleChange} /><br/>
-                            
-                            {/* <select className="form-control" name="customer" value={customer} onChange={handleChange}>
-                                <option value="">Select Customer</option>
-                                {   customers.length > 0 &&
-                                    customers.map(customer => {
-                                        return <option key={customer._id} value={customer._id}>{customer.name}</option>
-                                    })
-                                }
-                            </select><br/> */}
-                            <Select name="customer" 
-                                    value={customer} 
-                                    onChange={handleCustomerChange} 
-                                    options={customerOptions} /><br/>
-                            {formErrors.customer && <span className="text-danger">{formErrors.customer}</span>}
-                            
-                            <div className="row">
+                                   onChange={handleChange} />
+                            </div>
+                            <div div className="mb-2">
+                                <Select name="customer" 
+                                        value={customer} 
+                                        onChange={handleCustomerChange} 
+                                        options={customerOptions} />
+                                {formErrors.customer && <span className="text-danger">{formErrors.customer}</span>}
+                            </div>
+                            <div className="row mb-2">
                                 <div className="col-md-10">
                                     <Select name="product" 
                                             value={product} 
                                             onChange={handleProductChange} 
-                                            options={productOptions} /><br/>
+                                            options={productOptions} />
                                     {formErrors.product && <span className="text-danger">{formErrors.product}</span>} 
 
                                 </div>
@@ -133,7 +126,7 @@ const BillForm = (props) => {
                             </div>
 
                             <input type="submit" value="save" className="btn btn-primary btn-sm" />
-                            <button onClick={handleModal } className="btn btn-secondary btn-sm">Cancel</button>
+                            <button onClick={handleShowModal } className="btn btn-secondary btn-sm" style={{marginLeft: '5px'}}>Cancel</button>
                         
                         </form>
                     </div>
