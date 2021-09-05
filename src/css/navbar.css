@@ -1,7 +1,7 @@
 
 .sidenav {
   height: 100%;
-  width: 160px;
+  width: 180px;  
   /* position: fixed; */
   z-index: 1;
   top: 0;
@@ -20,5 +20,25 @@
 }
 
 .sidenav a:hover {
-  color: #f1f1f1;
+  color: #080808;
+}
+
+.nav-pills >li >a {
+  font-size: 20px;
+  color: black;
+  text-decoration: none;
+  display: block;
+  border-radius: 4px;
+  padding: 10px 15px;
+  margin: 10px 15px 10px 25px;
+}
+.nav-pills > li > a:hover {
+   background-color: rgb(176 175 214);
+   color: white;
+}
+
+.nav-pills .active {
+ /* background-color: rgb(0, 81, 255); */
+ color:rgb(0, 81, 255)     ;
+ font-weight:bold;
 }

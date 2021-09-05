@@ -20,6 +20,7 @@ export const startUserRegistration = (formData, resetForm, redirectToLogin) => {
                          }
                          else{
                              resetForm()
+                             removeServerErrors()
                              Swal.fire('Successful', 'Successfully Registered','success')
                              redirectToLogin()
                          }

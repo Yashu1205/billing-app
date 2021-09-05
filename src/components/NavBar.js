@@ -4,6 +4,7 @@ import { Route, NavLink, withRouter } from 'react-router-dom'
 
 import '../css/navbar.css' 
 import PrivateRoute from './PrivateRoute'
+import ProtectedRoute from './ProtectedRoute'
 import Home from './Home'
 import Register from './User/Register'
 import Login from './User/Login' 
@@ -20,10 +21,10 @@ const NavBar = (props) => {
     }
 
     return (
-        <div className="d-flex flex-row ">
+        <div className="d-flex flex-row " style={{display:'inline', height: '100%'}}>
             <div className="sidenav">
                 <h1 style={{textAlign: 'center'}}>BMS</h1>
-                <ul style={{listStyleType: 'none'}}>                   
+                <ul style={{listStyleType: 'none'}} className= "nav nav-pills">                   
 
                     {
                         isLoggedIn ? (
@@ -36,7 +37,7 @@ const NavBar = (props) => {
                             <li>
                                 <NavLink  to="/customers" activeClassName="active">
                                     Customers
-                                </NavLink>
+                                </NavLink> 
                             </li>
                             <li>
                                 <NavLink  to="/products" activeClassName="active">
@@ -48,14 +49,14 @@ const NavBar = (props) => {
                                     Bills
                                 </NavLink>
                             </li>
-                            <li onClick={handleLogout}>
+                            <li onClick={handleLogout} style={{cursor: 'pointer'}}>
                                 <a> Logout</a>
                             </li>
                             </>
                         ) : (
                             <>
                             <li>
-                                <NavLink  to="/" activeClassName="active">
+                                <NavLink exact to="/" activeClassName="active">
                                     Home
                                 </NavLink>
                             </li>
@@ -76,9 +77,9 @@ const NavBar = (props) => {
                 </ul>
                 
             </div>
-            <Route path="/" component={Home} exact={true}/>
-            <Route path="/register" component={Register} />
-            <Route path="/login" component={Login} />
+            <ProtectedRoute path="/" component={Home} isLoggedIn={isLoggedIn} exact={true}/>
+            <ProtectedRoute path="/register" component={Register} isLoggedIn={isLoggedIn} />
+            <ProtectedRoute path="/login" component={Login} isLoggedIn={isLoggedIn} />
             <PrivateRoute path="/customers" component={CustomersContainer} isLoggedIn={isLoggedIn}/>
             <PrivateRoute path="/products" component={ProductsContainer} isLoggedIn={isLoggedIn}/>
             <PrivateRoute path="/bills" component={BillsContainer} isLoggedIn={isLoggedIn}/>

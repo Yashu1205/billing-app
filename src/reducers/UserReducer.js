@@ -1,4 +1,4 @@
-import { SET_ERRORS, IS_LOGIN, REMOVE_ERRORS } from '../actions/UserAction'
+import { SET_ERRORS, IS_LOGIN, REMOVE_ERRORS } from '../actions/userAction'
 
 const userInitialValues = {
     isLoggedIn: localStorage.getItem('token') ? true : false,

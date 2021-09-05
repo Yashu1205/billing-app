@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
-import { removeServerErrors, startLoginUser } from "../../actions/UserAction"
+import { removeServerErrors, startLoginUser } from "../../actions/userAction"
 
 const Login = (props) => {
     const [email, setEmail] = useState('')
@@ -22,24 +22,26 @@ const Login = (props) => {
         }
     }
 
+    const handleError = (e) => {
+        if(e.target.value.trim().length === 0){
+            setLoginErrors({...loginErrors, [e.target.name]: `${e.target.name} is required`})
+        } else{
+            const removeErrors = {...loginErrors}
+            delete removeErrors[e.target.name]
+            setLoginErrors(removeErrors)
+        }  
+    }
     const resetForm = () => {
         setEmail('')
         setPassword('')
-    }
-
-    const handleCancel = (e) => {
-        e.preventDefault()
-        resetForm()
-        setLoginErrors({})
-        dispatch(removeServerErrors())
-    } 
+    }    
 
     const runValidations = () => {
         if(email.trim().length === 0){
-            errors.email = 'Email is required'
+            errors.email = 'email is required'
         } 
         if(password.trim().length === 0){
-            errors.password = 'Password is required'
+            errors.password = 'password is required'
         }
     }  
 
@@ -62,6 +64,13 @@ const Login = (props) => {
         }
     }
 
+    const handleCancel = (e) => {
+        e.preventDefault()
+        resetForm()
+        setLoginErrors({})
+        dispatch(removeServerErrors())
+    } 
+
     return (
         <div className="container mt-3">
             <div className="row">
@@ -70,7 +79,7 @@ const Login = (props) => {
                 </div>
                 <div className="col-md-4 card mt-5">
                     <div style={{margin: '10px', padding: '10px'}}> 
-                    <h4>Login</h4>
+                    <h3 style={{textAlign: 'center'}}>Login</h3>
                     <form onSubmit={handleSubmit}>
                         <table className="table table-borderless pt-3" >
                             <thead></thead>
@@ -81,6 +90,7 @@ const Login = (props) => {
                                             name="email"
                                             value={email}
                                             onChange={handleChange} 
+                                            onBlur={handleError}
                                             placeholder="Enter your email" />
 
                                     {loginErrors.email && <span className="text-danger">{loginErrors.email} <br/></span>}
@@ -93,6 +103,7 @@ const Login = (props) => {
                                                 name="password" 
                                                 value={password} 
                                                 onChange={handleChange} 
+                                                onBlur={handleError}
                                                 placeholder="example@email.com" />
                                         {loginErrors.password && <span className="text-danger">{loginErrors.password} <br/></span>}
                                         {serverErrors.email && <span className="text-danger">email is already taken <br/></span>}
