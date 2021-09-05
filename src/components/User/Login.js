@@ -106,7 +106,7 @@ const Login = (props) => {
                                                 onBlur={handleError}
                                                 placeholder="example@email.com" />
                                         {loginErrors.password && <span className="text-danger">{loginErrors.password} <br/></span>}
-                                        {serverErrors.email && <span className="text-danger">email is already taken <br/></span>}
+                                        {serverErrors.errors && <span className="text-danger">{serverErrors.errors} <br/></span>}
                                     </td>
                                 </tr>
 
