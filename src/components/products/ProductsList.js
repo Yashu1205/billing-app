@@ -133,10 +133,10 @@ const ProductsList = (props) => {
                     }
                 </div>
             </div>
-            {searchResults.length > 0 &&
+            {/* {searchResults.length > 0 &&
                     <PaginationTable currentPage={currentPage} perPage={perPage} totalData={products.length}
                                      handleClick={handleClick} />
-            }
+            } */}
 
         </>
     )

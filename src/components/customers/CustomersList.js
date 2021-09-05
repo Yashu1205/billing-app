@@ -99,7 +99,7 @@ const CustomersList = (props) => {
                     </select>
                 </div> 
                 <div className="col-md-4">
-                    <button className="btn add" onClick={handleShowModal}>Add Customer</button>
+                    <button className="btn add" onClick={handleShowModal}>Add New Customer</button>
                 </div>
             </div>
 
@@ -120,12 +120,12 @@ const CustomersList = (props) => {
                 </div>
             </div>
 
-            {searchResults.length > 0 &&
+            {/* {searchResults.length > 0 &&
                 <div >
                     <PaginationTable currentPage={currentPage} perPage={perPage} totalData={customers.length}
                                      handleClick={handleClick} />
                 </div>
-            }
+            } */}
         </>
     )
 }
