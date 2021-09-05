@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
-import { removeServerErrors, startLoginUser } from "../../actions/userAction"
+import { removeServerErrors, startLoginUser } from "../../actions/UserAction"
 
 const Login = (props) => {
     const [email, setEmail] = useState('')

@@ -1,6 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import userReducer from '../reducers/userReducer'
+import userReducer from '../reducers/UserReducer'
 import customersReducer from '../reducers/customersReducer'
 import productsReducer from '../reducers/productsReducer'
 import billsReducer from '../reducers/billsReducer'
