@@ -16,6 +16,7 @@ const UserRegistration  = (props) => {
     const dispatch = useDispatch()
 
     const runValidations = () => {
+
         if(signupForm.username.trim().length === 0){
             errors.username = 'username is required'
         }
@@ -26,6 +27,8 @@ const UserRegistration  = (props) => {
         }
         if(signupForm.password.trim().length === 0){
             errors.password = 'password is required'
+        } else if(signupForm.password.trim().length < 8){
+            errors.password = 'password must be at least 8 characters'
         }
         if(signupForm.businessName.trim().length === 0){
             errors.businessName = 'business name is required'
@@ -54,6 +57,8 @@ const UserRegistration  = (props) => {
             } else{
                 delete errors.email
             }
+        } else if(e.target.value.trim().length !== 0 && e.target.name === 'password') {
+            errors = {...formErrors, password: 'password must be at least 8 characters'}
         } else{
             delete errors[e.target.name]
         }       
