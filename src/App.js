@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { startGetBills } from './actions/billsAction';
 import { startGetCustomers } from './actions/customersAction';
 import { startGetProducts } from './actions/productsAction';
+import { startGetUserProfile } from './actions/UserAction'
 import NavBar from './components/NavBar'
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         dispatch(startGetCustomers())
         dispatch(startGetProducts())
         dispatch(startGetBills())
+        dispatch(startGetUserProfile())
       }
     }
 

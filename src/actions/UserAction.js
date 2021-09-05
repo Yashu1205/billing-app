@@ -1,15 +1,17 @@
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
-const baseApiUrl = 'http://dct-billing-app.herokuapp.com/api/users'
+const baseUrl = 'http://dct-billing-app.herokuapp.com/api/users'
+const token = localStorage.getItem('token')
 export const REGISTER_USER = 'REGISTER_USER'
 export const SET_ERRORS = 'SET_ERRORS'
 export const REMOVE_ERRORS = 'REMOVE_ERRORS'
 export const IS_LOGIN = 'IS_LOGIN'
+export const USER_ACCOUNT = 'USER_ACCOUNT'
 
 export const startUserRegistration = (formData, resetForm, redirectToLogin) => {
     return (dispatch) => {
-                axios.post(`${baseApiUrl}/register`, formData)
+                axios.post(`${baseUrl}/register`, formData)
                      .then((response) => {
                          const result = response.data
                          if(result.hasOwnProperty('errors')){
@@ -33,7 +35,7 @@ export const startUserRegistration = (formData, resetForm, redirectToLogin) => {
 
 export const startLoginUser = (formData, resetForm, redirectToHome) => {
     return (dispatch) => {
-            axios.post(`${baseApiUrl}/login`, formData)
+            axios.post(`${baseUrl}/login`, formData)
                  .then((response) => {
                      const result = response.data
                      if(result.hasOwnProperty('errors')){
@@ -53,6 +55,23 @@ export const startLoginUser = (formData, resetForm, redirectToHome) => {
     }
 }  
 
+export const startGetUserProfile  = () => {
+    return (dispatch) => {
+        axios.get(`${baseUrl}/account`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .then((response) => {
+                const result = response.data
+                dispatch(setUserAccount(result))
+            })
+            .catch((error) => {
+                Swal.fire('Oops...', error.message, 'error')
+            })
+    }
+}
+
 const setServerErrors = (errors) => {
     return {
         type: SET_ERRORS,
@@ -69,5 +88,12 @@ export const removeServerErrors = () => {
 const isLogin = () => {
     return {
         type: IS_LOGIN
+    }
+}
+
+const setUserAccount = (userDetail) => {
+    return {
+        type: USER_ACCOUNT,
+        payload: userDetail
     }
 }

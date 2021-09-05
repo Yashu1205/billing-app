@@ -21,7 +21,7 @@ const ProductsList = (props) => {
     const { products } = useSelector((state) => {
         return state.product
     })
-
+    
     useEffect(() => {
         setSearchResults([...products])
     },[products])
@@ -129,8 +129,8 @@ const ProductsList = (props) => {
                         ) : (
                             <div className="card">
                                 <div className="card-body">
-                                    <h5>No Customers</h5>
-                                    <h6>Add New Customer</h6>
+                                    <h5>No Products</h5>
+                                    <h6>Add New Product</h6>
                                 </div>
                             </div>
                         )

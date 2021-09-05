@@ -1,8 +1,9 @@
-import { SET_ERRORS, IS_LOGIN, REMOVE_ERRORS } from '../actions/UserAction'
+import { SET_ERRORS, IS_LOGIN, REMOVE_ERRORS, USER_ACCOUNT } from '../actions/UserAction'
 
 const userInitialValues = {
     isLoggedIn: localStorage.getItem('token') ? true : false,
-    serverErrors: {}
+    serverErrors: {},
+    userAccount: {}
 }
 
 const userReducer = (state = userInitialValues, action) => {
@@ -18,6 +19,11 @@ const userReducer = (state = userInitialValues, action) => {
 
         case REMOVE_ERRORS: {
             return {...state, serverErrors: {}}
+        }
+
+        case USER_ACCOUNT: {
+            console.log('in reducer',action.payload)
+            return {...state, userAccount: action.payload }
         }
 
         default : {

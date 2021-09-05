@@ -2,9 +2,13 @@ const PageNotFound = () => {
 
 
     return (
-        <div className="container" style={{overflowY:'hidden',height:'100%'}} >
-            <img src="404.jpg" alt="404.jpg" />
-        </div>
+        <div className="row mt-3">
+                <img src="billing.png" alt="e-invoicing" style={{height: '350px'}} />
+
+            </div>
+        // <div style={{margin:'16%'}}>
+        //    <img src="pagenotfound.png" alt="page not found" width="1000px" height="500px"/>
+        // </div>
     )
 }
 

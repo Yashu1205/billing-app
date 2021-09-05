@@ -11,6 +11,7 @@ import Login from './User/Login'
 import CustomersContainer from './customers/CustomersContainer'
 import ProductsContainer from './products/ProductsContainer'
 import BillsContainer from './bills/BillsContainer'
+import UserAccount from './User/UserAccount'
 import PageNotFound from './PageNotFound'
 
 const NavBar = (props) => {
@@ -50,6 +51,11 @@ const NavBar = (props) => {
                                     Bills
                                 </NavLink>
                             </li>
+                            <li>
+                                <NavLink  to="/profile" activeClassName="active">
+                                    Profile
+                                </NavLink>
+                            </li>
                             <li onClick={handleLogout} style={{cursor: 'pointer'}}>
                                 <a> Logout</a>
                             </li>
@@ -82,6 +88,7 @@ const NavBar = (props) => {
                 <ProtectedRoute path="/" component={Home} isLoggedIn={isLoggedIn} exact={true}/> 
                 <ProtectedRoute path="/register" component={Register} isLoggedIn={isLoggedIn} />
                 <ProtectedRoute path="/login" component={Login} isLoggedIn={isLoggedIn} />
+                <PrivateRoute path="/profile" component={UserAccount} isLoggedIn={isLoggedIn} />
                 <PrivateRoute path="/customers" component={CustomersContainer} isLoggedIn={isLoggedIn}/>
                 <PrivateRoute path="/products" component={ProductsContainer} isLoggedIn={isLoggedIn}/>
                 <PrivateRoute path="/bills" component={BillsContainer} isLoggedIn={isLoggedIn}/> 

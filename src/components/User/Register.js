@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import isEmail from 'validator/lib/isEmail'
+import '../../css/header.css'
 
 import { removeServerErrors, startUserRegistration } from '../../actions/UserAction'
 
@@ -90,7 +91,7 @@ const UserRegistration  = (props) => {
     }
 
     return (
-        <div className="container mt-3">
+        <div className="container mt-3 item-container">
             <div className="row">
                 <div className="col-md-3">
 
