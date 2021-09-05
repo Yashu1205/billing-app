@@ -5,7 +5,7 @@ const userInitialValues = {
     serverErrors: {}
 }
 
-const UserReducer = (state = userInitialValues, action) => {
+const userReducer = (state = userInitialValues, action) => {
     switch(action.type){
 
         case SET_ERRORS:{
@@ -27,4 +27,4 @@ const UserReducer = (state = userInitialValues, action) => {
     
 }
 
-export default UserReducer
+export default userReducer
