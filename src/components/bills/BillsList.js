@@ -35,7 +35,7 @@ const BillsList = (props) => {
 
     const getCustomerName = (customerId) => {
         const result = customers.find(cust => cust._id === customerId)
-        return result.name
+        return result ? result.name : ''
     }
     
     const removeBill = (id) => {
@@ -115,9 +115,9 @@ const BillsList = (props) => {
                 </div>
                 <div className="col-md-4">
                     <select name="sort" className="form-select" value={orderBy} onChange={handleSort} placeholder="Sort customers">
-                        <option value="">Sort customers</option>
-                        <option value="nameAsc">Sort by name - ascending</option>
-                        <option value="nameDesc">Sort by name - descending</option>
+                        <option value="">Sort bills</option>
+                        <option value="nameAsc">Sort by customer name - ascending</option>
+                        <option value="nameDesc">Sort by customer name - descending</option>
                         <option value="dateAsc">Sort by date - ascending</option>
                         <option value="dateDesc">Sort by date - descending</option>
                     </select>
