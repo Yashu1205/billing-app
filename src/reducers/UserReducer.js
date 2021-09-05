@@ -22,7 +22,6 @@ const userReducer = (state = userInitialValues, action) => {
         }
 
         case USER_ACCOUNT: {
-            console.log('in reducer',action.payload)
             return {...state, userAccount: action.payload }
         }
 

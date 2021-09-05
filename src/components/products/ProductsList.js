@@ -104,7 +104,7 @@ const ProductsList = (props) => {
                 </div>
                 <div className="col-md-4">
                     <select name="sort" className="form-select" value={orderBy} onChange={handleSort} placeholder="Sort customers">
-                        <option value="">Sort customers</option>
+                        <option value="">Sort products by</option>
                         <option value="nameAsc">Name - ascending</option>
                         <option value="nameDesc">Name - descending</option>
                         <option value="priceAsc">Price - ascending</option>

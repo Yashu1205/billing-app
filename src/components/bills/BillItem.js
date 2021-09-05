@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { startBillDetails } from "../../actions/billsAction"
 import Swal from 'sweetalert2'
@@ -20,7 +20,8 @@ const BillItem = (props) => {
     })
     
     const getProductName = (productId) => {
-        return products.find(prod => prod._id === productId).name
+        const productName = products.find(prod => prod._id === productId)
+        return productName ? productName.name : '' 
     }
     
     const handleShowBillModal = () => setShowBillModal(!showBillModal) 
@@ -48,7 +49,7 @@ const BillItem = (props) => {
     }
     
     return (
-        <div className="card mb-3 p-1">
+        <div className="card mb-3">
             <div className="row">
                 <div className="col-md-8 detail">
                     <p>{customerName} - {DateTime.fromISO(date).toISODate()} {total}</p>
