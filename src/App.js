@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { startGetBills } from './actions/billsAction';
 import { startGetCustomers } from './actions/customersAction';
 import { startGetProducts } from './actions/productsAction';
 import NavBar from './components/NavBar'
@@ -7,20 +8,14 @@ import NavBar from './components/NavBar'
 function App() {
   const dispatch = useDispatch()
   const token = localStorage.getItem('token')
-  const [jwt, setJwt] = useState(token)
 
-    useEffect(() => {
-      if(jwt){
-        dispatch(startGetProducts())
-      }
-    },[])
-
-    useEffect(() => { 
-      if(jwt){
+    window.onload = function(){
+      if(token){
         dispatch(startGetCustomers())
-      } 
-    },[])
-
+        dispatch(startGetProducts())
+        dispatch(startGetBills())
+      }
+    }
 
   return (      
       <NavBar/>

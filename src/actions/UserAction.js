@@ -1,16 +1,15 @@
 import axios from 'axios'
 import Swal from 'sweetalert2'
+
+const baseApiUrl = 'http://dct-billing-app.herokuapp.com/api/users'
 export const REGISTER_USER = 'REGISTER_USER'
 export const SET_ERRORS = 'SET_ERRORS'
 export const REMOVE_ERRORS = 'REMOVE_ERRORS'
 export const IS_LOGIN = 'IS_LOGIN'
 
-
-const baseApiUrl = 'http://dct-billing-app.herokuapp.com/api'
 export const startUserRegistration = (formData, resetForm, redirectToLogin) => {
-    console.log(formData)
     return (dispatch) => {
-                axios.post(`${baseApiUrl}/users/register`, formData)
+                axios.post(`${baseApiUrl}/register`, formData)
                      .then((response) => {
                          const result = response.data
                          if(result.hasOwnProperty('errors')){
@@ -21,6 +20,7 @@ export const startUserRegistration = (formData, resetForm, redirectToLogin) => {
                          }
                          else{
                              resetForm()
+                             removeServerErrors()
                              Swal.fire('Successful', 'Successfully Registered','success')
                              redirectToLogin()
                          }
@@ -32,9 +32,8 @@ export const startUserRegistration = (formData, resetForm, redirectToLogin) => {
 }
 
 export const startLoginUser = (formData, resetForm, redirectToHome) => {
-
     return (dispatch) => {
-            axios.post(`${baseApiUrl}/users/login`, formData)
+            axios.post(`${baseApiUrl}/login`, formData)
                  .then((response) => {
                      const result = response.data
                      if(result.hasOwnProperty('errors')){
@@ -67,7 +66,7 @@ export const removeServerErrors = () => {
     }
 }
 
-const isLogin = (errors) => {
+const isLogin = () => {
     return {
         type: IS_LOGIN
     }

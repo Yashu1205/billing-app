@@ -1,24 +1,21 @@
-import { useState, useEffect } from "react"
-import { useDispatch } from "react-redux"
-import { startGetProducts } from "../../actions/productsAction"
-import ProductsList from "./ProductsList"
-import AddProduct from "./AddProduct"
+import React, { Suspense } from 'react'
+import { ClipLoader } from "react-spinners";
+import '../../css/header.css'
+const ProductsList = React.lazy(() => import('./ProductsList'))
 
 const ProductsContainer = (props) => {
-    const [showModal, setShowModal] = useState(false)
-    const dispatch = useDispatch()
 
-    // useEffect(() => {
-    //     dispatch(startGetProducts())
-    // },[])
-
-    const handleModal = () => {
-        setShowModal(!showModal)
+    const override = {
+        display: 'block',
+        margin: '50px auto',
+        borderColor: '#37a37b'
     }
 
-    return(
-        <div className="container mt-3">
-            <ProductsList handleModal={handleModal} showModal={showModal}/>
+    return (
+        <div className="container mt-3 item-container">
+            <Suspense fallback={ <ClipLoader color="#ffffff" loading={true} css={override} size={100} />} >
+                <ProductsList />
+            </Suspense>
         </div>
     )
 }

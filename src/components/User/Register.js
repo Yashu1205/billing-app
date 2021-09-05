@@ -8,7 +8,7 @@ import { removeServerErrors, startUserRegistration } from '../../actions/UserAct
 const UserRegistration  = (props) => {
     const [signupForm, setSignupForm] = useState({username:'', email:'',password:'', businessName:'', address:''})
     const [formErrors, setFormErrors] = useState({})
-    const errors = {}
+    let errors = {}
 
     const { serverErrors } = useSelector(state => {
         return state.user
@@ -16,6 +16,7 @@ const UserRegistration  = (props) => {
     const dispatch = useDispatch()
 
     const runValidations = () => {
+
         if(signupForm.username.trim().length === 0){
             errors.username = 'username is required'
         }
@@ -26,6 +27,8 @@ const UserRegistration  = (props) => {
         }
         if(signupForm.password.trim().length === 0){
             errors.password = 'password is required'
+        } else if(signupForm.password.trim().length < 8){
+            errors.password = 'password must be at least 8 characters'
         }
         if(signupForm.businessName.trim().length === 0){
             errors.businessName = 'business name is required'
@@ -45,10 +48,26 @@ const UserRegistration  = (props) => {
         setSignupForm({...signupForm, [e.target.name]:e.target.value })
     }
 
+    const handleError = (e) => {
+        if(e.target.value.trim().length === 0){
+            errors = {...formErrors, [e.target.name]: `${e.target.name} is required`}
+        } else if(e.target.value.trim().length !== 0 && e.target.name === 'email'){
+            if(!isEmail(signupForm.email)){
+                errors = {...formErrors, email: 'invalid email'}
+            } else{
+                delete errors.email
+            }
+        } else if(e.target.value.trim().length !== 0 && e.target.name === 'password') {
+            errors = {...formErrors, password: 'password must be at least 8 characters'}
+        } else{
+            delete errors[e.target.name]
+        }       
+        setFormErrors({...errors})
+    }
+
     const handleSubmit = (e, formData) => {
         e.preventDefault()
         runValidations()
-
         
         const redirectToLogin = () => {
             props.history.push('/login')
@@ -78,7 +97,7 @@ const UserRegistration  = (props) => {
                 </div>
                 <div className="col-md-4 card mt-5">
                     <div style={{margin: '10px', padding: '10px'}}> 
-                    <h3>Register with us</h3>
+                    <h3  style={{textAlign: 'center'}}>Register with us</h3>
                     <form onSubmit={handleSubmit}>
                         <table className="table table-borderless pt-3" >
                             <thead></thead>
@@ -89,6 +108,7 @@ const UserRegistration  = (props) => {
                                                 name="username" 
                                                 value={signupForm.username} 
                                                 onChange={handleChange}
+                                                onBlur={handleError}
                                                 placeholder="Enter username" />
                                         {formErrors.username && <span className="text-danger">{formErrors.username} <br/></span>}
                                         {serverErrors.username && <span className="text-danger">username is already taken <br/></span>} 
@@ -101,6 +121,7 @@ const UserRegistration  = (props) => {
                                                 name="email" 
                                                 value={signupForm.email} 
                                                 onChange={handleChange} 
+                                                onBlur={handleError}
                                                 placeholder="example@email.com" />
                                         {formErrors.email && <span className="text-danger">{formErrors.email} <br/></span>}
                                         {serverErrors.email && <span className="text-danger">email is already taken <br/></span>}
@@ -113,6 +134,7 @@ const UserRegistration  = (props) => {
                                                 name="password" 
                                                 value={signupForm.password} 
                                                 onChange={handleChange} 
+                                                onBlur={handleError}
                                                 placeholder="Enter password" />
                                         { formErrors.password && 
                                             <span className="text-danger">{ formErrors.password }</span> 
@@ -126,6 +148,7 @@ const UserRegistration  = (props) => {
                                                 name="businessName" 
                                                 value={signupForm.businessName} 
                                                 onChange={handleChange} 
+                                                onBlur={handleError}
                                                 placeholder="Enter your business name"/>
                                             { formErrors.businessName && 
                                                 <span className="text-danger">{ formErrors.businessName }</span>
@@ -139,6 +162,7 @@ const UserRegistration  = (props) => {
                                                 name="address" 
                                                 value={signupForm.address} 
                                                 onChange={handleChange} 
+                                                onBlur={handleError}
                                                 placeholder="Enter address for business" />
                                         { formErrors.address && 
                                             <span className="text-danger">{ formErrors.address }</span>
