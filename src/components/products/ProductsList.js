@@ -66,7 +66,7 @@ const ProductsList = (props) => {
         return result
     }
 
-    const handleSort = (e, sortType) => {
+    const handleSort = (e) => {
         const inputValue = e.target.value
         setOrderBy(inputValue)
         let sortedProducts = []
