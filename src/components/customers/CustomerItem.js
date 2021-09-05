@@ -27,7 +27,7 @@ const CustomerItem = (props) => {
     }
     
     return (
-        <div className="card mb-3 p-1">
+        <div className="card mb-3">
             <div className="row">
                 <div className="col-md-8 detail">
                     <p>{name} - {mobile} { email && `- ${email}`}</p>

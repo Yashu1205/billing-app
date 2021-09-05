@@ -1,14 +1,21 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { startGetCustomers } from '../../actions/customersAction'
-import CustomersList from './CustomersList'
+import React, { Suspense } from 'react'
+import { ClipLoader } from "react-spinners";
+import '../../css/header.css'
+const CustomersList = React.lazy(() => import('./CustomersList'))
 
 const CustomersContainer = (props) => {
-    const dispatch = useDispatch()
+
+    const override = {
+        display: 'block',
+        margin: '50px auto',
+        borderColor: '#37a37b'
+    }
 
     return (
-        <div className="container mt-3">
-            <CustomersList />
+        <div className="container mt-3 item-container">
+            <Suspense fallback={ <ClipLoader color="#ffffff" loading={true} css={override} size={100} />} >
+                <CustomersList />
+            </Suspense>
         </div>
     )
 }

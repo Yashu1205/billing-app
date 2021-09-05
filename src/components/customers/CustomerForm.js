@@ -8,7 +8,8 @@ const CustomerForm = (props) => {
     const [email, setEmail] = useState(custEmail ? custEmail : '')
     const [mobile, setMobile] = useState(custMobile ? custMobile : '')
     const [formErrors, setFormErrors] = useState({})
-    const errors = {}
+    let errors = {}
+    const pattern = new RegExp(/^[0-9\b]+$/)
 
     const handleChange = (e) => {
         const inputName = e.target.name
@@ -21,16 +22,53 @@ const CustomerForm = (props) => {
         }
     }
 
+    const handleError = (e) => {
+        const inputName = e.target.name
+        if(inputName === 'name'){
+            if(name.trim().length === 0){
+                errors = {...formErrors, name: 'Please enter your name'}
+            } else{
+                errors = {...formErrors}
+                delete errors.name
+            }
+        }
+        else if(inputName === 'mobile'){
+            if(mobile.trim().length === 0){
+                errors = {...formErrors, mobile: 'Please enter your mobile number'}
+            } else if(mobile.trim().length !== 10){
+                errors = {...formErrors, mobile: 'Please enter valid mobile number'}
+            }
+            else{
+                errors = {...formErrors}
+                delete errors.mobile
+            }
+        }
+
+        if(inputName === 'email' && email.trim().length !== 0){
+            if(!isEmail(email)){
+                errors = {...formErrors, email: 'Please enter valid email'}
+            }
+            else{
+                errors = {...formErrors}
+                delete errors.email
+            }
+        }
+         
+        setFormErrors({...errors})
+    }
+
     const runValidations = () => {
         if(name.trim().length === 0){
-            errors.name = 'name is required'
+            errors.name = 'Please enter your name'
         }
         if(mobile.trim().length === 0){
-            errors.mobile = 'mobile is required'
+            errors.mobile = 'Please enter your mobile'
+        } else if(mobile.length !== 10){
+            errors.mobile = 'Please enter valid mobile number'
         }
         if(email.trim().length > 0){
             if(!isEmail(email)){
-                errors.email = 'email is invalid'
+                errors.email = 'Please enter valid email'
             }
         }
     }
@@ -76,6 +114,7 @@ const CustomerForm = (props) => {
                                 name="name" 
                                 value={name} 
                                 onChange={handleChange}
+                                onBlur={handleError}
                                 placeholder="Enter name"
                             />
                         { formErrors.name && <span className="text-danger"> {formErrors.name}<br/> </span> }
@@ -90,6 +129,7 @@ const CustomerForm = (props) => {
                                 name="mobile" 
                                 value={mobile} 
                                 onChange={handleChange}
+                                onBlur={handleError}
                                 placeholder="Enter mobile"
                             />
                         { formErrors.mobile && <span className="text-danger"> {formErrors.mobile}<br/> </span> }
@@ -105,6 +145,7 @@ const CustomerForm = (props) => {
                                 name="email" 
                                 value={email} 
                                 onChange={handleChange}
+                                onBlur={handleError}
                                 placeholder="Enter email"
                             />
                         { formErrors.email && <span className="text-danger">{formErrors.email}<br/></span>}
