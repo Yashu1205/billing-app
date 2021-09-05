@@ -3,7 +3,7 @@ const Home = (props) => {
 
 
     return(
-        <div className="container mt-3">
+        <div className="container mt-3 " style={{marginLeft: '15%'}}>
             <h3 style={{textAlign: 'center'}}>Welcome to BMS</h3>
             <div className="row mt-3">
                 <img src="billing.png" alt="e-invoicing" style={{height: '350px'}} />
