@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import isEmail from 'validator/lib/isEmail'
 
-import { removeServerErrors, startUserRegistration } from '../../actions/UserAction'
+import { removeServerErrors, startUserRegistration } from '../../actions/userAction'
 
 const UserRegistration  = (props) => {
     const [signupForm, setSignupForm] = useState({username:'', email:'',password:'', businessName:'', address:''})
