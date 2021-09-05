@@ -5,7 +5,6 @@ import PaginationTable from '../PaginationTable'
 import formatDataForPagination from "../../helpers/formatDataForPagination"
 import ProductItem from "./ProductItem"
 import AddProduct from "./AddProduct"
-import '../../css/header.css'
 
 const ProductsList = (props) => {
     const perPage = 5
@@ -66,7 +65,7 @@ const ProductsList = (props) => {
         return result
     }
 
-    const handleSort = (e, sortType) => {
+    const handleSort = (e) => {
         const inputValue = e.target.value
         setOrderBy(inputValue)
         let sortedProducts = []
@@ -121,22 +120,30 @@ const ProductsList = (props) => {
 
             <div className="row mt-3">
                 <div className="col-md-10">
-                    {searchResults.length > 0 &&
-                        searchResults.slice(startIndex, endIndex).map(product => {
-                            return <ProductItem key={product._id} 
-                                                 {...product} 
-                                                 removeProduct={removeProduct} />
-                        })
+                    {searchResults.length > 0 ? (
+                            searchResults.slice(startIndex, endIndex).map(product => {
+                                return <ProductItem key={product._id} 
+                                                    {...product} 
+                                                    removeProduct={removeProduct} />
+                            })
+                        ) : (
+                            <div className="card">
+                                <div className="card-body">
+                                    <h5>No Customers</h5>
+                                    <h6>Add New Customer</h6>
+                                </div>
+                            </div>
+                        )
                     }
                     { showModal &&
                         <AddProduct showModal={showModal} handleShowModal={handleShowModal} />
                     }
                 </div>
             </div>
-            {/* {searchResults.length > 0 &&
+            {searchResults.length > 0 &&
                     <PaginationTable currentPage={currentPage} perPage={perPage} totalData={products.length}
                                      handleClick={handleClick} />
-            } */}
+            }
 
         </>
     )

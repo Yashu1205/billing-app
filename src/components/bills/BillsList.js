@@ -9,6 +9,7 @@ import AddBill from './AddBill'
 const BillsList = (props) => {
     const perPage = 5
     const [ searchInput, setSearchInput] = useState('')
+    const [orderBy, setOrderBy] = useState('')
     const [searchResults, setSearchResults] = useState([])
     const [showModal, setShowModal] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
@@ -34,7 +35,7 @@ const BillsList = (props) => {
 
     const getCustomerName = (customerId) => {
         const result = customers.find(cust => cust._id === customerId)
-        return result.name
+        return result ? result.name : ''
     }
     
     const removeBill = (id) => {
@@ -56,6 +57,48 @@ const BillsList = (props) => {
         setSearchResults(finalResult)
     }
 
+    const getSortedResult = (key) => {
+        let result = []
+        if(key === 'name'){
+            result = searchResults.sort((a,b) => {
+                const custNameA =  customers.find(cust => cust._id === a.customer)
+                const custNameB =  customers.find(cust => cust._id === b.customer)
+                const aName = custNameA.name.toLowerCase(),   bName = custNameB.name.toLowerCase()
+    
+                if(aName < bName){
+                    return -1
+                }
+                if(aName > bName){
+                    return 1
+                }
+                return 0
+            })
+        }
+        else{
+            result = searchResults.sort((a, b) => {
+                return new Date(...a.date.split('/').reverse()) - new Date(...b.date.split('/').reverse());
+            })
+        }
+        return result
+    }
+
+    const handleSort = (e) => {
+        setOrderBy(e.target.value)
+        let result = []
+        if(e.target.value === 'nameAsc'){
+            result = getSortedResult('name')
+        } else if(e.target.value === 'nameDesc'){
+            result = getSortedResult().reverse()
+        }else if(e.target.value === 'dateAsc'){
+            result = getSortedResult('date')
+        } else if(e.target.value === 'dateDesc'){
+            result = getSortedResult('date').reverse()
+        }else{
+            result = [...bills]
+        }
+        setSearchResults(result)
+    }
+
     const handleClick = (pageNumber) => {
         setCurrentPage(pageNumber)
         const formatData = formatDataForPagination(pageNumber, perPage)
@@ -71,11 +114,13 @@ const BillsList = (props) => {
                     <input type="text" value={searchInput} onChange={handleSearch} placeholder="search bills by customer name" className="form-control" /> 
                 </div>
                 <div className="col-md-4">
-                    {/* <select name="sort" className="form-select" value={orderBy} onChange={handleSort} placeholder="Sort customers">
-                        <option value="">Sort customers</option>
-                        <option value="ascending">Sort by name - ascending</option>
-                        <option value="descending">Sort by name - descending</option>
-                    </select> */}
+                    <select name="sort" className="form-select" value={orderBy} onChange={handleSort} placeholder="Sort customers">
+                        <option value="">Sort bills</option>
+                        <option value="nameAsc">Sort by customer name - ascending</option>
+                        <option value="nameDesc">Sort by customer name - descending</option>
+                        <option value="dateAsc">Sort by date - ascending</option>
+                        <option value="dateDesc">Sort by date - descending</option>
+                    </select>
                 </div> 
                 <div className="col-md-4">
                     <button className="btn add" onClick={handleShowModal}>Add new bill</button>

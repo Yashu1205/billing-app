@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react' 
 import { useSelector, useDispatch } from 'react-redux'
 import { startDeleteCustomer } from "../../actions/customersAction"
-import CustomerItem from "./CustomerItem"
-import AddCustomer from "./AddCustomer"
 import PaginationTable from '../PaginationTable'
 import formatDataForPagination from '../../helpers/formatDataForPagination'
+import getSearchResult from '../../helpers/search'
+import getSortedResult from '../../helpers/sort'
+import CustomerItem from "./CustomerItem"
+import AddCustomer from "./AddCustomer"
+
 import '../../css/header.css'
 
 const CustomersList = (props) => {
     const  perPage = 5
     const [query, setQuery] = useState('')
+    const [orderBy, setOrderBy] = useState('')
     const [searchResults, setSearchResults] = useState([])
     const [showModal, setShowModal] = useState(false)
-    const [orderBy, setOrderBy] = useState('')
     const [currentPage, setCurrentPage] = useState(1)
     const [startIndex, setStartIndex] = useState(0)
     const [endIndex, setEndIndex] = useState(perPage)
@@ -34,43 +37,20 @@ const CustomersList = (props) => {
         dispatch(startDeleteCustomer(id))
     } 
 
-    const getSearchResult = (query) => {
-        const result = customers.filter(customer => {
-            return customer.name.toLowerCase().includes(query.toLowerCase()) || 
-                    customer.email.toLowerCase().includes(query.toLowerCase()) ||
-                    customer.mobile.includes(query)
-        })
-        setSearchResults(result)
-    }
-
     const handleSearchChange = (e) => {
         const searchInput = e.target.value
         setQuery(searchInput)
-        getSearchResult(searchInput)
+        const result = getSearchResult(customers, searchInput, 'customers')
+        setSearchResults(result)
     }    
     
-    const getSortedResult = () => {
-        const result = searchResults.sort((a,b) => {
-            const aName =  a.name.toLowerCase(),   bName = b.name.toLowerCase()
-
-            if(aName < bName){
-                return -1
-            }
-            if(aName > bName){
-                return 1
-            }
-            return 0
-        })
-        return result
-    }
-
     const handleSort = (e) => {
         setOrderBy(e.target.value)
         let sortedCustomers = []
         if(e.target.value === 'ascending'){
-            sortedCustomers = getSortedResult()
+            sortedCustomers = getSortedResult(customers, 'customers')
         } else if(e.target.value === 'descending'){
-            sortedCustomers = getSortedResult().reverse()
+            sortedCustomers = getSortedResult(customers, 'customers').reverse()
         } else {
             sortedCustomers = [...customers]
         }
@@ -107,12 +87,19 @@ const CustomersList = (props) => {
             
             <div className="row mt-3">
                 <div className="col-md-10">
-                    {searchResults.length > 0 &&
+                    {searchResults.length > 0 ? (
                         searchResults.slice(startIndex, endIndex).map(customer => {
                             return <CustomerItem key={customer._id} 
                                                  {...customer} 
                                                  removeCustomer={removeCustomer} />
-                        })
+                        })  ) : (
+                            <div className="card">
+                                <div className="card-body">
+                                    <h5>No Customers</h5>
+                                    <h6>Add New Customer</h6>
+                                </div>
+                            </div>
+                        )
                     }
                     { showModal &&
                         <AddCustomer showModal={showModal} handleShowModal={handleShowModal} />
@@ -120,12 +107,10 @@ const CustomersList = (props) => {
                 </div>
             </div>
 
-            {/* {searchResults.length > 0 &&
-                <div >
+            {searchResults.length > 0 &&
                     <PaginationTable currentPage={currentPage} perPage={perPage} totalData={customers.length}
                                      handleClick={handleClick} />
-                </div>
-            } */}
+            }
         </>
     )
 }

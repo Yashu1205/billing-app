@@ -1,4 +1,4 @@
-import { Route, NavLink, withRouter } from 'react-router-dom'
+import { Route, NavLink, withRouter, Switch } from 'react-router-dom'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { faHome } from '@fortawesome/free-solid-svg-icons'
 
@@ -11,6 +11,7 @@ import Login from './User/Login'
 import CustomersContainer from './customers/CustomersContainer'
 import ProductsContainer from './products/ProductsContainer'
 import BillsContainer from './bills/BillsContainer'
+import PageNotFound from './PageNotFound'
 
 const NavBar = (props) => {
     const isLoggedIn = localStorage.getItem('token') || false
@@ -21,7 +22,7 @@ const NavBar = (props) => {
     }
 
     return (
-        <div className="d-flex flex-row " style={{display:'inline', height: '100%'}}>
+        <div className="d-flex flex-row ">
             <div className="sidenav">
                 <h1 style={{textAlign: 'center'}}>BMS</h1>
                 <ul style={{listStyleType: 'none'}} className= "nav nav-pills">                   
@@ -77,12 +78,15 @@ const NavBar = (props) => {
                 </ul>
                 
             </div>
-            <ProtectedRoute path="/" component={Home} isLoggedIn={isLoggedIn} exact={true}/>
-            <ProtectedRoute path="/register" component={Register} isLoggedIn={isLoggedIn} />
-            <ProtectedRoute path="/login" component={Login} isLoggedIn={isLoggedIn} />
-            <PrivateRoute path="/customers" component={CustomersContainer} isLoggedIn={isLoggedIn}/>
-            <PrivateRoute path="/products" component={ProductsContainer} isLoggedIn={isLoggedIn}/>
-            <PrivateRoute path="/bills" component={BillsContainer} isLoggedIn={isLoggedIn}/>
+            <Switch>
+                <ProtectedRoute path="/" component={Home} isLoggedIn={isLoggedIn} exact={true}/> 
+                <ProtectedRoute path="/register" component={Register} isLoggedIn={isLoggedIn} />
+                <ProtectedRoute path="/login" component={Login} isLoggedIn={isLoggedIn} />
+                <PrivateRoute path="/customers" component={CustomersContainer} isLoggedIn={isLoggedIn}/>
+                <PrivateRoute path="/products" component={ProductsContainer} isLoggedIn={isLoggedIn}/>
+                <PrivateRoute path="/bills" component={BillsContainer} isLoggedIn={isLoggedIn}/> 
+                <Route component={PageNotFound} />
+            </Switch>
 
         </div>
     )
