@@ -18,7 +18,7 @@ const Home = (props) => {
                             You can register using your own credentials or for testing purpose you can use the below provided login credentials.
                             <br/> 
                         </p>
-                        <p><strong>Email:</strong> admin@gmail.com</p>
+                        <p><strong>Email:</strong> admin321@gmail.com</p>
                         <p><strong>Password: </strong>test1234</p>
                     </div>
                 </div>
