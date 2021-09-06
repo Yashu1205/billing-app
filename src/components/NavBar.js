@@ -1,6 +1,4 @@
 import { Route, NavLink, withRouter, Switch } from 'react-router-dom'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faHome } from '@fortawesome/free-solid-svg-icons'
 
 import '../css/navbar.css' 
 import PrivateRoute from './PrivateRoute'
@@ -27,14 +25,18 @@ const NavBar = (props) => {
             <div className="sidenav">
                 <h1 style={{textAlign: 'center'}}>BMS</h1>
                 <ul style={{listStyleType: 'none'}} className= "nav nav-pills">                   
-
+                    <li>
+                        <NavLink exact to="/" activeClassName="active">
+                            Home
+                        </NavLink>
+                    </li>
                     {
                         isLoggedIn ? (
                             <>
                             <li>
-                                <NavLink  to="/dashboard" activeClassName="active">
+                                {/* <NavLink  to="/dashboard" activeClassName="active">
                                     Dashboard
-                                </NavLink>
+                                </NavLink> */}
                             </li>
                             <li>
                                 <NavLink  to="/customers" activeClassName="active">
@@ -61,12 +63,7 @@ const NavBar = (props) => {
                             </li>
                             </>
                         ) : (
-                            <>
-                            <li>
-                                <NavLink exact to="/" activeClassName="active">
-                                    Home
-                                </NavLink>
-                            </li>
+                            <>                            
                             <li>
                                 <NavLink  to="/register" activeClassName="active">
                                     Register
@@ -85,7 +82,7 @@ const NavBar = (props) => {
                 
             </div>
             <Switch>
-                <ProtectedRoute path="/" component={Home} isLoggedIn={isLoggedIn} exact={true}/> 
+                <Route path="/" component={Home} exact={true}/> 
                 <ProtectedRoute path="/register" component={Register} isLoggedIn={isLoggedIn} />
                 <ProtectedRoute path="/login" component={Login} isLoggedIn={isLoggedIn} />
                 <PrivateRoute path="/profile" component={UserAccount} isLoggedIn={isLoggedIn} />
