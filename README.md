@@ -24,7 +24,7 @@ Packages used:
 - axios 
 - html2pdf.js
 - luxon 
-- react-paginate
+- reactstrap
 - react-select 
 - react-spinner 
 - sweetalert2 
