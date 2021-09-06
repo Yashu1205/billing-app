@@ -20,13 +20,12 @@ Bills Module:
 Additional features:
 Searching and sorting functionality is available for customers, products and bills.
 
-Packages used:
--axios
--html2pdf.js
--luxon
--reactstrap
--react-select
--react-paginate
--react-spinners
--sweetalert2
--validator
+Packages used: 
+- axios 
+- html2pdf.js
+- luxon 
+- react-paginate
+- react-select 
+- react-spinner 
+- sweetalert2 
+- validator
