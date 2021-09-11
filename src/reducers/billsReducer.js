@@ -11,7 +11,7 @@ const billsReducer = (state = billsInitialValues.data, action) => {
 
         case ADD_BILL: {
             const newBills = [action.payload, ...state.bills]
-            return {...state, bills: newBills}
+            return {...state, bills: newBills, billDetails: action.payload}
         }
 
         case DELETE_BILL: {

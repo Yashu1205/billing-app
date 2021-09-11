@@ -9,7 +9,7 @@ export const REMOVE_ERRORS = 'REMOVE_ERRORS'
 export const IS_LOGIN = 'IS_LOGIN'
 export const USER_ACCOUNT = 'USER_ACCOUNT'
 
-export const startUserRegistration = (formData, resetForm, redirectToLogin) => {
+export const startUserRegistration = (formData, resetForm, history) => {
     return (dispatch) => {
                 axios.post(`${baseUrl}/register`, formData)
                      .then((response) => {
@@ -24,7 +24,7 @@ export const startUserRegistration = (formData, resetForm, redirectToLogin) => {
                              resetForm()
                              removeServerErrors()
                              Swal.fire('Successful', 'Successfully Registered','success')
-                             redirectToLogin()
+                             history.push('/login')
                          }
                      })
                      .catch((error) => {
@@ -33,7 +33,7 @@ export const startUserRegistration = (formData, resetForm, redirectToLogin) => {
     }
 }
 
-export const startLoginUser = (formData, resetForm, redirectToHome) => {
+export const startLoginUser = (formData, resetForm, history) => {
     return (dispatch) => {
             axios.post(`${baseUrl}/login`, formData)
                  .then((response) => {
@@ -44,9 +44,8 @@ export const startLoginUser = (formData, resetForm, redirectToHome) => {
                      else{
                          localStorage.setItem('token', response.data.token)
                          resetForm()
-                         dispatch(isLogin())
                          Swal.fire('Success', 'Successfully Logged in','success')
-                         redirectToHome()
+                         history.push('/dashboard')
                      }
                  })
                  .catch((error) => {
@@ -82,12 +81,6 @@ const setServerErrors = (errors) => {
 export const removeServerErrors = () => {
     return {
         type: REMOVE_ERRORS
-    }
-}
-
-const isLogin = () => {
-    return {
-        type: IS_LOGIN
     }
 }
 

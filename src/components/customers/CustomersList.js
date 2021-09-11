@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react' 
 import { useSelector, useDispatch } from 'react-redux'
 import { startDeleteCustomer } from "../../actions/customersAction"
+import { BsFillPersonPlusFill } from 'react-icons/bs'
 import PaginationTable from '../PaginationTable'
 import formatDataForPagination from '../../helpers/formatDataForPagination'
-import getSearchResult from '../../helpers/search'
+import { getSearchResult } from '../../helpers/search'
 import getSortedResult from '../../helpers/sort'
 import CustomerItem from "./CustomerItem"
 import AddCustomer from "./AddCustomer"
@@ -48,9 +49,9 @@ const CustomersList = (props) => {
         setOrderBy(e.target.value)
         let sortedCustomers = []
         if(e.target.value === 'ascending'){
-            sortedCustomers = getSortedResult(customers, 'customers')
+            sortedCustomers = getSortedResult(searchResults, 'name')
         } else if(e.target.value === 'descending'){
-            sortedCustomers = getSortedResult(customers, 'customers').reverse()
+            sortedCustomers = getSortedResult(searchResults, 'name').reverse()
         } else {
             sortedCustomers = [...customers]
         }
@@ -69,17 +70,19 @@ const CustomersList = (props) => {
         <>
             <div className="row mb-3 customer-header">                
                 <div className="col-md-4">
-                    <input type="text" value={query} onChange={handleSearchChange} placeholder="search customer" className="form-control" /> 
+                    <input type="text" value={query} onChange={handleSearchChange} placeholder="Search customers by name" style={{fontFamily:'Arial FontAwesome'}}  className="form-control" /> 
                 </div>
                 <div className="col-md-4">
-                    <select name="sort" className="form-select" value={orderBy} onChange={handleSort} placeholder="Sort customers">
-                        <option value="">Sort customers</option>
-                        <option value="ascending">Sort by name - ascending</option>
-                        <option value="descending">Sort by name - descending</option>
+                    <select name="sort" className="form-select" value={orderBy} onChange={handleSort} placeholder="Order customers by:">
+                        <option value="">Order customers by</option>
+                        <option value="ascending">Name - ascending</option>
+                        <option value="descending">Name - descending</option>
                     </select>
                 </div> 
                 <div className="col-md-4">
-                    <button className="btn add" onClick={handleShowModal}>Add New Customer</button>
+                    <button className="btn add" onClick={handleShowModal}>
+                        <BsFillPersonPlusFill size="1.5em"/> 
+                    </button>
                 </div>
             </div>
 
@@ -108,7 +111,7 @@ const CustomersList = (props) => {
             </div>
 
             {searchResults.length > 0 &&
-                    <PaginationTable currentPage={currentPage} perPage={perPage} totalData={customers.length}
+                    <PaginationTable currentPage={currentPage} perPage={perPage} totalData={searchResults.length}
                                      handleClick={handleClick} />
             }
         </>

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
-import { removeServerErrors, startLoginUser } from "../../actions/UserAction"
+import { removeServerErrors, startLoginUser } from "../../actions/userAction"
 
 const Login = (props) => {
     const [email, setEmail] = useState('')
@@ -49,8 +49,6 @@ const Login = (props) => {
         e.preventDefault()
         runValidations()
 
-        const redirectToHome = () => { props.history.push('/customers')}
-
         if(Object.keys(errors).length > 0){
             setLoginErrors(errors)
         }
@@ -60,7 +58,7 @@ const Login = (props) => {
                 email: email,
                 password: password
             }
-            dispatch(startLoginUser(formData, resetForm, redirectToHome))
+            dispatch(startLoginUser(formData, resetForm, props.history))
         }
     }
 

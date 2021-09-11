@@ -1,4 +1,4 @@
-const getSearchResult = (data, query, key) => {
+export const getSearchResult = (data, query, key) => {
     let result = []
     if(key === 'customers'){
         result = data.filter(customer => {
@@ -15,4 +15,12 @@ const getSearchResult = (data, query, key) => {
     return result
 }
 
-export default getSearchResult
+export const getBillsSearchResult = (customers, bills, searchInput) => {
+    let finalResult = []
+    const customerBills = customers.filter(customer => customer.name.toLowerCase().includes(searchInput.toLowerCase()))
+    customerBills.forEach((custBill) => {
+        const result = bills.filter(bill => bill.customer === custBill._id)
+        finalResult = finalResult.concat(result)
+    })
+    return finalResult
+}

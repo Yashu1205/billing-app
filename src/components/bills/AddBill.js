@@ -1,3 +1,4 @@
+import { useHistory } from 'react-router'
 import { useSelector, useDispatch } from 'react-redux'
 import { startAddBill } from '../../actions/billsAction'
 import BillForm from './BillForm'
@@ -8,13 +9,17 @@ const AddBill = (props) => {
     const customers = useSelector(state => {
         return state.customer
     })
+    let history = useHistory()
 
     const products = useSelector(state => {
         return state.product
     })
-
+    const redirectToBillDetails = (billId) => {
+        console.log(billId)
+        history.push(`/bill-detail/${billId}`)
+    }
     const formSubmission = (formData) => {
-        dispatch(startAddBill(formData, handleShowModal))
+        dispatch(startAddBill(formData, handleShowModal,redirectToBillDetails))
     }
 
     return (

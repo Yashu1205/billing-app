@@ -10,7 +10,7 @@ const  ProtectedRoute = (props) =>  {
                 <Route path={path} component = {component} exact={exact}/>
 
             ) : (
-                <Redirect to="/customers" />
+                <Redirect to="/dashboard" />
             )
         }
         </>

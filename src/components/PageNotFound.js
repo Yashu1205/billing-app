@@ -1,11 +1,16 @@
-const PageNotFound = () => {
 
+const PageNotFound = () => {
+    const imgStyle = {
+        width: '86%',
+        height: '100%',
+        zIndex: '1',
+        position: 'fixed',
+        marginLeft: '5%'
+    }
 
     return (
-        <div className="container" style={{marginLeft: '12%', overflowY:'hidden',objectFit:'contain'}}>
-            <div className="row ">
-                <img src="pagenotfound.png" alt="e-invoicing"  />
-            </div>
+        <div className="container" >
+            <img src="404.png" alt="e-invoicing" style={imgStyle}  />
         </div>
     )
 }

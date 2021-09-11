@@ -9,7 +9,6 @@ const CustomerForm = (props) => {
     const [mobile, setMobile] = useState(custMobile ? custMobile : '')
     const [formErrors, setFormErrors] = useState({})
     let errors = {}
-    const pattern = new RegExp(/^[0-9\b]+$/)
 
     const handleChange = (e) => {
         const inputName = e.target.name
@@ -155,8 +154,8 @@ const CustomerForm = (props) => {
                     <div className="row">
                         <div className="col-md-3"></div>
                         <div className="col-md-9">
-                            <input type="submit" value={title ? "save" : "update"} className="btn btn-primary " style={{marginRight: '5px'}}/>
-                            <button onClick={handleCancel } className="btn btn-secondary">Cancel</button>
+                            <input type="submit" value={title ? "save" : "update"} className="btn btn-primary btn-sm" style={{marginRight: '5px'}}/>
+                            <button onClick={handleCancel } className="btn btn-secondary btn-sm">Cancel</button>
                         </div>    
                     </div>
                     

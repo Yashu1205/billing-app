@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { startDeleteBill } from '../../actions/billsAction'
+import { getCustomerName } from '../../helpers/getName'
+import { getBillsSearchResult } from '../../helpers/search'
+import { BsFilePlus } from 'react-icons/bs'
 import PaginationTable from '../PaginationTable'
 import formatDataForPagination from '../../helpers/formatDataForPagination'
 import BillItem from './BillItem'
@@ -15,7 +18,6 @@ const BillsList = (props) => {
     const [currentPage, setCurrentPage] = useState(1)
     const [startIndex, setStartIndex] = useState(0)
     const [endIndex, setEndIndex] = useState(perPage)
-    let finalResult = []
 
     const dispatch = useDispatch() 
     const { customers } = useSelector((state) => {
@@ -32,11 +34,6 @@ const BillsList = (props) => {
     const handleShowModal = () => {
         setShowModal(!showModal)
     }
-
-    const getCustomerName = (customerId) => {
-        const result = customers.find(cust => cust._id === customerId)
-        return result ? result.name : ''
-    }
     
     const removeBill = (id) => {
         dispatch(startDeleteBill(id))
@@ -45,25 +42,17 @@ const BillsList = (props) => {
     const handleSearch = (e) => {
         const inputSearch = e.target.value
         setSearchInput(inputSearch)
-        getSearchResult(inputSearch)
-    }
-
-    const getSearchResult = (searchInput) => {
-        const customerBills = customers.filter(customer => customer.name.toLowerCase().includes(searchInput.toLowerCase()))
-        customerBills.forEach((custBill) => {
-            const result = bills.filter(bill => bill.customer === custBill._id)
-            finalResult = finalResult.concat(result)
-        })
-        setSearchResults(finalResult)
+        const billsSearchResult = getBillsSearchResult(customers, bills, inputSearch)
+        setSearchResults(billsSearchResult)
     }
 
     const getSortedResult = (key) => {
         let result = []
         if(key === 'name'){
             result = searchResults.sort((a,b) => {
-                const custNameA =  customers.find(cust => cust._id === a.customer)
-                const custNameB =  customers.find(cust => cust._id === b.customer)
-                const aName = custNameA.name.toLowerCase(),   bName = custNameB.name.toLowerCase()
+                const customerA =  customers.find(cust => cust._id === a.customer)
+                const customerB =  customers.find(cust => cust._id === b.customer)
+                const aName = customerA.name.toLowerCase(),   bName = customerB.name.toLowerCase()
     
                 if(aName < bName){
                     return -1
@@ -88,7 +77,7 @@ const BillsList = (props) => {
         if(e.target.value === 'nameAsc'){
             result = getSortedResult('name')
         } else if(e.target.value === 'nameDesc'){
-            result = getSortedResult().reverse()
+            result = getSortedResult('name').reverse()
         }else if(e.target.value === 'dateAsc'){
             result = getSortedResult('date')
         } else if(e.target.value === 'dateDesc'){
@@ -115,7 +104,7 @@ const BillsList = (props) => {
                 </div>
                 <div className="col-md-4">
                     <select name="sort" className="form-select" value={orderBy} onChange={handleSort} placeholder="Sort customers">
-                        <option value="">Sort bills</option>
+                        <option value="">Order bills by</option>
                         <option value="nameAsc">customer name - ascending</option>
                         <option value="nameDesc">customer name - descending</option>
                         <option value="dateAsc">date - ascending</option>
@@ -123,10 +112,12 @@ const BillsList = (props) => {
                     </select>
                 </div> 
                 <div className="col-md-4">
-                    <button className="btn add" onClick={handleShowModal}>Add new bill</button>
+                    <button className="btn add" onClick={handleShowModal}>
+                        <BsFilePlus size="1.5em" />
+                    </button>
                 </div>
             </div>
-            <h4 style={{marginLeft: '15px'}}>Listing Bills - {bills.length} </h4>
+            <h4 style={{marginLeft: '15px'}}>Listing Bills - {searchResults.length} </h4>
 
             <div className="row mt-3">
                 <div className="col-md-10">
@@ -134,7 +125,7 @@ const BillsList = (props) => {
                         searchResults.slice(startIndex, endIndex).map(bill => {
                             return <BillItem key={bill._id}
                                                  {...bill} 
-                                                 customerName={getCustomerName(bill.customer)}
+                                                 customerInfo={getCustomerName(customers, bill.customer)}
                                                  removeBill={removeBill} />
                         })
                     }
@@ -146,7 +137,7 @@ const BillsList = (props) => {
 
             {searchResults.length > 0 &&
                 <div >
-                    <PaginationTable currentPage={currentPage} perPage={perPage} totalData={bills.length}
+                    <PaginationTable currentPage={currentPage} perPage={perPage} totalData={searchResults.length}
                                      handleClick={handleClick} />
                 </div>
             }

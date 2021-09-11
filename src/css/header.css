@@ -1,6 +1,6 @@
 .customer-header{
     padding: 14px 10px;
-    background-color: #ede3e3;
+    background-color: #009688;
     width: 84%;
     border-radius: 15px;
 }
@@ -10,16 +10,20 @@
     margin: 15px 3px;
 }
 
+
 .detail p{
     padding: 10px;
     margin: 5px;
 }
 .add {
-    background-color: #6064df;
+    background-color: #070a7a;
     float: right;
+    color: white;
+}
+.add :hover{
     color: white;
 }
 
 .item-container {
-    margin-left: 16%;
+    margin-left: 20%;
 }

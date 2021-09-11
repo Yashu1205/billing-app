@@ -1,16 +1,24 @@
 import { useState } from "react"
+import { useSelector } from 'react-redux' 
 import EditCustomer from "./EditCustomer"
 import Swal from 'sweetalert2'
+import { BsPencilSquare, BsFillTrashFill } from 'react-icons/bs'
 
 const CustomerItem = (props) => {
     const [showModal, setShowModal] = useState(false)
     const { _id, name, email, mobile, removeCustomer } = props
 
+    const { bills } = useSelector((state) => {
+        return state.bill
+    })
+
     const handleShowModal = () => setShowModal(!showModal)
+
+    const customerBills = bills.filter(bill => bill.customer === _id)
 
     const handleRemoveCustomer = () => {
             Swal.fire({
-                title: 'Are you sure?',
+                title: `${customerBills.length} bills were created for this customer. Are you sure to delete?`,
                 text: "You won't be able to revert this!",
                 icon: 'warning',
                 showCancelButton: true,
@@ -30,11 +38,11 @@ const CustomerItem = (props) => {
         <div className="card mb-3">
             <div className="row">
                 <div className="col-md-8 detail">
-                    <p>{name} - {mobile} { email && `- ${email}`}</p>
+                    <pre style={{margin:'20px'}}>{name}  {mobile} { email && `- ${email}`}</pre>
                 </div>
                 <div className="col-md-4 action">
-                    <button className="btn btn-sm btn-danger" onClick={handleRemoveCustomer}>Delete</button>
-                    <button className="btn btn-sm btn-info" onClick={handleShowModal}>Edit</button>
+                    <button className="btn btn-sm btn-danger" onClick={handleRemoveCustomer}><BsFillTrashFill size="1.5em" /></button>
+                    <button className="btn btn-sm btn-info" onClick={handleShowModal}><BsPencilSquare size="1.5em"/></button>
                 </div>
             </div>
             {

@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import Select from 'react-select'
+import { FaCartPlus } from 'react-icons/fa'
+import { BsXSquareFill } from 'react-icons/bs'
 
 const today = new Date()
 
@@ -32,17 +34,36 @@ const BillForm = (props) => {
         setProduct(product)
     }
 
+    const getProductPrice = (productId) => {
+        const product = products.find(prod => prod._id === productId )
+        return product.price
+    }
+
     const addToCart = (e) => {
         e.preventDefault()
-        const newCartItem = {id: product.value, name: product.label, quantity: quantity}
-        setCartItems([newCartItem, ...cartItems])
+        const existingItem = cartItems.find(item => item.id === product.value)
+        if(existingItem){
+            const newCartItems = cartItems.map(item => {
+                if(item.id === product.value){
+                    return {...item, quantity: item.quantity + 1, subtotal: getProductPrice(product.value) + item.subtotal}
+                } else{
+                    return {...item}
+                }
+            }) 
+            setCartItems(newCartItems)
+        }
+        else{
+            const newCartItem = {id: product.value, name: product.label, quantity: quantity, subtotal: getProductPrice(product.value)*quantity}
+            setCartItems([newCartItem, ...cartItems])
+        }
         setProduct('')
     }
 
     const handleQuantity = (id, count) => {
         const newCartResult = cartItems.map(cartItem => {
             if(cartItem.id === id){
-                return {...cartItem, quantity: cartItem.quantity+count }
+                let newItemCount = cartItem.quantity + count 
+                return {...cartItem, quantity: newItemCount , subtotal: newItemCount * getProductPrice(id)}
             }
             else{
                 return {...cartItem}
@@ -55,6 +76,7 @@ const BillForm = (props) => {
         const cartResult = cartItems.filter(item => item.id !== id)
         setCartItems(cartResult)
     }
+
     const runValidations = () => {
         if(customer === ''){
             errors.customer = 'customer is required'
@@ -63,10 +85,10 @@ const BillForm = (props) => {
             errors.product = 'product is required'
         }
     }
+
     const handleSubmit = (e) => {
         e.preventDefault()
         runValidations()
-
         const lineItems = cartItems.map(cartItem => {
             return {product: cartItem.id, quantity: cartItem.quantity}
         })
@@ -85,8 +107,16 @@ const BillForm = (props) => {
         }
     }
 
+    const handleCancel = () => {
+        handleShowModal()
+    }
+
     return (
-        <Modal show={showModal } size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+        <Modal show={showModal }
+               onHide={handleCancel}
+               size="lg" 
+               aria-labelledby="contained-modal-title-vcenter" 
+               centered>
             <Modal.Header>
                 <Modal.Title id="contained-modal-title-vcenter">
                     Create New Bill
@@ -105,40 +135,45 @@ const BillForm = (props) => {
                             <div div className="mb-2">
                                 <Select name="customer" 
                                         value={customer} 
+                                        placeholder="select customer"
                                         onChange={handleCustomerChange} 
                                         options={customerOptions} />
                                 {formErrors.customer && <span className="text-danger">{formErrors.customer}</span>}
                             </div>
                             <div className="row mb-2">
-                                <div className="col-md-10">
+                                <div className="col-md-8">
                                     <Select name="product" 
                                             value={product} 
+                                            placeholder="select product"
                                             onChange={handleProductChange} 
                                             options={productOptions} />
                                     {formErrors.product && <span className="text-danger">{formErrors.product}</span>} 
 
                                 </div>
-                                <div className="col-md-2">
-                                    <button className="btn btn-sm btn-primary" onClick={addToCart}>Add</button> <br/>     
+                                <div className="col-md-4">
+                                    <button className="btn btn-sm btn-primary" onClick={addToCart} disabled={!product}>
+                                        <FaCartPlus size="1.5em"/>    
+                                    </button> <br/>     
 
                                 </div>
                             </div>
 
-                            <input type="submit" value="save" className="btn btn-primary btn-sm" />
-                            <button onClick={handleShowModal } className="btn btn-secondary btn-sm" style={{marginLeft: '5px'}}>Cancel</button>
+                            <input type="submit" value="Generate" className="btn btn-primary btn-sm" />
+                            <button onClick={handleCancel } className="btn btn-secondary btn-sm" style={{marginLeft: '5px'}}>Cancel</button>
                         
                         </form>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-6"  style={{maxHeight: '260px', overflowY:'scroll'}}>
                         {
                             cartItems.length > 0 &&
                             
                             <table className="table table-borderless">
                                 <thead>
                                     <tr>  
-                                        <th>Product</th>
-                                        <th>Quantity</th>
+                                        <th>Item</th>
+                                        <th>Qty</th>
                                         <th>Remove</th>
+                                        <th>Subtotal</th>
                                     </tr>
                                 </thead>
 
@@ -146,16 +181,19 @@ const BillForm = (props) => {
                                     { cartItems.map(item => {
                                         return (
                                             <tr key={item.id}>
-                                                <td>{item.name}</td>
+                                                <td>{item.name.slice(0,12)}</td>
                                                 <td>
-                                                    <button className="btn btn-light" onClick={() => handleQuantity(item.id,-1)}
+                                                    <button className="btn btn-light btn-sm " onClick={() => handleQuantity(item.id,-1)}
                                                             disabled={item.quantity === 1}> - </button>
                                                         {item.quantity}x
-                                                    <button className="btn btn-light"  onClick={() => handleQuantity(item.id, 1)}> + </button>
+                                                    <button className="btn btn-light btn-sm"  onClick={() => handleQuantity(item.id, 1)}> + </button>
                                                 </td>
                                                 <td>
-                                                    <button onClick={() => removeItemFromCart(item.id)}>Remove</button>
+                                                    <button onClick={() => removeItemFromCart(item.id)} className="btn btn-sm">
+                                                        <BsXSquareFill size="1.3em"/>
+                                                    </button>
                                                 </td>
+                                                <td>{item.subtotal}</td>
                                             </tr>
                                         )
                                         })

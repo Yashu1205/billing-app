@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { BsPlusCircleFill } from 'react-icons/bs'
 import { startDeleteProduct } from "../../actions/productsAction"
+import { getSearchResult } from "../../helpers/search"
+import getSortedResult from '../../helpers/sort'
 import PaginationTable from '../PaginationTable'
 import formatDataForPagination from "../../helpers/formatDataForPagination"
 import ProductItem from "./ProductItem"
@@ -35,35 +38,31 @@ const ProductsList = (props) => {
     const handleSearchChange = (e) => {
         const searchInput = e.target.value
         setQuery(searchInput)
-        getSearchResult(searchInput)
+        const productSearchResult = getSearchResult(products, searchInput, 'products')
+        setSearchResults(productSearchResult)
     } 
 
-    const getSearchResult = (query) => {
-        const result = products.filter(product => product.name.toLowerCase().includes(query.toLowerCase()) )
-        setSearchResults(result)
-    }
-
-    const getSortedResult = (key) => {
-        let result = []
+    // const getSortedResult = (key) => {
+    //     let result = []
         
-        if(key === 'name'){
-            result = searchResults.sort((a,b) => {
-                const aName =  a.name.toLowerCase(),   bName = b.name.toLowerCase()
+    //     if(key === 'name'){
+    //         result = searchResults.sort((a,b) => {
+    //             const aName =  a.name.toLowerCase(),   bName = b.name.toLowerCase()
     
-                if(aName < bName){
-                    return -1
-                }
-                if(aName > bName){
-                    return 1
-                }
-                return 0
-            })
-        } 
-        else{
-            result = searchResults.sort((a,b) => a.price - b.price)
-        }
-        return result
-    }
+    //             if(aName < bName){
+    //                 return -1
+    //             }
+    //             if(aName > bName){
+    //                 return 1
+    //             }
+    //             return 0
+    //         })
+    //     } 
+    //     else{
+    //         result = searchResults.sort((a,b) => a.price - b.price)
+    //     }
+    //     return result
+    // }
 
     const handleSort = (e) => {
         const inputValue = e.target.value
@@ -71,16 +70,16 @@ const ProductsList = (props) => {
         let sortedProducts = []
 
         if(inputValue === 'nameAsc'){
-            sortedProducts = getSortedResult('name')
+            sortedProducts = getSortedResult(searchResults,'name')
         }
         else if(inputValue === 'nameDesc'){
-            sortedProducts = getSortedResult('name').reverse()
+            sortedProducts = getSortedResult(searchResults,'name').reverse()
         }
         else if(inputValue === 'priceAsc'){
-            sortedProducts = getSortedResult('price')
+            sortedProducts = getSortedResult(searchResults,'price')
         }
         else if(inputValue === 'priceDesc'){
-            sortedProducts = getSortedResult('price').reverse()
+            sortedProducts = getSortedResult(searchResults,'price').reverse()
         }
         else {
             sortedProducts = [...products]
@@ -112,11 +111,13 @@ const ProductsList = (props) => {
                     </select>
                 </div> 
                 <div className="col-md-4">
-                    <button className="btn add" onClick={handleShowModal}>Add new product</button>
+                    <button className="btn add" onClick={handleShowModal} >
+                        <BsPlusCircleFill size="1.5em"/>    
+                    </button>
                 </div>
             </div>
 
-            <h4 style={{marginLeft: '15px'}}>Listing Products - { products.length }</h4>
+            <h4 style={{marginLeft: '15px'}}>Listing Products - { searchResults.length }</h4>
 
             <div className="row mt-3">
                 <div className="col-md-10">
@@ -141,7 +142,7 @@ const ProductsList = (props) => {
                 </div>
             </div>
             {searchResults.length > 0 &&
-                    <PaginationTable currentPage={currentPage} perPage={perPage} totalData={products.length}
+                    <PaginationTable currentPage={currentPage} perPage={perPage} totalData={searchResults.length}
                                      handleClick={handleClick} />
             }
 

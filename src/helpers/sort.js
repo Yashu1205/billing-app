@@ -1,6 +1,6 @@
-const getSortedResult = (data, key, sortBy) => {
+const getSortedResult = (data, key) => {
     let result = []
-    if(key === 'customers'){
+    if(key === 'name'){
         result = data.sort((a,b) => {
                     const aName =  a.name.toLowerCase(),   bName = b.name.toLowerCase()
 
@@ -13,7 +13,9 @@ const getSortedResult = (data, key, sortBy) => {
                     return 0
                 })
     }
-    console.log(result)
+    else{
+        result = data.sort((a,b) => a.price - b.price)
+    }
     return result
 }
 

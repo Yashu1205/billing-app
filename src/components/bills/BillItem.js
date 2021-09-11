@@ -1,29 +1,21 @@
 import { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
+import { BsFillEyeFill, BsFillTrashFill } from 'react-icons/bs'
 import { startBillDetails } from "../../actions/billsAction"
 import Swal from 'sweetalert2'
-import { DateTime } from "luxon"
 import ViewBill from "./ViewBill"
+import moment from 'moment'
 
 const BillItem = (props) => {
     const [showBillModal, setShowBillModal] = useState(false)
-    const { _id, date, total, customerName, removeBill } = props
+    const { _id, date, customerInfo, removeBill } = props
 
     const dispatch = useDispatch()
     
     const { billDetails } = useSelector((state) => {
         return state.bill
     })
-
-    const { products } = useSelector((state) => {
-        return state.product
-    })
-    
-    const getProductName = (productId) => {
-        const productName = products.find(prod => prod._id === productId)
-        return productName ? productName.name : '' 
-    }
-    
+        
     const handleShowBillModal = () => setShowBillModal(!showBillModal) 
 
     const handleRemoveBill = () => {
@@ -52,35 +44,26 @@ const BillItem = (props) => {
         <div className="card mb-3">
             <div className="row">
                 <div className="col-md-8 detail">
-                    <p>{customerName} - {DateTime.fromISO(date).toISODate()} {total}</p>
+                    <pre style={{margin:'20px'}}>{customerInfo.name}  {moment(date).format('ll')} </pre>
                 </div>
                 <div className="col-md-4 action">
-                    <button className="btn btn-sm btn-danger" onClick={handleRemoveBill}>Delete</button>
-                    <button className="btn btn-sm btn-info" onClick={getBillDetails}>View</button>
+                    <button className="btn btn-sm btn-danger" onClick={handleRemoveBill}>
+                        <BsFillTrashFill size="1.5em" />
+                    </button>
+                    <button className="btn btn-sm btn-info" onClick={getBillDetails}>
+                        <BsFillEyeFill size="1.5em"/>
+                    </button>
                 </div>
             </div>
             {
-                showBillModal && <ViewBill billDetails={billDetails} showBillModal={showBillModal}
-                customerName={customerName} 
-                handleShowBillModal={handleShowBillModal} 
-                getProductName={getProductName} /> 
+                showBillModal && <ViewBill billDetails={billDetails} 
+                                           showBillModal={showBillModal}
+                                           handleShowBillModal={handleShowBillModal}
+                                           customerInfo={customerInfo}/> 
             }
-        </div>
-        // <div className="card mb-3 p-1">
-        //     <p>{customerName} - {DateTime.fromISO(date).toISODate()} - {total} 
-        //         <button className="btn btn-sm btn-danger" onClick={handleRemoveBill}>
-        //             Delete</button>
-        //         <button className="btn btn-sm btn-info" onClick={getBillDetails}>View</button>
-        //     </p>
-        //     {
-        //         showBillModal && 
-                    // <ViewBill billDetails={billDetails} showBillModal={showBillModal}
-                    //           customerName={customerName} 
-                    //           handleShowBillModal={handleShowBillModal} 
-                    //           getProductName={getProductName} /> 
-        //     }
-        // </div>
-    )
+        </div>    
+        
+        )
 }
 
 export default BillItem

@@ -33,7 +33,7 @@ const ProductForm = (props) => {
         if(name.trim().length === 0){
             errors.name = 'name is required'
         }
-        if(price.trim().length === 0){
+        if(price.toString().trim().length === 0){
             errors.price = 'price is required'
         }
     }
@@ -105,8 +105,8 @@ const ProductForm = (props) => {
                     <div className="row">
                         <div className="col-md-3"></div>
                         <div className="col-md-9">
-                            <input type="submit" value={title ? "save" : "update"} className="btn btn-primary " style={{marginRight: '5px'}}/>
-                            <button onClick={handleCancel } className="btn btn-secondary">Cancel</button>
+                            <input type="submit" value={title ? "save" : "update"} className="btn btn-primary btn-sm " style={{marginRight: '5px'}}/>
+                            <button onClick={handleCancel } className="btn btn-secondary btn-sm">Cancel</button>
                         </div>    
                     </div>
                 </form>

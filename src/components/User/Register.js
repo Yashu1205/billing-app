@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import isEmail from 'validator/lib/isEmail'
 import '../../css/header.css'
 
-import { removeServerErrors, startUserRegistration } from '../../actions/UserAction'
+import { removeServerErrors, startUserRegistration } from '../../actions/userAction'
 
 const UserRegistration  = (props) => {
     const [signupForm, setSignupForm] = useState({username:'', email:'',password:'', businessName:'', address:''})
@@ -58,7 +58,7 @@ const UserRegistration  = (props) => {
             } else{
                 delete errors.email
             }
-        } else if(e.target.value.trim().length !== 0 && e.target.name === 'password') {
+        } else if(e.target.value.trim().length < 8 && e.target.name === 'password') {
             errors = {...formErrors, password: 'password must be at least 8 characters'}
         } else{
             delete errors[e.target.name]
@@ -66,20 +66,16 @@ const UserRegistration  = (props) => {
         setFormErrors({...errors})
     }
 
-    const handleSubmit = (e, formData) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
         runValidations()
         
-        const redirectToLogin = () => {
-            props.history.push('/login')
-        }
-
         if(Object.keys(errors).length > 0){
             setFormErrors({...errors})
         }
         else{
             setFormErrors({})
-            dispatch(startUserRegistration(signupForm, resetForm, redirectToLogin))
+            dispatch(startUserRegistration(signupForm, resetForm, props.history))
         }
     }
 

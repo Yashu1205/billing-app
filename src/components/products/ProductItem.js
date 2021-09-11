@@ -1,5 +1,6 @@
 import { useState } from "react"
 import Swal from "sweetalert2"
+import { BsPencilSquare, BsFillTrashFill } from 'react-icons/bs'
 import EditProduct from './EditProduct'
 
 const ProductItem = (props) => {
@@ -30,11 +31,15 @@ const ProductItem = (props) => {
         <div className="card mb-3">
             <div className="row">
                 <div className="col-md-8 detail">
-                    <p>{name} - {price}</p>
+                    <pre style={{margin:'20px'}}>{name}     Rs.{price}</pre>
                 </div>
                 <div className="col-md-4 action">
-                    <button className="btn btn-sm btn-danger" onClick={handleRemoveProduct}>Delete</button>
-                    <button className="btn btn-sm btn-info" onClick={handleShowModal}>Edit</button>
+                    <button className="btn btn-sm btn-danger" onClick={handleRemoveProduct}>
+                        <BsFillTrashFill size="1.5em" />
+                    </button>
+                    <button className="btn btn-sm btn-info" onClick={handleShowModal}>
+                        <BsPencilSquare size="1.5em" />
+                    </button>
                 </div>
             </div>
             {

@@ -7,13 +7,10 @@ const UserAccount = (props) => {
     return (
         <div className="container mt-3 item-container">
         <div className="row">
-            <div className="col-md-3">
-
-            </div>
-            <div className="col-md-4 card mt-5">
+            <div className="card mt-5" style={{width:"50%"}}>
                 <div style={{margin: '10px', padding: '10px'}}> 
                 <h3  style={{textAlign: 'center'}}>My Profile</h3>
-                <table className="table table-borderless">
+                <table className="table table-borderless table-striped">
                     <thead></thead>
                     <tbody>
                         <tr>

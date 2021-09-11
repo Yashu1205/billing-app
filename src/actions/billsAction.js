@@ -27,7 +27,7 @@ export const startGetBills = () => {
     }
 }
 
-export const startAddBill = (formData, handleModal) => {
+export const startAddBill = (formData, handleModal, redirectToBillDetails) => {
     return (dispatch) => {
         axios.post(baseUrl, formData, {
                 headers: {
@@ -37,9 +37,9 @@ export const startAddBill = (formData, handleModal) => {
             .then((response) => {
                 const result = response.data
                 dispatch(addBill(result))
-                console.log(result)
                 handleModal()
                 Swal.fire('Success', 'Bill added successfully', 'success')
+                redirectToBillDetails(result._id)
             })
             .catch((error) => {
                 Swal.fire('Oops...', error.message, 'error')
