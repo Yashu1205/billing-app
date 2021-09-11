@@ -1,4 +1,4 @@
-import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
+import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 
 const PaginationTable = (props) => {
     const { perPage, totalData, handleClick, currentPage } = props

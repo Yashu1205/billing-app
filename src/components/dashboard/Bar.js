@@ -1,5 +1,6 @@
 import { Chart } from 'react-google-charts'
 import moment from 'moment'
+
 const Bar = (props) => {
     const { bills } = props
     const currentMonth = moment().month() + 1

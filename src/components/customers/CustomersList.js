@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react' 
 import { useSelector, useDispatch } from 'react-redux'
-import { startDeleteCustomer } from "../../actions/customersAction"
+import { startDeleteCustomer } from '../../actions/customersAction'
 import { BsFillPersonPlusFill } from 'react-icons/bs'
 import PaginationTable from '../PaginationTable'
 import formatDataForPagination from '../../helpers/formatDataForPagination'
@@ -9,7 +9,7 @@ import getSortedResult from '../../helpers/sort'
 import CustomerItem from "./CustomerItem"
 import AddCustomer from "./AddCustomer"
 
-import '../../css/header.css'
+import '../../styles/header.css'
 
 const CustomersList = (props) => {
     const  perPage = 5

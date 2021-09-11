@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import isEmail from 'validator/lib/isEmail'
-import '../../css/header.css'
+import '../../styles/header.css'
 
 import { removeServerErrors, startUserRegistration } from '../../actions/userAction'
 

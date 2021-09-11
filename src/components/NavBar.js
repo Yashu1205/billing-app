@@ -6,7 +6,7 @@ import { BsFillHouseDoorFill, BsFileText, BsFileSpreadsheet, BsGraphUp, BsBoxArr
 import { FaUserFriends, FaUser } from 'react-icons/fa'
 import { MdPowerSettingsNew, MdShoppingBasket } from 'react-icons/md'
 
-import '../css/navbar.css' 
+import '../styles/navbar.css' 
 import PrivateRoute from './PrivateRoute'
 import ProtectedRoute from './ProtectedRoute'
 import Home from './Home'

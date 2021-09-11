@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux'
-import { startAddCustomer } from "../../actions/customersAction"
-import CustomerForm from "./CustomerForm"
+import { startAddCustomer } from '../../actions/customersAction'
+import CustomerForm from './CustomerForm'
 
 const AddCustomer = (props) => {
     const dispatch = useDispatch()

@@ -1,6 +1,6 @@
-import { useDispatch } from "react-redux";
-import { startUpdateProduct } from "../../actions/productsAction";
-import ProductForm from "./ProductForm";
+import { useDispatch } from 'react-redux';
+import { startUpdateProduct } from '../../actions/productsAction';
+import ProductForm from './ProductForm';
 
 const EditProduct = (props) => {
     const { id, name, price, showModal, handleShowModal } = props

@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
 import { BsPlusCircleFill } from 'react-icons/bs'
-import { startDeleteProduct } from "../../actions/productsAction"
-import { getSearchResult } from "../../helpers/search"
+import { startDeleteProduct } from '../../actions/productsAction'
+import { getSearchResult } from '../../helpers/search'
 import getSortedResult from '../../helpers/sort'
 import PaginationTable from '../PaginationTable'
 import formatDataForPagination from "../../helpers/formatDataForPagination"
-import ProductItem from "./ProductItem"
+import ProductItem from './ProductItem'
 import AddProduct from "./AddProduct"
 
 const ProductsList = (props) => {

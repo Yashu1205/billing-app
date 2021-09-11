@@ -1,4 +1,4 @@
-import '../../css/navbar.css'
+import '../../styles/navbar.css'
 import BillsList from './BillsList'
 
 const BillsContainer = (props) => {

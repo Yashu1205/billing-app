@@ -1,4 +1,4 @@
-import { getCustomerName, getProductName } from "../../helpers/getName"
+import { getCustomerName, getProductName } from '../../helpers/getName'
 
 const TopStat = (props) => {
     const { customers, products, bills } = props

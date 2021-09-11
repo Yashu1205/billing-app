@@ -1,6 +1,6 @@
-import { useState } from "react"
+import { useState } from 'react'
 import { useSelector } from 'react-redux' 
-import EditCustomer from "./EditCustomer"
+import EditCustomer from './EditCustomer'
 import Swal from 'sweetalert2'
 import { BsPencilSquare, BsFillTrashFill } from 'react-icons/bs'
 

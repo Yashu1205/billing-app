@@ -1,9 +1,9 @@
-import { useState } from "react"
-import { useSelector, useDispatch } from "react-redux"
+import { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { BsFillEyeFill, BsFillTrashFill } from 'react-icons/bs'
-import { startBillDetails } from "../../actions/billsAction"
+import { startBillDetails } from '../../actions/billsAction'
 import Swal from 'sweetalert2'
-import ViewBill from "./ViewBill"
+import ViewBill from './ViewBill'
 import moment from 'moment'
 
 const BillItem = (props) => {

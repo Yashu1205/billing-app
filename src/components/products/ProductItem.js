@@ -1,5 +1,5 @@
-import { useState } from "react"
-import Swal from "sweetalert2"
+import { useState } from 'react'
+import Swal from 'sweetalert2'
 import { BsPencilSquare, BsFillTrashFill } from 'react-icons/bs'
 import EditProduct from './EditProduct'
 
