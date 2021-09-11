@@ -6,7 +6,7 @@ export const ADD_BILL = 'ADD_BILL'
 export const BILL_DETAILS = 'BILL_DETAILS' 
 export const DELETE_BILL = 'DELETE_BILL'
 
-const baseUrl = "http://dct-billing-app.herokuapp.com/api/bills"
+const baseUrl = "https://dct-billing-app.herokuapp.com/api/bills"
 const token = localStorage.getItem('token')
 
 export const startGetBills = () => {

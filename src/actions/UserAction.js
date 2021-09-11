@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
-const baseUrl = 'http://dct-billing-app.herokuapp.com/api/users'
+const baseUrl = 'https://dct-billing-app.herokuapp.com/api/users'
 const token = localStorage.getItem('token')
 export const REGISTER_USER = 'REGISTER_USER'
 export const SET_ERRORS = 'SET_ERRORS'

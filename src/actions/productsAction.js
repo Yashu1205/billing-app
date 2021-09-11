@@ -1,7 +1,7 @@
 import axios from "axios"
 import Swal from "sweetalert2"
 
-const baseUrl = 'http://dct-billing-app.herokuapp.com/api/products'
+const baseUrl = 'https://dct-billing-app.herokuapp.com/api/products'
 const token = localStorage.getItem('token')
 
 export const SET_PRODUCTS = 'SET_PRODUCTS'
