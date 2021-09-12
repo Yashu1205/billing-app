@@ -2,8 +2,8 @@ import { useSelector } from 'react-redux'
 import { Modal } from 'react-bootstrap'
 import { BsBoxArrowInDown } from 'react-icons/bs'
 import html2pdf from 'html2pdf.js'
-import moment from 'moment'
-import { getProductName } from '../../helpers/getName'
+
+import BillPrint from './BillPrint'
 
 const ViewBill = (props) => {
     const { billDetails, showBillModal, handleShowBillModal, customerInfo} = props
@@ -37,59 +37,11 @@ const ViewBill = (props) => {
                     <BsBoxArrowInDown size="1.5em"/>
                 </button>
             </div>
-            <div id="bill-info" className="card" style={{margin:'50px 20px 0 20px', backgroundColor:'rgb(217 217 12 / 41%)'}}>
-                <div className="card-body " style={{textAlign:'center'}}>
-                    <h5 className="card-title">{userAccount.businessName}</h5>
-                    <h6>Address: {userAccount.address}</h6>
-                    <h6>Email:  {userAccount.email}</h6>
-                </div>
-                <hr/>
-                <div className="d-flex justify-content-between" >
-                    <div style={{padding:'0 10px'}}>
-                        <p>Customer name: {customerInfo.name}</p>
-                        <p>Mobile: {customerInfo.mobile}</p>
-                    </div>
-                    <div style={{padding:'0 10px'}}>
-                        <p>Date: {moment(billDetails.date).format('ll')}</p>
-                    </div>
-                </div>
-                <hr/>
-
-                <table className="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>S.N.</th>
-                            <th>Particulars</th>
-                            <th>MRP</th>
-                            <th>Qty</th>
-                            <th>Subtotal</th>
-                        </tr>
-
-                    </thead>
-                    <tbody>
-                        {
-                            billDetails.lineItems.map((lineItem, index) => {
-                                return (
-                                    <tr key={lineItem._id}>
-                                        <td>{index + 1}</td>
-                                        <td>{getProductName(products,lineItem.product).name}</td>
-                                        <td>{lineItem.price}</td>
-                                        <td>{lineItem.quantity}</td>
-                                        <td>{lineItem.subTotal}</td>  
-                                    </tr>
-                                )
-                            })
-                        }
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>Total</td>
-                            <td>{billDetails.total}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <BillPrint userAccount={userAccount} 
+                       products={products} 
+                       billDetails={billDetails}
+                       customerInfo={customerInfo}/>
+            
             <Modal.Footer>
                 <button className="btn btn-secondary btn-sm" onClick={handleShowBillModal} style={{marginRight: '8px'}}>Close</button>
             </Modal.Footer>

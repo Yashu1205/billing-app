@@ -21,15 +21,13 @@ const DashboardContainer = () => {
         <div className="container item-container">
             <h3 className="mt-3" style={{marginLeft:'10px'}}>Stats</h3>
             <div className="row">
-                <div className="col-md-6">
-                    <Stats customers={customers} products={products} bills={bills} />
-                </div>
-                <div className="col-md-6">
-                    <Bar customers={customers} products={products} bills={bills} />
-                </div>
+                <Stats customers={customers} products={products} bills={bills} />
             </div>
             <div className="row">
                 <TopStat customers={customers} products={products} bills={bills}/>
+            </div>
+            <div className="row">
+                <Bar customers={customers} products={products} bills={bills} />
             </div>
         </div>
     )

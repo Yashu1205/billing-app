@@ -70,7 +70,7 @@ const CustomersList = (props) => {
         <>
             <div className="row mb-3 customer-header">                
                 <div className="col-md-4">
-                    <input type="text" value={query} onChange={handleSearchChange} placeholder="Search customers by name" style={{fontFamily:'Arial FontAwesome'}}  className="form-control" /> 
+                    <input type="text" value={query} onChange={handleSearchChange} placeholder="Search customers by name" className="form-control" /> 
                 </div>
                 <div className="col-md-4">
                     <select name="sort" className="form-select" value={orderBy} onChange={handleSort} placeholder="Order customers by:">

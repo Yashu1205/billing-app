@@ -91,7 +91,7 @@ const ProductForm = (props) => {
                             <label >Price*:</label><br/>
                         </div>  
                         <div className="col-md-9">
-                        <input type="text" className="form-control"
+                        <input type="number" className="form-control"
                                 name="price" 
                                 value={price} 
                                 onChange={handleChange}
