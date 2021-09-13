@@ -11,6 +11,7 @@ const ViewBill = (props) => {
     const { userAccount } = useSelector((state) => state.user) 
     const { products } = useSelector((state) => state.product)
 
+    // download bill
     const downloadBill = () => {
         const element = document.getElementById('bill-info')
         const opt = {

@@ -7,15 +7,20 @@ const TopStat = (props) => {
     
     const lastWeek = lastWeekDays()
 
+    //get bills data from the last week
     const lastWeekSales = bills.filter(bill => {
         return lastWeek.includes(moment(bill.date).format('l'))
     })
 
     const customersTotalAmount = {}
     const topCustomers = []
+
+    //returns an array of customers with their bill amount
     const allCustomers = lastWeekSales.reduce((accu, current) => {
         return accu.concat({id: current.customer, total: current.total})
-    },[])    
+    },[])   
+
+    //get total bill amount of each customer for the last week
     allCustomers.forEach(cust => {
         if(customersTotalAmount.hasOwnProperty(cust.id)){
             customersTotalAmount[cust.id] += cust.total
@@ -24,16 +29,23 @@ const TopStat = (props) => {
             customersTotalAmount[cust.id] = cust.total
         }    
     })
+
+    //make array of customers with their total amount so that it is easy to sort 
     for(const ele in customersTotalAmount){
         topCustomers.push({id: ele, total: customersTotalAmount[ele]})
     }
+    //sort the array of customers on the basis of the total bill amount and return top 5 customers
     const topFiveCustomers = topCustomers.sort((a,b) => b.total - a.total).slice(0,5)
     
     const topProducts = []
     const productsCount = {}
+    
+    // returns an array of all bought products in the last week 
     const allBoughtProducts = lastWeekSales.reduce((accu, current) => {
         return accu.concat(current.lineItems)
     },[])
+
+    //add each purcahsed product in the productsCount object with its id and total purchased quantity
     allBoughtProducts.forEach(prod => {
         if(productsCount.hasOwnProperty(prod.product)){
             productsCount[prod.product] += prod.quantity
@@ -42,9 +54,11 @@ const TopStat = (props) => {
             productsCount[prod.product] = prod.quantity
         }
     })
+    //push all values in the productsCount to the topProducts array to make it easier to sort
     for(const ele in productsCount){
         topProducts.push({id: ele, quantity: productsCount[ele]})    
     }    
+    //sort the products array based on product quantity and get only the first five products 
     const topFiveProducts  = topProducts.sort((a,b) => b.quantity - a.quantity).slice(0,5)
     
     return (

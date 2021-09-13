@@ -22,6 +22,7 @@ const Login = (props) => {
         }
     }
 
+    //run validation on blur on input field
     const handleError = (e) => {
         if(e.target.value.trim().length === 0){
             setLoginErrors({...loginErrors, [e.target.name]: `${e.target.name} is required`})
@@ -31,11 +32,8 @@ const Login = (props) => {
             setLoginErrors(removeErrors)
         }  
     }
-    const resetForm = () => {
-        setEmail('')
-        setPassword('')
-    }    
 
+    //run validations on submit
     const runValidations = () => {
         if(email.trim().length === 0){
             errors.email = 'email is required'
@@ -43,8 +41,9 @@ const Login = (props) => {
         if(password.trim().length === 0){
             errors.password = 'password is required'
         }
-    }  
-
+    } 
+    
+    //dispatch login action if no errors
     const handleSubmit = (e) => {
         e.preventDefault()
         runValidations()
@@ -58,10 +57,17 @@ const Login = (props) => {
                 email: email,
                 password: password
             }
-            dispatch(startLoginUser(formData, resetForm, props.history))
+            dispatch(startLoginUser(formData, props.history))
         }
     }
 
+    //clear input fields 
+    const resetForm = () => {
+        setEmail('')
+        setPassword('')
+    } 
+
+    //clear input fields and remove errors
     const handleCancel = (e) => {
         e.preventDefault()
         resetForm()
@@ -84,12 +90,12 @@ const Login = (props) => {
                             <tbody>
                                 <tr>
                                     <td>
-                                    <input type="text" className="form-control" 
+                                    <input type="text" className="form-control form-control-sm" 
                                             name="email"
                                             value={email}
                                             onChange={handleChange} 
                                             onBlur={handleError}
-                                            placeholder="Enter your email" />
+                                            placeholder="enter your email" />
 
                                     {loginErrors.email && <span className="text-danger">{loginErrors.email} <br/></span>}
                                     </td>
@@ -102,7 +108,7 @@ const Login = (props) => {
                                                 value={password} 
                                                 onChange={handleChange} 
                                                 onBlur={handleError}
-                                                placeholder="example@email.com" />
+                                                placeholder="enter password" />
                                         {loginErrors.password && <span className="text-danger">{loginErrors.password} <br/></span>}
                                         {serverErrors.errors && <span className="text-danger">{serverErrors.errors} <br/></span>}
                                     </td>

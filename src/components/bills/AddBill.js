@@ -4,22 +4,22 @@ import { startAddBill } from '../../actions/billsAction'
 import BillForm from './BillForm'
 
 const AddBill = (props) => {
-    const {showModal, handleShowModal} =props
     const dispatch = useDispatch()
+    let history = useHistory()
+    
+    const {showModal, handleShowModal} =props
+
     const customers = useSelector(state => {
         return state.customer
     })
-    let history = useHistory()
 
     const products = useSelector(state => {
         return state.product
     })
-    const redirectToBillDetails = (billId) => {
-        console.log(billId)
-        history.push(`/bill-detail/${billId}`)
-    }
+    
+    //get form data from bills form and dispatch action to generate bill
     const formSubmission = (formData) => {
-        dispatch(startAddBill(formData, handleShowModal,redirectToBillDetails))
+        dispatch(startAddBill(formData, history))
     }
 
     return (

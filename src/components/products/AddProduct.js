@@ -7,6 +7,7 @@ const AddProduct = (props) => {
     const dispatch = useDispatch()     
     const {showModal, handleShowModal } = props
 
+    //get form data from productForm and dispatch action to add product
     const formSubmission = (formData) => {
         dispatch(startAddProduct(formData, handleShowModal))
     }    

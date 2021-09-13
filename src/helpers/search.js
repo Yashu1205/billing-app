@@ -1,3 +1,4 @@
+//search for customers and products
 export const getSearchResult = (data, query, key) => {
     let result = []
     if(key === 'customers'){
@@ -15,6 +16,7 @@ export const getSearchResult = (data, query, key) => {
     return result
 }
 
+//search for bills based on customer name
 export const getBillsSearchResult = (customers, bills, searchInput) => {
     let finalResult = []
     const customerBills = customers.filter(customer => customer.name.toLowerCase().includes(searchInput.toLowerCase()))

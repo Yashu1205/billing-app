@@ -18,7 +18,7 @@ This is a billing app that can be used for creating bills for a business. The bu
 - validator
 
 # DEMO
-- Live DEMO of the website is available here:[DEMO](https://fervent-northcutt-ef741e.netlify.app/)
+- Live DEMO of the website is available here:[DEMO](https://elegant-goldberg-44e6ff.netlify.app)
 
 # FEATURES
 + Authentication 

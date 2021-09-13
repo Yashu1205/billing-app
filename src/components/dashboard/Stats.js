@@ -1,6 +1,7 @@
 const Stats = (props) => {
     const { customers, products, bills} = props
 
+    //get total sales of the business
     const totalSales = bills.reduce((total, current) => {
         return total + current.total
     }, 0)

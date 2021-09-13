@@ -14,9 +14,8 @@ const BillForm = (props) => {
     const [ quantity ,setQuantity ] = useState(1)
     const [ formErrors, setFormErrors] = useState({})
     const errors = {}
-
     const { customers, products, showModal, handleShowModal, formSubmission } = props
-
+    
     const customerOptions = customers.map(customer => {
         return {'value': customer._id, 'label': customer.name}
     })
@@ -24,21 +23,25 @@ const BillForm = (props) => {
         return {'value': product._id, 'label': product.name}
     })
     
+    //set date field
     const handleChange = (e) => {
         setStartDate(e.target.value)
     }
+    //set customer field
     const handleCustomerChange = (data) => {
         setCustomer(data)
     }
+    //set product field 
     const handleProductChange = (product) => {
         setProduct(product)
     }
-
+    //get product price to get the subtotal
     const getProductPrice = (productId) => {
         const product = products.find(prod => prod._id === productId )
         return product.price
     }
 
+    //on adding product on cart, update cart items
     const addToCart = (e) => {
         e.preventDefault()
         const existingItem = cartItems.find(item => item.id === product.value)
@@ -59,6 +62,7 @@ const BillForm = (props) => {
         setProduct('')
     }
 
+    //handle increment or decrement of product quantity
     const handleQuantity = (id, count) => {
         const newCartResult = cartItems.map(cartItem => {
             if(cartItem.id === id){
@@ -72,11 +76,13 @@ const BillForm = (props) => {
         setCartItems(newCartResult)
     }
 
+    //remove cart item
     const removeItemFromCart = (id) => {
         const cartResult = cartItems.filter(item => item.id !== id)
         setCartItems(cartResult)
     }
 
+    //run validations on submit 
     const runValidations = () => {
         if(customer === ''){
             errors.customer = 'customer is required'
@@ -86,6 +92,7 @@ const BillForm = (props) => {
         }
     }
 
+     //if no errors, call formSubmission() in parent component that dispatches action to generate bill   
     const handleSubmit = (e) => {
         e.preventDefault()
         runValidations()
@@ -103,17 +110,20 @@ const BillForm = (props) => {
                 customer: customer.value,
                 lineItems: lineItems
             }
+            handleShowModal()
             formSubmission(formData)
         }
     }
 
-    const handleCancel = () => {
+    //close modal on cancel
+    const handleCancel = (e) => {
+        e.preventDefault()
         handleShowModal()
     }
 
     return (
-        <Modal show={showModal }
-               onHide={handleCancel}
+        <Modal show={showModal}
+               onHide={() => {}}
                size="lg" 
                aria-labelledby="contained-modal-title-vcenter" 
                centered>
@@ -129,10 +139,11 @@ const BillForm = (props) => {
                         <form onSubmit={handleSubmit}>
                             <div className="mb-2">
                                 <input type="date" className="form-control" name="date"  
-                                   value={startDate} 
-                                   onChange={handleChange} />
+                                       value={startDate} 
+                                       onChange={handleChange} />
                             </div>
-                            <div div className="mb-2">
+
+                            <div className="mb-2">
                                 <Select name="customer" 
                                         value={customer} 
                                         placeholder="select customer"
@@ -140,6 +151,7 @@ const BillForm = (props) => {
                                         options={customerOptions} />
                                 {formErrors.customer && <span className="text-danger">{formErrors.customer}</span>}
                             </div>
+
                             <div className="row mb-2">
                                 <div className="col-md-8">
                                     <Select name="product" 
@@ -150,6 +162,7 @@ const BillForm = (props) => {
                                     {formErrors.product && <span className="text-danger">{formErrors.product}</span>} 
 
                                 </div>
+
                                 <div className="col-md-4">
                                     <button className="btn btn-sm btn-primary" onClick={addToCart} disabled={!product}>
                                         <FaCartPlus size="1.5em"/>    
@@ -159,7 +172,9 @@ const BillForm = (props) => {
                             </div>
 
                             <input type="submit" value="Generate" className="btn btn-primary btn-sm" />
-                            <button onClick={handleCancel } className="btn btn-secondary btn-sm" style={{marginLeft: '5px'}}>Cancel</button>
+                            <button onClick={handleCancel }className="btn btn-link btn-sm" style={{textDecoration:'none', marginLeft:"5px"}}>
+                                Cancel
+                            </button>
                         
                         </form>
                     </div>
@@ -203,7 +218,7 @@ const BillForm = (props) => {
                             </table>
                         }
                     </div>
-                </div>    
+                </div>     
 
                 
             </Modal.Body>

@@ -16,8 +16,10 @@ const BillItem = (props) => {
         return state.bill
     })
         
+    //toggle modal open/close
     const handleShowBillModal = () => setShowBillModal(!showBillModal) 
 
+    //ask for delete confirmation and call removeBill()
     const handleRemoveBill = () => {
             Swal.fire({
                 title: 'Are you sure?',

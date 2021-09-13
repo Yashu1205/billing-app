@@ -26,6 +26,7 @@ const NavBar = (props) => {
     })
     const isLoggedIn = localStorage.getItem('token') || false
 
+    //css for lazy loader
     const override = {
         display: 'block',
         margin: '50px auto',

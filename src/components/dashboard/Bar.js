@@ -7,6 +7,7 @@ const Bar = (props) => {
     const currentMonth = moment().month() 
     const lastWeek = lastWeekDays()
     
+    //get array of data for monthly sales
     const monthlySales = {}
     for(let i = currentMonth; i > currentMonth - 6; i--){
         let currentMonthSales = 0
@@ -20,6 +21,7 @@ const Bar = (props) => {
     const salesData = Object.entries(monthlySales).reverse()
     salesData.unshift(['Month','Sales'])
 
+    //get array of data for weekly sales
     const weeklySales = {}
     for(let i = 0; i < lastWeek.length; i++){
         let currentWeekSales = 0
@@ -30,7 +32,7 @@ const Bar = (props) => {
         })
         weeklySales[moment(lastWeek[i]).format('ddd')] = currentWeekSales
     }
-    const weeklySalesData = Object.entries(weeklySales).reverse()
+    const weeklySalesData = Object.entries(weeklySales)
     weeklySalesData.unshift(['Day','Sales'])
 
     return(
@@ -43,9 +45,9 @@ const Bar = (props) => {
                 loader={<div>Loading Chart</div>}
                 data={weeklySalesData}
                 options={{
-                    title: 'Sales in the last week',
+                    title: 'Sales this week',
                     chartArea: { width: '65%' },
-                    hAxis: { title: 'Month'  },
+                    hAxis: { title: 'Day'  },
                     vAxis: { title: 'Total Sales', minValue: 0    },
                 }}
                 legendToggle

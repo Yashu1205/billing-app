@@ -38,7 +38,7 @@ const BillDetail = (props) => {
     }
     
     return (
-        <div className="container mt-3 item-container" >
+        <div className="container mt-3 " style={{marginLeft:'17%'}} >
             {
                 Object.keys(billDetails).length > 0 &&
             <>

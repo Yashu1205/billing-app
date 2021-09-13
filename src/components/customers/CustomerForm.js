@@ -8,8 +8,9 @@ const CustomerForm = (props) => {
     const [email, setEmail] = useState(custEmail ? custEmail : '')
     const [mobile, setMobile] = useState(custMobile ? custMobile : '')
     const [formErrors, setFormErrors] = useState({})
-    let errors = {}
+    let errors = {}    
 
+    //set input value to state
     const handleChange = (e) => {
         const inputName = e.target.name
         if(inputName === "name"){
@@ -21,6 +22,7 @@ const CustomerForm = (props) => {
         }
     }
 
+    //run validation on blur on input
     const handleError = (e) => {
         const inputName = e.target.name
         if(inputName === 'name'){
@@ -56,6 +58,7 @@ const CustomerForm = (props) => {
         setFormErrors({...errors})
     }
 
+    //run validations on submit
     const runValidations = () => {
         if(name.trim().length === 0){
             errors.name = 'Please enter your name'
@@ -72,6 +75,7 @@ const CustomerForm = (props) => {
         }
     }
 
+    //if no errors, call formSubmission() in parent component that dispatches action to add/edit customer 
     const handleSubmit = (e) => {
         e.preventDefault()
         runValidations()
@@ -89,13 +93,18 @@ const CustomerForm = (props) => {
         }
     }
 
+    //close modal on cancel
     const handleCancel = (e) => {
         e.preventDefault()
         handleShowModal()
     }
 
     return (
-        <Modal show={showModal } size="md" aria-labelledby="contained-modal-title-vcenter" centered>
+        <Modal show={showModal } 
+               onHide={() => {}}
+               size="md" 
+               aria-labelledby="contained-modal-title-vcenter" 
+               centered>
             <Modal.Header>
                 <Modal.Title id="contained-modal-title-vcenter">
                     {title ? title : 'Update Customer'}
@@ -155,7 +164,9 @@ const CustomerForm = (props) => {
                         <div className="col-md-3"></div>
                         <div className="col-md-9">
                             <input type="submit" value={title ? "save" : "update"} className="btn btn-primary btn-sm" style={{marginRight: '5px'}}/>
-                            <button onClick={handleCancel } className="btn btn-secondary btn-sm">Cancel</button>
+                            <button onClick={handleCancel }className="btn btn-link btn-sm" style={{textDecoration:'none'}}>
+                                Cancel
+                            </button>
                         </div>    
                     </div>
                     

@@ -39,6 +39,7 @@ const BillsList = (props) => {
         dispatch(startDeleteBill(id))
     }
 
+    //get search result with getBillsSearchResult() helper
     const handleSearch = (e) => {
         const inputSearch = e.target.value
         setSearchInput(inputSearch)
@@ -46,6 +47,7 @@ const BillsList = (props) => {
         setSearchResults(billsSearchResult)
     }
 
+    //get sorted result based on customer name and bill generated date 
     const getSortedResult = (key) => {
         let result = []
         if(key === 'name'){
@@ -71,6 +73,7 @@ const BillsList = (props) => {
         return result
     }
 
+    //handle sort input and get result accordingly
     const handleSort = (e) => {
         setOrderBy(e.target.value)
         let result = []
@@ -88,6 +91,7 @@ const BillsList = (props) => {
         setSearchResults(result)
     }
 
+    //handle pagination, set page start and end index with formatDataForPagination() helper 
     const handleClick = (pageNumber) => {
         setCurrentPage(pageNumber)
         const formatData = formatDataForPagination(pageNumber, perPage)

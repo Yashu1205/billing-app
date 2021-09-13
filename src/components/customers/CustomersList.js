@@ -30,6 +30,7 @@ const CustomersList = (props) => {
         setSearchResults([...customers])
     },[customers])
 
+    //toggle modal open/close
     const handleShowModal = () => {
         setShowModal(!showModal)
     }
@@ -38,6 +39,7 @@ const CustomersList = (props) => {
         dispatch(startDeleteCustomer(id))
     } 
 
+    //get search result with getSearchResult() helper
     const handleSearchChange = (e) => {
         const searchInput = e.target.value
         setQuery(searchInput)
@@ -45,6 +47,7 @@ const CustomersList = (props) => {
         setSearchResults(result)
     }    
     
+    //get sort result with getSortedResult() helper
     const handleSort = (e) => {
         setOrderBy(e.target.value)
         let sortedCustomers = []
@@ -58,6 +61,7 @@ const CustomersList = (props) => {
         setSearchResults(sortedCustomers)     
     }
 
+    //handle pagination, set page start and end index with formatDataForPagination() helper 
     const handleClick = (pageNumber) => {
         setCurrentPage(pageNumber)
         const formatData = formatDataForPagination(pageNumber, perPage)

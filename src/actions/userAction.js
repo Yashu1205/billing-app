@@ -9,31 +9,30 @@ export const REMOVE_ERRORS = 'REMOVE_ERRORS'
 export const IS_LOGIN = 'IS_LOGIN'
 export const USER_ACCOUNT = 'USER_ACCOUNT'
 
-export const startUserRegistration = (formData, resetForm, history) => {
+export const startUserRegistration = (formData, history) => {
     return (dispatch) => {
-                axios.post(`${baseUrl}/register`, formData)
-                     .then((response) => {
-                         const result = response.data
-                         if(result.hasOwnProperty('errors')){
-                             dispatch(setServerErrors(result.errors))
-                         }
-                         else if(result.hasOwnProperty('driver')){
-                             dispatch(setServerErrors(result.keyValue))
-                         }
-                         else{
-                             resetForm()
-                             removeServerErrors()
-                             Swal.fire('Successful', 'Successfully Registered','success')
-                             history.push('/login')
-                         }
-                     })
-                     .catch((error) => {
-                         Swal.fire('Oops...', error.message, 'error')
-                     })
+            axios.post(`${baseUrl}/register`, formData)
+                    .then((response) => {
+                        const result = response.data
+                        if(result.hasOwnProperty('errors')){
+                            dispatch(setServerErrors(result.errors))
+                        }
+                        else if(result.hasOwnProperty('driver')){
+                            dispatch(setServerErrors(result.keyValue))
+                        }
+                        else{
+                            removeServerErrors()
+                            Swal.fire('Successful', 'Successfully Registered','success')
+                            history.push('/login')
+                        }
+                    })
+                    .catch((error) => {
+                        Swal.fire('Oops...', error.message, 'error')
+                    })
     }
 }
 
-export const startLoginUser = (formData, resetForm, history) => {
+export const startLoginUser = (formData, history) => {
     return (dispatch) => {
             axios.post(`${baseUrl}/login`, formData)
                  .then((response) => {
@@ -43,7 +42,6 @@ export const startLoginUser = (formData, resetForm, history) => {
                      }
                      else{
                          localStorage.setItem('token', response.data.token)
-                         resetForm()
                          Swal.fire('Success', 'Successfully Logged in','success')
                          history.push('/dashboard')
                      }
@@ -56,18 +54,18 @@ export const startLoginUser = (formData, resetForm, history) => {
 
 export const startGetUserProfile  = () => {
     return (dispatch) => {
-        axios.get(`${baseUrl}/account`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            .then((response) => {
-                const result = response.data
-                dispatch(setUserAccount(result))
-            })
-            .catch((error) => {
-                Swal.fire('Oops...', error.message, 'error')
-            })
+            axios.get(`${baseUrl}/account`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                .then((response) => {
+                    const result = response.data
+                    dispatch(setUserAccount(result))
+                })
+                .catch((error) => {
+                    Swal.fire('Oops...', error.message, 'error')
+                })
     }
 }
 

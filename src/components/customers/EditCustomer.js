@@ -6,6 +6,7 @@ const EditCustomer = (props) => {
     const { id, name, mobile, email , showModal, handleShowModal} = props
     const dispatch = useDispatch()
 
+    //get form data from customerForm and dispatch action to update customer
     const formSubmission = (formData) => {
         dispatch(startUpdateCustomer(formData, id, handleShowModal))
     }

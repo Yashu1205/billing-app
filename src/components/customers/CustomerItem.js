@@ -12,13 +12,16 @@ const CustomerItem = (props) => {
         return state.bill
     })
 
+    //toggle modal open/close
     const handleShowModal = () => setShowModal(!showModal)
 
+    //to get bills of a particular customer
     const customerBills = bills.filter(bill => bill.customer === _id)
 
+    //ask for delete confirmation and call removeCustomer() that is in customerList component 
     const handleRemoveCustomer = () => {
             Swal.fire({
-                title: `${customerBills.length} bills were created for this customer. Are you sure to delete?`,
+                title: customerBills.length > 0 ? `${customerBills.length} bills were created for this customer. Are you sure to delete?` : 'Its not advisable to delete customer. Are you sure to delete? ',
                 text: "You won't be able to revert this!",
                 icon: 'warning',
                 showCancelButton: true,
@@ -41,8 +44,12 @@ const CustomerItem = (props) => {
                     <pre style={{margin:'20px'}}>{name}  {mobile} { email && `- ${email}`}</pre>
                 </div>
                 <div className="col-md-4 action">
-                    <button className="btn btn-sm btn-danger" onClick={handleRemoveCustomer}><BsFillTrashFill size="1.5em" /></button>
-                    <button className="btn btn-sm btn-info" onClick={handleShowModal}><BsPencilSquare size="1.5em"/></button>
+                    <button className="btn btn-sm btn-danger" onClick={handleRemoveCustomer}>
+                        <BsFillTrashFill size="1.5em" />
+                    </button>
+                    <button className="btn btn-sm btn-info" onClick={handleShowModal}>
+                        <BsPencilSquare size="1.5em"/>
+                    </button>
                 </div>
             </div>
             {

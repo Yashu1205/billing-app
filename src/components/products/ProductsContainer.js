@@ -1,5 +1,5 @@
-import '../../styles/header.css'
 import ProductsList  from './ProductsList'
+import '../../styles/header.css'
 
 const ProductsContainer = (props) => {
     return (

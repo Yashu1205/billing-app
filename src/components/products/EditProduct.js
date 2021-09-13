@@ -6,6 +6,7 @@ const EditProduct = (props) => {
     const { id, name, price, showModal, handleShowModal } = props
     const dispatch = useDispatch()
 
+    //get form data from productForm and dispatch action to update product  
     const formSubmission = (formData) => {
         dispatch(startUpdateProduct(formData,id, handleShowModal))
     }

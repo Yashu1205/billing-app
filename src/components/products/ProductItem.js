@@ -6,12 +6,14 @@ import EditProduct from './EditProduct'
 const ProductItem = (props) => {
     const [showModal, setShowModal] = useState(false)
     const { _id, name, price, removeProduct} = props
-
+    
+    //toggle modal open/close
     const handleShowModal = () => setShowModal(!showModal)
 
+    //ask for delete confirmation and call removeProduct() that is in productList component  
     const handleRemoveProduct = () => {
         Swal.fire({
-            title: 'Are you sure?',
+            title: 'Its not advisable to delete product. Are you sure to delete?',
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,

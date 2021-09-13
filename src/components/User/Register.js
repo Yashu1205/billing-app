@@ -16,6 +16,29 @@ const UserRegistration  = (props) => {
     })
     const dispatch = useDispatch()
 
+    const handleChange = (e) => {
+        setSignupForm({...signupForm, [e.target.name]:e.target.value })
+    }
+
+    //  run validation on blur of input field
+    const handleError = (e) => {
+        if(e.target.value.trim().length === 0){
+            errors = {...formErrors, [e.target.name]: `${e.target.name} is required`}
+        } else if(e.target.value.trim().length !== 0 && e.target.name === 'email'){
+            if(!isEmail(signupForm.email)){
+                errors = {...formErrors, email: 'invalid email'}
+            } else{
+                delete errors.email
+            }
+        } else if(e.target.value.trim().length < 8 && e.target.name === 'password') {
+            errors = {...formErrors, password: 'password must be at least 8 characters'}
+        } else{
+            delete errors[e.target.name]
+        }       
+        setFormErrors({...errors})
+    }
+
+    // Run validations on click of submit
     const runValidations = () => {
 
         if(signupForm.username.trim().length === 0){
@@ -36,36 +59,10 @@ const UserRegistration  = (props) => {
         }
         if(signupForm.address.trim().length === 0){
             errors.address = 'business address is required'
-        }
-        
+        }        
     }
-
-    const resetForm = () => {
-        const userInfo = {username:'', email:'',password:'', businessName:'', address:''}
-        setSignupForm({...userInfo})
-    }    
-
-    const handleChange = (e) => {
-        setSignupForm({...signupForm, [e.target.name]:e.target.value })
-    }
-
-    const handleError = (e) => {
-        if(e.target.value.trim().length === 0){
-            errors = {...formErrors, [e.target.name]: `${e.target.name} is required`}
-        } else if(e.target.value.trim().length !== 0 && e.target.name === 'email'){
-            if(!isEmail(signupForm.email)){
-                errors = {...formErrors, email: 'invalid email'}
-            } else{
-                delete errors.email
-            }
-        } else if(e.target.value.trim().length < 8 && e.target.name === 'password') {
-            errors = {...formErrors, password: 'password must be at least 8 characters'}
-        } else{
-            delete errors[e.target.name]
-        }       
-        setFormErrors({...errors})
-    }
-
+    
+    //dispatch  register action if no errors
     const handleSubmit = (e) => {
         e.preventDefault()
         runValidations()
@@ -75,10 +72,17 @@ const UserRegistration  = (props) => {
         }
         else{
             setFormErrors({})
-            dispatch(startUserRegistration(signupForm, resetForm, props.history))
+            dispatch(startUserRegistration(signupForm, props.history))
         }
     }
 
+    // clear form fields
+    const resetForm = () => {
+        const userInfo = {username:'', email:'',password:'', businessName:'', address:''}
+        setSignupForm({...userInfo})
+    }  
+
+    //clear input fields, client-side errors as well as server-side errors
     const handleCancel = (e) => {
         e.preventDefault()
         resetForm()        

@@ -29,12 +29,14 @@ const ProductsList = (props) => {
         setSearchResults([...products])
     },[products])
 
+    //toggle modal open/close
     const handleShowModal = () => setShowModal(!showModal)
     
     const removeProduct = (id) => {
         dispatch(startDeleteProduct(id))
     }
 
+    //get search result with getSearchResult() helper
     const handleSearchChange = (e) => {
         const searchInput = e.target.value
         setQuery(searchInput)
@@ -42,28 +44,7 @@ const ProductsList = (props) => {
         setSearchResults(productSearchResult)
     } 
 
-    // const getSortedResult = (key) => {
-    //     let result = []
-        
-    //     if(key === 'name'){
-    //         result = searchResults.sort((a,b) => {
-    //             const aName =  a.name.toLowerCase(),   bName = b.name.toLowerCase()
-    
-    //             if(aName < bName){
-    //                 return -1
-    //             }
-    //             if(aName > bName){
-    //                 return 1
-    //             }
-    //             return 0
-    //         })
-    //     } 
-    //     else{
-    //         result = searchResults.sort((a,b) => a.price - b.price)
-    //     }
-    //     return result
-    // }
-
+    //get sort result with getSortedResult() helper
     const handleSort = (e) => {
         const inputValue = e.target.value
         setOrderBy(inputValue)
@@ -87,6 +68,7 @@ const ProductsList = (props) => {
         setSearchResults(sortedProducts)
     }
 
+    //handle pagination, set page start and end index with formatDataForPagination() helper 
     const handleClick = (pageNumber) => {
         setCurrentPage(pageNumber)
         const formatData = formatDataForPagination(pageNumber, perPage)

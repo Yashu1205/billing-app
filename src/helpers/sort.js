@@ -1,3 +1,4 @@
+//sort for customers and products, sort customers by name/ sort products by name and price 
 const getSortedResult = (data, key) => {
     let result = []
     if(key === 'name'){
