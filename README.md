@@ -54,7 +54,8 @@ This is a billing app that can be used for creating bills for a business. The bu
   - Top five frequently bought products for the week is displayed.
   
 + Graph 
-  -  Bar chart is implemented for showcasing last six months total sales.
+  -  Bar chart is implemented for showcasing weekly total sales.
+  -  Area chart is implemented for displaying last six months total sales.
 
 # Contributors
   ### [YashodaBhattarai](https://github.com/Yashu1205)
