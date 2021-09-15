@@ -1,5 +1,5 @@
 import { SET_PRODUCTS, ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT } from "../actions/productsAction"
-
+import { LOGOUT } from "../actions/userAction"
 const productsInitalValues = { data: { products: [] }}
 
 const productsReducer = (state = productsInitalValues.data, action ) => {
@@ -30,6 +30,9 @@ const productsReducer = (state = productsInitalValues.data, action ) => {
             return {...state, products: result}
         }
 
+        case LOGOUT: {
+            return state=productsInitalValues
+        }
         
         default: {
             return {...state}

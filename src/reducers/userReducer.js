@@ -1,4 +1,4 @@
-import { SET_ERRORS, REMOVE_ERRORS, USER_ACCOUNT } from '../actions/userAction'
+import { SET_ERRORS, REMOVE_ERRORS, USER_ACCOUNT, LOGOUT } from '../actions/userAction'
 
 const userInitialValues = {
     serverErrors: {},
@@ -18,6 +18,10 @@ const userReducer = (state = userInitialValues, action) => {
 
         case USER_ACCOUNT: {
             return {...state, userAccount: action.payload }
+        }
+
+        case LOGOUT: {
+            return state=userInitialValues
         }
 
         default : {

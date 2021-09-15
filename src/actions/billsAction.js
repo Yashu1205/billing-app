@@ -13,7 +13,7 @@ export const startGetBills = () => {
     return (dispatch) => {
             axios.get(baseUrl, {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
                 })
                 .then((response) => {
@@ -31,7 +31,7 @@ export const startAddBill = (formData,history) => {
     return (dispatch) => {
         axios.post(baseUrl, formData, {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             })
             .then((response) => {
@@ -50,7 +50,7 @@ export const startDeleteBill  = (id) => {
     return (dispatch) => {
         axios.delete(`${baseUrl}/${id}`, {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             })
             .then((response) => {
@@ -65,7 +65,7 @@ export const startBillDetails = (id, handleShowBillModal ) => {
     return (dispatch) => {
         axios.get(`${baseUrl}/${id}`, {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             })
             .then((response) => {

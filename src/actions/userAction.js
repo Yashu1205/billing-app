@@ -6,8 +6,8 @@ const token = localStorage.getItem('token')
 export const REGISTER_USER = 'REGISTER_USER'
 export const SET_ERRORS = 'SET_ERRORS'
 export const REMOVE_ERRORS = 'REMOVE_ERRORS'
-export const IS_LOGIN = 'IS_LOGIN'
 export const USER_ACCOUNT = 'USER_ACCOUNT'
+export const LOGOUT = 'LOGOUT'
 
 export const startUserRegistration = (formData, history) => {
     return (dispatch) => {
@@ -56,7 +56,7 @@ export const startGetUserProfile  = () => {
     return (dispatch) => {
             axios.get(`${baseUrl}/account`, {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
                 })
                 .then((response) => {
@@ -86,5 +86,11 @@ const setUserAccount = (userDetail) => {
     return {
         type: USER_ACCOUNT,
         payload: userDetail
+    }
+}
+
+export const logout = () => {
+    return {
+        type: LOGOUT
     }
 }

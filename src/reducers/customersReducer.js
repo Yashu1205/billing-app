@@ -1,5 +1,5 @@
 import { SET_CUSTOMERS, ADD_CUSTOMER, DELETE_CUSTOMER, UPDATE_CUSTOMER } from "../actions/customersAction"
-
+import { LOGOUT } from "../actions/userAction"
 const customersInitialValues = { data: { customers: []} }
 
 const customersReducer = (state = customersInitialValues.data, action) => {
@@ -30,6 +30,10 @@ const customersReducer = (state = customersInitialValues.data, action) => {
             return {...state, customers: result}
         }
 
+        case LOGOUT:{
+            return state=customersInitialValues
+        }
+        
         default: {
             return {...state}
         }
