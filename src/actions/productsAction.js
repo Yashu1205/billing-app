@@ -2,7 +2,6 @@ import axios from "axios"
 import Swal from "sweetalert2"
 
 const baseUrl = 'https://dct-billing-app.herokuapp.com/api/products'
-const token = localStorage.getItem('token')
 
 export const SET_PRODUCTS = 'SET_PRODUCTS'
 export const ADD_PRODUCT = 'ADD_PRODUCT'
@@ -13,7 +12,7 @@ export const startGetProducts = () => {
     return (dispatch) => {
         axios.get(baseUrl, {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             })
             .then((response) => {
@@ -30,7 +29,7 @@ export const startAddProduct = (formData, handleModal) => {
     return (dispatch) => {
         axios.post(baseUrl, formData, {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
              })
              .then((response)  => {
@@ -49,7 +48,7 @@ export const startDeleteProduct = (id) => {
     return (dispatch) => {
         axios.delete(`${baseUrl}/${id}`, {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             })
             .then((response) => {
@@ -68,7 +67,7 @@ export const startUpdateProduct = (updatedData, id, handleModal) => {
         axios.put(`${baseUrl}/${id}`, updatedData, {
                 headers:
                 {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             })
             .then((response) => {

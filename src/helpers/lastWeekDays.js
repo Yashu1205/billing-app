@@ -2,14 +2,14 @@
 const currentDay = new Date()
 const today = currentDay.getDay()
 const dayLimit = today === 0 ? 6 : today
-
+console.log(today)
 const lastWeekDays = () => {
  
     //get array of days of current week
 const weekDays = []
     for(let i = 0; i< dayLimit; i++ ){
         let d = new Date()
-        d.setDate(d.getDate())
+        d.setDate(d.getDate() - i)
 
         //return today in string month/day/year format
         const result = ((day, month, year) => {
@@ -17,9 +17,8 @@ const weekDays = []
         })(d.getDate(), d.getMonth()+1, d.getFullYear());
         
         weekDays.push(result)
-    
     }
-    return weekDays
+    return weekDays.reverse()
 }
 
 export default lastWeekDays

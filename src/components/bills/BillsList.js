@@ -125,13 +125,21 @@ const BillsList = (props) => {
 
             <div className="row mt-3">
                 <div className="col-md-10">
-                    {searchResults.length > 0 && customers.length > 0 &&
+                    {searchResults.length > 0 ? (
                         searchResults.slice(startIndex, endIndex).map(bill => {
                             return <BillItem key={bill._id}
                                                  {...bill} 
                                                  customerInfo={getCustomerName(customers, bill.customer)}
                                                  removeBill={removeBill} />
                         })
+                    ): (
+                        <div className="card">
+                            <div className="card-body">
+                                <h5>No transactions </h5>
+                                <h6>Generate a new bill</h6>
+                            </div>
+                        </div>
+                    )
                     }
                     { showModal &&
                         <AddBill showModal={showModal} handleShowModal={handleShowModal} />

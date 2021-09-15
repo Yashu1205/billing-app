@@ -27,7 +27,7 @@ const CustomerForm = (props) => {
         const inputName = e.target.name
         if(inputName === 'name'){
             if(name.trim().length === 0){
-                errors = {...formErrors, name: 'Please enter your name'}
+                errors = {...formErrors, name: 'enter your name'}
             } else{
                 errors = {...formErrors}
                 delete errors.name
@@ -35,9 +35,9 @@ const CustomerForm = (props) => {
         }
         else if(inputName === 'mobile'){
             if(mobile.trim().length === 0){
-                errors = {...formErrors, mobile: 'Please enter your mobile number'}
+                errors = {...formErrors, mobile: 'enter your mobile number'}
             } else if(mobile.trim().length !== 10){
-                errors = {...formErrors, mobile: 'Please enter valid mobile number'}
+                errors = {...formErrors, mobile: 'enter valid mobile number'}
             }
             else{
                 errors = {...formErrors}
@@ -47,7 +47,7 @@ const CustomerForm = (props) => {
 
         if(inputName === 'email' && email.trim().length !== 0){
             if(!isEmail(email)){
-                errors = {...formErrors, email: 'Please enter valid email'}
+                errors = {...formErrors, email: 'enter valid email'}
             }
             else{
                 errors = {...formErrors}
@@ -61,16 +61,16 @@ const CustomerForm = (props) => {
     //run validations on submit
     const runValidations = () => {
         if(name.trim().length === 0){
-            errors.name = 'Please enter your name'
+            errors.name = 'name is required'
         }
         if(mobile.trim().length === 0){
-            errors.mobile = 'Please enter your mobile'
+            errors.mobile = 'mobile number is required'
         } else if(mobile.length !== 10){
-            errors.mobile = 'Please enter valid mobile number'
+            errors.mobile = 'enter valid mobile number'
         }
         if(email.trim().length > 0){
             if(!isEmail(email)){
-                errors.email = 'Please enter valid email'
+                errors.email = 'enter valid email'
             }
         }
     }

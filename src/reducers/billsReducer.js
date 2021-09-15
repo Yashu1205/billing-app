@@ -1,4 +1,5 @@
 import { SET_BILLS, ADD_BILL, BILL_DETAILS, DELETE_BILL } from "../actions/billsAction"
+import { LOGOUT } from "../actions/userAction"
 
 const billsInitialValues = { data: { bills: [], billDetails: {}}}
 
@@ -21,6 +22,10 @@ const billsReducer = (state = billsInitialValues.data, action) => {
 
         case BILL_DETAILS: {
             return {...state, billDetails: action.payload}
+        }
+
+        case LOGOUT: {
+            return state=billsInitialValues
         }
         
         default : {
