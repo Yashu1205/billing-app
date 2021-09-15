@@ -1,4 +1,4 @@
-import React, { useEffect, Suspense } from 'react'
+import React, { Suspense } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, NavLink, withRouter, Switch } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
