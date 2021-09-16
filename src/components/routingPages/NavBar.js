@@ -11,8 +11,8 @@ import '../../styles/navbar.css'
 import PrivateRoute from './PrivateRoute'
 import ProtectedRoute from './ProtectedRoute'
 import Home from '../Home'
-import Register from '../user/Register'
 import Login from '../user/Login' 
+import Register from '../user/Register'
 import PageNotFound from './PageNotFound'
 const DashboardContainer = React.lazy(() => import('../dashboard/DashboardContainer'))
 const CustomersContainer = React.lazy(() => import('../customers/CustomersContainer'))
