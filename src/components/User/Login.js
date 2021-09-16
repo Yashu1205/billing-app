@@ -99,7 +99,6 @@ const Login = (props) => {
                                             onChange={handleChange} 
                                             onBlur={handleError}
                                             placeholder="enter your email" />
-
                                     {loginErrors.email && <span className="text-danger">{loginErrors.email} <br/></span>}
                                     </td>
                                 </tr>
@@ -120,7 +119,7 @@ const Login = (props) => {
                                 <tr>
                                     <td>
                                         <p>New to Billing App? <NavLink to="/register">Register here</NavLink></p>
-                                        <pre>Login email and password for demo: <br/> Email:    admin321@gmail.com <br/> Password: test1234</pre>
+                                        <pre>Login email and password for demo: <br/> Email:     admin321@gmail.com <br/> Password:  test1234</pre>
                                     </td>
                                 </tr>
                                 <tr>
