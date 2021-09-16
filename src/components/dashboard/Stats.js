@@ -9,28 +9,28 @@ const Stats = (props) => {
     return (
         <>
         <div className="d-flex flex-wrap">
-            <div className="card" style={{width:'22%', height:'100px', margin:'8px'}}>
+            <div className="card" style={{width:'22%', height:'100px', margin:'8px', backgroundColor: 'rgb(76 182 172)'}}>
                 <div className="card-body">
-                    <h6 className="card-subtitle text-muted">Customers</h6>
-                    <h5 className="card-title mb-2 ">{customers.length}</h5>
+                    <h4 className="card-subtitle" style={{color: 'white'}}>Customers</h4>
+                    <h5 className="card-title mb-2 " style={{color: 'white'}}>{customers.length}</h5>
                 </div>
             </div>
-            <div className="card" style={{width:'22%', height:'100px', margin:'8px'}}>
+            <div className="card" style={{width:'22%', height:'100px', margin:'8px', backgroundColor: 'rgb(76 182 172)'}}>
                 <div className="card-body">
-                    <h6 className="card-subtitle text-muted">Products</h6>
-                    <h5 className="card-title mb-2 ">{products.length}</h5>
+                    <h4 className="card-subtitle" style={{color: 'white'}}>Products</h4>
+                    <h5 className="card-title mb-2 " style={{color: 'white'}} >{products.length}</h5>
                 </div>
             </div>
-            <div className="card" style={{width:'22%', height:'100px', margin:'8px'}}>
+            <div className="card" style={{width:'22%', height:'100px', margin:'8px', backgroundColor: 'rgb(76 182 172)'}}>
                 <div className="card-body">
-                    <h6 className="card-subtitle text-muted">Purchases</h6>
-                    <h5 className="card-title mb-2 ">{bills.length}</h5>                    
+                    <h4 className="card-subtitle" style={{color: 'white'}}>Purchases</h4>
+                    <h5 className="card-title mb-2 " style={{color: 'white'}}>{bills.length}</h5>                    
                 </div>
             </div>
-            <div className="card" style={{width:'22%',  height:'100px',margin:'8px'}}>
+            <div className="card" style={{width:'22%',  height:'100px',margin:'8px', backgroundColor: 'rgb(76 182 172)'}}>
                 <div className="card-body">
-                    <h6 className="card-subtitle text-muted">Revenue</h6>
-                    <h5 className="card-title mb-2 ">INR. {totalSales}</h5>
+                    <h4 className="card-subtitle" style={{color: 'white'}}>Revenue</h4>
+                    <h5 className="card-title mb-2 " style={{color: 'white'}}>INR. {totalSales}</h5>
                 </div>
             </div>
         </div>

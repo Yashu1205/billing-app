@@ -22,7 +22,7 @@ const ProductsList = (props) => {
     const [endIndex, setEndIndex] = useState(perPage)
 
     const dispatch = useDispatch()
-    const { products } = useSelector((state) => state.product )
+    const { products } = useSelector((state) => state.products )
     
     useEffect(() => {
         setSearchResults([...products])

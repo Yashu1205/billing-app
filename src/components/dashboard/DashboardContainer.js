@@ -8,8 +8,7 @@ const DashboardContainer = (props) => {
     const { customers } = useSelector((state) => state.customers )
     const { products } = useSelector((state) => state.products )
     const { bills } = useSelector((state) => state.bills )
-    console.log(bills)
-    console.log(customers)
+    
     return (
         <>
         {bills  &&
