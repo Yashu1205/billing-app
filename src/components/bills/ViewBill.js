@@ -9,7 +9,7 @@ const ViewBill = (props) => {
     const { billDetails, showBillModal, handleShowBillModal, customerInfo} = props
     
     const { userAccount } = useSelector((state) => state.user) 
-    const { products } = useSelector((state) => state.product)
+    const { products } = useSelector((state) => state.products )
 
     // download bill
     const downloadBill = () => {
@@ -17,7 +17,7 @@ const ViewBill = (props) => {
         const opt = {
             margin:       1,
             filename:     `${customerInfo.name}-bill.pdf`,
-            image:        { type: 'jpeg', quality: 0.98 },
+            image:        { type: 'jpeg', quality: 1 },
             html2canvas:  { scale: 1 },
             jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
           };

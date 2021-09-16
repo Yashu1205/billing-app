@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import Select from 'react-select'
+import Swal from 'sweetalert2'
 import { FaCartPlus } from 'react-icons/fa'
 import { BsXSquareFill } from 'react-icons/bs'
 
@@ -56,7 +57,7 @@ const BillForm = (props) => {
             setCartItems(newCartItems)
         }
         else{
-            const newCartItem = {id: product.value, name: product.label, quantity: quantity, subtotal: getProductPrice(product.value)*quantity}
+            const newCartItem = {id: product.value, name: product.label, quantity: quantity, price: getProductPrice(product.value), subtotal: getProductPrice(product.value)*quantity}
             setCartItems([newCartItem, ...cartItems])
         }
         setProduct('')
@@ -78,9 +79,27 @@ const BillForm = (props) => {
 
     //remove cart item
     const removeItemFromCart = (id) => {
-        const cartResult = cartItems.filter(item => item.id !== id)
-        setCartItems(cartResult)
+        Swal.fire({
+            title: 'Are you sure to remove the item?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+        })
+       .then((result) => {
+            if (result.isConfirmed) {
+                const cartResult = cartItems.filter(item => item.id !== id)
+                setCartItems(cartResult)
+            }
+       })
+        
     }
+
+    //get cart total
+    const getCartTotal = cartItems.reduce((accu, current) => accu+current.subtotal, 0) 
 
     //run validations on submit 
     const runValidations = () => {
@@ -135,7 +154,7 @@ const BillForm = (props) => {
 
             <Modal.Body>
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-5">
                         <form onSubmit={handleSubmit}>
                             <div className="mb-2">
                                 <input type="date" className="form-control" name="date"  
@@ -153,7 +172,7 @@ const BillForm = (props) => {
                             </div>
 
                             <div className="row mb-2">
-                                <div className="col-md-8">
+                                <div className="col-md-10">
                                     <Select name="product" 
                                             value={product} 
                                             placeholder="select product"
@@ -163,7 +182,7 @@ const BillForm = (props) => {
 
                                 </div>
 
-                                <div className="col-md-4">
+                                <div className="col-md-2">
                                     <button className="btn btn-sm btn-primary" onClick={addToCart} disabled={!product}>
                                         <FaCartPlus size="1.5em"/>    
                                     </button> <br/>     
@@ -178,7 +197,7 @@ const BillForm = (props) => {
                         
                         </form>
                     </div>
-                    <div className="col-md-6"  style={{maxHeight: '260px', overflowY:'scroll'}}>
+                    <div className="col-md-7"  style={{maxHeight: '260px', overflowY:'scroll'}}>
                         {
                             cartItems.length > 0 &&
                             
@@ -188,6 +207,7 @@ const BillForm = (props) => {
                                         <th>Item</th>
                                         <th>Qty</th>
                                         <th>Remove</th>
+                                        <th>Price</th>
                                         <th>Subtotal</th>
                                     </tr>
                                 </thead>
@@ -195,6 +215,7 @@ const BillForm = (props) => {
                                 <tbody>
                                     { cartItems.map(item => {
                                         return (
+                                            
                                             <tr key={item.id}>
                                                 <td>{item.name.slice(0,12)}</td>
                                                 <td>
@@ -208,11 +229,19 @@ const BillForm = (props) => {
                                                         <BsXSquareFill size="1.3em"/>
                                                     </button>
                                                 </td>
+                                                <td>{item.price}</td> 
                                                 <td>{item.subtotal}</td>
-                                            </tr>
+                                            </tr>                                            
                                         )
-                                        })
+                                        }) 
                                     }
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Total</td>
+                                        <td>{getCartTotal}</td>
+                                    </tr> 
                                 </tbody>
 
                             </table>

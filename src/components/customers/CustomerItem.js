@@ -8,9 +8,7 @@ const CustomerItem = (props) => {
     const [showModal, setShowModal] = useState(false)
     const { _id, name, email, mobile, removeCustomer } = props
 
-    const { bills } = useSelector((state) => {
-        return state.bill
-    })
+    const { bills } = useSelector((state) => state.bills )
 
     //toggle modal open/close
     const handleShowModal = () => setShowModal(!showModal)

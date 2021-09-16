@@ -25,7 +25,7 @@ const billsReducer = (state = billsInitialValues.data, action) => {
         }
 
         case LOGOUT: {
-            return state=billsInitialValues
+            return {...billsInitialValues}
         }
         
         default : {

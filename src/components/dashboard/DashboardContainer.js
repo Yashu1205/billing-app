@@ -1,35 +1,14 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
-import { startGetBills } from '../../actions/billsAction';
-import { startGetCustomers } from '../../actions/customersAction';
-import { startGetProducts } from '../../actions/productsAction';
-import { startGetUserProfile } from '../../actions/userAction'
+import { useSelector } from 'react-redux'
 import Stats from './Stats'
 import Bar from './Bar'
 import TopStat from './TopStat'
 
 const DashboardContainer = (props) => {
-    const dispatch = useDispatch()
+
+    const { customers } = useSelector((state) => state.customers )
+    const { products } = useSelector((state) => state.products )
+    const { bills } = useSelector((state) => state.bills )
     
-    useEffect(() => {
-        dispatch(startGetCustomers())
-        dispatch(startGetProducts())
-        dispatch(startGetBills())
-        dispatch(startGetUserProfile())
-    },[])
-
-    const { customers } = useSelector((state) => {
-        return state.customer
-    })
-
-    const { products } = useSelector((state) => {
-        return state.product
-    })
-
-    const { bills } = useSelector((state) => {
-        return state.bill 
-    })
-
     return (
         <>
         {bills  &&

@@ -1,13 +1,13 @@
 import { Route, Redirect } from 'react-router-dom'
 
 const  ProtectedRoute = (props) =>  {
-    const {path, component, isLoggedIn, exact} = props
+    const { isLoggedIn } = props
 
     return (
         <>
         {
             !isLoggedIn ? (
-                <Route path={path} component = {component} exact={exact}/>
+                <Route {...props}/>
 
             ) : (
                 <Redirect to="/dashboard" />

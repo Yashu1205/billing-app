@@ -31,7 +31,7 @@ const productsReducer = (state = productsInitalValues.data, action ) => {
         }
 
         case LOGOUT: {
-            return state=productsInitalValues
+            return {...productsInitalValues}
         }
         
         default: {

@@ -20,12 +20,8 @@ const BillsList = (props) => {
     const [endIndex, setEndIndex] = useState(perPage)
 
     const dispatch = useDispatch() 
-    const { customers } = useSelector((state) => {
-        return state.customer
-    })    
-    const  { bills } = useSelector((state) => {
-        return state.bill
-    })
+    const { customers } = useSelector((state) => state.customers )    
+    const  { bills } = useSelector((state) => state.bills )
 
     useEffect(() => {
         setSearchResults([...bills])

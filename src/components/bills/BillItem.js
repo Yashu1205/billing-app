@@ -12,9 +12,7 @@ const BillItem = (props) => {
 
     const dispatch = useDispatch()
     
-    const { billDetails } = useSelector((state) => {
-        return state.bill
-    })
+    const { billDetails } = useSelector((state) => state.bills )
         
     //toggle modal open/close
     const handleShowBillModal = () => setShowBillModal(!showBillModal) 

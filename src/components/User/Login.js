@@ -47,7 +47,7 @@ const Login = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         runValidations()
-
+        
         if(Object.keys(errors).length > 0){
             setLoginErrors(errors)
         }
@@ -57,7 +57,10 @@ const Login = (props) => {
                 email: email,
                 password: password
             }
-            dispatch(startLoginUser(formData, props.history))
+            const redirect = () => {
+                props.history.push('/dashboard')
+            }
+            dispatch(startLoginUser(formData, redirect))
         }
     }
 
@@ -96,7 +99,6 @@ const Login = (props) => {
                                             onChange={handleChange} 
                                             onBlur={handleError}
                                             placeholder="enter your email" />
-
                                     {loginErrors.email && <span className="text-danger">{loginErrors.email} <br/></span>}
                                     </td>
                                 </tr>
@@ -116,7 +118,8 @@ const Login = (props) => {
 
                                 <tr>
                                     <td>
-                                        <p>New to BMS? <NavLink to="/register">Register here</NavLink></p>
+                                        <p>New to Billing App? <NavLink to="/register">Register here</NavLink></p>
+                                        <pre>Login email and password for demo: <br/> Email:     admin321@gmail.com <br/> Password:  test1234</pre>
                                     </td>
                                 </tr>
                                 <tr>

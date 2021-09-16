@@ -21,10 +21,8 @@ const CustomersList = (props) => {
     const [startIndex, setStartIndex] = useState(0)
     const [endIndex, setEndIndex] = useState(perPage)
 
-    const { customers } = useSelector(state => {
-        return state.customer 
-    })
     const dispatch = useDispatch()
+    const { customers } = useSelector(state => state.customers )
 
     useEffect(() => {
         setSearchResults([...customers])
@@ -51,6 +49,7 @@ const CustomersList = (props) => {
     const handleSort = (e) => {
         setOrderBy(e.target.value)
         let sortedCustomers = []
+        
         if(e.target.value === 'ascending'){
             sortedCustomers = getSortedResult(searchResults, 'name')
         } else if(e.target.value === 'descending'){

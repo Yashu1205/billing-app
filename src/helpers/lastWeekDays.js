@@ -2,7 +2,7 @@
 const currentDay = new Date()
 const today = currentDay.getDay()
 const dayLimit = today === 0 ? 6 : today
-console.log(today)
+
 const lastWeekDays = () => {
  
     //get array of days of current week

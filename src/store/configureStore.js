@@ -9,9 +9,9 @@ const configureStore = () => {
 
     const store = createStore(combineReducers({
         user: userReducer,
-        customer: customersReducer,
-        product: productsReducer,
-        bill: billsReducer
+        customers: customersReducer,
+        products: productsReducer,
+        bills: billsReducer
 
     }), applyMiddleware(thunk))
     
