@@ -17,10 +17,10 @@ const BillDetail = (props) => {
     },[billId])
 
     
-    const { billDetails } = useSelector((state) => state.bill)    
+    const { billDetails } = useSelector((state) => state.bills)    
     const { userAccount } = useSelector((state) => state.user)     
-    const { products } = useSelector((state) => state.product)
-    const { customers } = useSelector((state) => state.customer)
+    const { products } = useSelector((state) => state.products)
+    const { customers } = useSelector((state) => state.customers)
     
     const customerInfo = getCustomerName(customers, billDetails.customer)
     
@@ -28,7 +28,7 @@ const BillDetail = (props) => {
         const element = document.getElementById('bill-info')
         const opt = {
             margin:       1,
-            filename:     `${getCustomerName().name}-bill.pdf`,
+            filename:     `${customerInfo.name}-bill.pdf`,
             image:        { type: 'jpeg', quality: 0.98 },
             html2canvas:  { scale: 1 },
             jsPDF:        { unit: 'in', format: 'a4', orientation: 'landscape' }

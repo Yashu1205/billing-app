@@ -10,6 +10,7 @@ const EditCustomer = (props) => {
     const formSubmission = (formData) => {
         dispatch(startUpdateCustomer(formData, id, handleShowModal))
     }
+    
     return (
         <CustomerForm name={name} email={email} mobile={mobile} 
                       showModal={showModal}

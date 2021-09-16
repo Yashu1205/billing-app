@@ -11,15 +11,15 @@ import '../../styles/navbar.css'
 import PrivateRoute from './PrivateRoute'
 import ProtectedRoute from './ProtectedRoute'
 import Home from '../Home'
-import Register from '../User/Register'
-import Login from '../User/Login' 
+import Register from '../user/Register'
+import Login from '../user/Login' 
 import PageNotFound from './PageNotFound'
 const DashboardContainer = React.lazy(() => import('../dashboard/DashboardContainer'))
 const CustomersContainer = React.lazy(() => import('../customers/CustomersContainer'))
 const ProductsContainer = React.lazy(() => import('../products/ProductsContainer'))
 const BillsContainer = React.lazy(() => import('../bills/BillsContainer'))
 const BillDetail = React.lazy(() => import('../bills/BillDetail'))
-const UserAccount = React.lazy(() => import('../User/UserAccount'))
+const UserAccount = React.lazy(() => import('../user/UserAccount'))
 
 const NavBar = (props) => {
     const dispatch = useDispatch()

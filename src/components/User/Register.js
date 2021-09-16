@@ -72,7 +72,11 @@ const UserRegistration  = (props) => {
         }
         else{
             setFormErrors({})
-            dispatch(startUserRegistration(signupForm, props.history))
+            const redirect = () => {
+                props.history.push('/login')
+            }
+           
+            dispatch(startUserRegistration(signupForm, redirect))
         }
     }
 

@@ -19,9 +19,9 @@
   display: block;
 }
 
-.sidenav a:hover {
+/* .sidenav a:hover {
   color: #080808;
-}
+} */
 
 .nav-pills >li >a {
   font-size: 20px;
@@ -33,8 +33,7 @@
   margin: 10px 15px 10px 25px;
 }
 .nav-pills > li > a:hover {
-   background-color: rgb(176 175 214);
-   color: white;
+   color: #070a7a ;
 }
 
 .nav-pills .active {

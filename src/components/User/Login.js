@@ -47,7 +47,7 @@ const Login = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         runValidations()
-
+        
         if(Object.keys(errors).length > 0){
             setLoginErrors(errors)
         }
@@ -57,7 +57,10 @@ const Login = (props) => {
                 email: email,
                 password: password
             }
-            dispatch(startLoginUser(formData, props.history))
+            const redirect = () => {
+                props.history.push('/dashboard')
+            }
+            dispatch(startLoginUser(formData, redirect))
         }
     }
 

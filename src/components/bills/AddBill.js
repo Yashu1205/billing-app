@@ -9,13 +9,8 @@ const AddBill = (props) => {
     
     const {showModal, handleShowModal} =props
 
-    const customers = useSelector(state => {
-        return state.customer
-    })
-
-    const products = useSelector(state => {
-        return state.product
-    })
+    const customers = useSelector(state => state.customers )
+    const products = useSelector(state => state.products )
     
     //get form data from bills form and dispatch action to generate bill
     const formSubmission = (formData) => {

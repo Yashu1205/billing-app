@@ -1,5 +1,8 @@
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import { startGetCustomers } from './customersAction'
+import { startGetProducts } from './productsAction'
+import { startGetBills } from './billsAction'
 
 const baseUrl = 'https://dct-billing-app.herokuapp.com/api/users'
 export const REGISTER_USER = 'REGISTER_USER'
@@ -8,7 +11,7 @@ export const REMOVE_ERRORS = 'REMOVE_ERRORS'
 export const USER_ACCOUNT = 'USER_ACCOUNT'
 export const LOGOUT = 'LOGOUT'
 
-export const startUserRegistration = (formData, history) => {
+export const startUserRegistration = (formData, redirect) => {
     return (dispatch) => {
             axios.post(`${baseUrl}/register`, formData)
                     .then((response) => {
@@ -22,7 +25,7 @@ export const startUserRegistration = (formData, history) => {
                         else{
                             removeServerErrors()
                             Swal.fire('Successful', 'Successfully Registered','success')
-                            history.push('/login')
+                            redirect()
                         }
                     })
                     .catch((error) => {
@@ -31,7 +34,7 @@ export const startUserRegistration = (formData, history) => {
     }
 }
 
-export const startLoginUser = (formData, history) => {
+export const startLoginUser = (formData, redirect) => {
     return (dispatch) => {
             axios.post(`${baseUrl}/login`, formData)
                  .then((response) => {
@@ -42,7 +45,11 @@ export const startLoginUser = (formData, history) => {
                      else{
                          localStorage.setItem('token', response.data.token)
                          Swal.fire('Success', 'Successfully Logged in','success')
-                         history.push('/dashboard')
+                         dispatch(startGetCustomers())
+                         dispatch(startGetProducts())
+                         dispatch(startGetBills())
+                         dispatch(startGetUserProfile())
+                         redirect()
                      }
                  })
                  .catch((error) => {

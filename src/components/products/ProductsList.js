@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import { BsPlusCircleFill } from 'react-icons/bs'
 import { startDeleteProduct } from '../../actions/productsAction'
 import { getSearchResult } from '../../helpers/search'
+import { BsPlusCircleFill } from 'react-icons/bs'
+
 import getSortedResult from '../../helpers/sort'
 import PaginationTable from '../PaginationTable'
 import formatDataForPagination from "../../helpers/formatDataForPagination"
@@ -21,9 +22,7 @@ const ProductsList = (props) => {
     const [endIndex, setEndIndex] = useState(perPage)
 
     const dispatch = useDispatch()
-    const { products } = useSelector((state) => {
-        return state.product
-    })
+    const { products } = useSelector((state) => state.product )
     
     useEffect(() => {
         setSearchResults([...products])
