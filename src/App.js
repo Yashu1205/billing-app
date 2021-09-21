@@ -1,4 +1,4 @@
-import NavBar from './components/routingPages/NavBar'
+import NavBar from './components/NavBar'
 
 function App() { 
  

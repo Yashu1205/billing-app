@@ -5,21 +5,21 @@ import { ClipLoader } from 'react-spinners'
 import { BsFillHouseDoorFill, BsFileText, BsFileSpreadsheet, BsGraphUp, BsBoxArrowRight } from 'react-icons/bs'
 import { FaUserFriends, FaUser } from 'react-icons/fa'
 import { MdPowerSettingsNew, MdShoppingBasket } from 'react-icons/md'
-import { logout } from '../../actions/userAction'
+import { logout } from '../actions/userAction'
 
-import '../../styles/navbar.css' 
-import PrivateRoute from './PrivateRoute'
-import ProtectedRoute from './ProtectedRoute'
-import Home from '../Home'
-import Login from '../user/Login' 
-import Register from '../user/Register'
-import PageNotFound from './PageNotFound'
-const DashboardContainer = React.lazy(() => import('../dashboard/DashboardContainer'))
-const CustomersContainer = React.lazy(() => import('../customers/CustomersContainer'))
-const ProductsContainer = React.lazy(() => import('../products/ProductsContainer'))
-const BillsContainer = React.lazy(() => import('../bills/BillsContainer'))
-const BillDetail = React.lazy(() => import('../bills/BillDetail'))
-const UserAccount = React.lazy(() => import('../user/UserAccount'))
+import '../styles/navbar.css' 
+import PrivateRoute from './routingPages/PrivateRoute'
+import ProtectedRoute from './routingPages/ProtectedRoute'
+import Home from './Home'
+import Login from './user/Login' 
+import Register from './user/Register'
+import PageNotFound from './routingPages/PageNotFound'
+const DashboardContainer = React.lazy(() => import('./dashboard/DashboardContainer'))
+const CustomersContainer = React.lazy(() => import('./customers/CustomersContainer'))
+const ProductsContainer = React.lazy(() => import('./products/ProductsContainer'))
+const BillsContainer = React.lazy(() => import('./bills/BillsContainer'))
+const BillDetail = React.lazy(() => import('./bills/BillDetail'))
+const UserAccount = React.lazy(() => import('./user/UserAccount'))
 
 const NavBar = (props) => {
     const dispatch = useDispatch()
